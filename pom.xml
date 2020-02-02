@@ -48,7 +48,7 @@
   <parent>
     <artifactId>apache</artifactId>
     <groupId>org.apache</groupId>
-    <version>21</version>
+    <version>23</version>
     <relativePath />
   </parent>
 
@@ -309,31 +309,54 @@ Copyright (c) 2003, 2006 IBM Corporation.
   <build>
     <pluginManagement>
       <plugins>
-
-        <!-- inherited from apache-wide parent pom -->
-        <!-- 
-          <artifactId>maven-deploy-plugin</artifactId>
-          <artifactId>maven-source-plugin</artifactId>
-          <artifactId>maven-resources-plugin</artifactId>
-          <artifactId>maven-dependency-plugin</artifactId><version>3.0.2</version>  see https://issues.apache.org/jira/browse/UIMA-2963
-          <artifactId>maven-javadoc-plugin</artifactId>  at 3.0.1 Oct 2018
-          <artifactId>apache-rat-plugin</artifactId>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-remote-resources-plugin</artifactId>
-          
-         -->  
-         
-         <plugin>
+          <version>1.7.0</version>
+        </plugin>
+
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-dependency-plugin</artifactId>
+          <version>3.1.1</version>
+        </plugin>
+
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-resources-plugin</artifactId>
+          <version>3.1.0</version>
+        </plugin>
+
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-deploy-plugin</artifactId>
+          <version>2.8.2</version>
+        </plugin>
+
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-source-plugin</artifactId>
+          <version>3.2.1</version>
+        </plugin>
+
+        <plugin>
            <groupId>org.apache.maven.plugins</groupId>
            <artifactId>maven-surefire-plugin</artifactId>
-           <version>2.22.1</version>
-         </plugin>         
-        
+           <version>2.22.2</version>
+         </plugin>
+
+        <plugin>
+            <groupId>net.nicoulaj.maven.plugins</groupId>
+            <artifactId>checksum-maven-plugin</artifactId>
+            <version>1.8</version>
+        </plugin>
+
         <!-- assembly plugin 
              Disable running assembly:assembly with
              warning message to use install instead -->
         <plugin> 
           <artifactId>maven-assembly-plugin</artifactId>
-          <version>3.1.0</version> <!-- https://issues.apache.org/jira/browse/UIMA-3332 from superpom-->
+          <version>3.2.0</version>
           <executions>
             <execution>
               <id>default-cli</id>
@@ -355,9 +378,7 @@ Copyright (c) 2003, 2006 IBM Corporation.
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-plugin-plugin</artifactId>
-          <!-- Version 3.3 required for Java 8 builds -->
-          <!-- https://jira.codehaus.org/browse/MPLUGIN-244 -->
-          <!-- inherit from apache superpom (3.52 in 2018)  -->
+          <version>3.6.0</version>
           <executions>
             <execution>
               <!-- force to use process-classes phase so runs after Java Annotations are available -->
@@ -379,7 +400,7 @@ Copyright (c) 2003, 2006 IBM Corporation.
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-compiler-plugin</artifactId>
-          <version>3.8.0</version>
+          <version>3.8.1</version>
           <configuration>
             <source>${maven.compiler.source}</source>
             <target>${maven.compiler.target}</target>
@@ -390,6 +411,7 @@ Copyright (c) 2003, 2006 IBM Corporation.
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-javadoc-plugin</artifactId>
+          <version>3.1.1</version>
           <configuration>
             <source>${maven.compiler.source}</source>
             <javadocVersion>${maven.compiler.source}</javadocVersion> <!-- https://issues.apache.org/jira/browse/UIMA-5369 -->
@@ -438,6 +460,7 @@ Copyright (c) 2003, 2006 IBM Corporation.
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-jar-plugin</artifactId>
+          <version>3.2.0</version>
           <configuration>
             <archive>
               <manifestEntries>
@@ -461,7 +484,7 @@ Copyright (c) 2003, 2006 IBM Corporation.
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-antrun-plugin</artifactId>
-
+          <version>1.8</version>
           <dependencies>
             <dependency> <!-- for ant extension supporting "if" -->
               <groupId>ant-contrib</groupId>
@@ -490,16 +513,6 @@ Copyright (c) 2003, 2006 IBM Corporation.
           </dependencies>          
         </plugin>
       
-        <!-- deprecated - move to m2eclipse, but keeping for now --> 
-        <plugin>
-          <groupId>org.apache.maven.plugins</groupId>
-          <artifactId>maven-eclipse-plugin</artifactId>
-          <version>2.10</version>
-          <configuration>
-            <downloadSources>true</downloadSources>
-          </configuration>
-        </plugin>
-        
         <plugin>
           <groupId>org.apache.felix</groupId>
           <artifactId>maven-bundle-plugin</artifactId>
@@ -520,6 +533,7 @@ Copyright (c) 2003, 2006 IBM Corporation.
         <plugin>
           <groupId>org.apache.rat</groupId>
           <artifactId>apache-rat-plugin</artifactId>
+          <version>0.13</version>
           <executions>
             <execution>
               <id>default-cli</id>
@@ -560,8 +574,7 @@ Copyright (c) 2003, 2006 IBM Corporation.
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-changes-plugin</artifactId>
-          <!-- version 2.10 see https://issues.apache.org/jira/browse/UIMA-3764 -->
-          <version>2.12.1</version>  <!-- Apache-wide pom has no entry for this plugin -->
+          <version>2.12.1</version>
           <dependencies>   <!-- needed for java 11 -->
              <dependency>
              <groupId>javax.annotation</groupId>
@@ -603,7 +616,7 @@ Copyright (c) 2003, 2006 IBM Corporation.
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-enforcer-plugin</artifactId>
-          <version>3.0.0-M2</version>
+          <version>3.0.0-M3</version>
         </plugin>
       </plugins>
     </pluginManagement>
@@ -762,7 +775,6 @@ Copyright (c) 2003, 2006 IBM Corporation.
             <plugin>
               <groupId>net.nicoulaj.maven.plugins</groupId>
               <artifactId>checksum-maven-plugin</artifactId>
-              <version>1.8</version>
             </plugin>            
           </plugins>
         </pluginManagement>
@@ -911,9 +923,7 @@ Copyright (c) 2003, 2006 IBM Corporation.
           <plugin>
             <groupId>net.nicoulaj.maven.plugins</groupId>
             <artifactId>checksum-maven-plugin</artifactId>
-            <version>1.8</version>
             <executions>            
-                             
               <execution>
                 <id>artifacts-checksum</id>
                 <phase>post-integration-test</phase>  <!-- run before gpg signing, so gpg can sign (ugh) the .sha512 needed for workaround -->
@@ -926,11 +936,10 @@ Copyright (c) 2003, 2006 IBM Corporation.
                   <algorithms>
                     <algorithm>SHA-512</algorithm>
                   </algorithms>
-                </configuration>                
+                </configuration>
               </execution>
             </executions>
           </plugin>   
-          
         </plugins>
       </build>     
     </profile>
@@ -2646,7 +2655,7 @@ Copyright (c) 2003, 2006 IBM Corporation.
           <plugin>
             <groupId>org.apache.uima</groupId>
             <artifactId>PearPackagingMavenPlugin</artifactId>
-            <version>2.10.2</version>
+            <version>2.10.5</version>
             <extensions>true</extensions>        
             <executions>
               <execution>
