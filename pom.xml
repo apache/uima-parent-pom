@@ -116,13 +116,13 @@
         
   <scm>
     <connection>
-      scm:svn:https://svn.apache.org/repos/asf/uima/build/trunk/parent-pom
+      scm:git:https://github.com/apache/uima-parent-pom
     </connection>
     <developerConnection>
-      scm:svn:https://svn.apache.org/repos/asf/uima/build/trunk/parent-pom
+      scm:git:https://github.com/apache/uima-parent-pom
     </developerConnection>
     <url>
-      https://svn.apache.org/viewvc/uima/build/trunk/parent-pom
+      https://github.com/apache/uima-parent-pom/tree/master
     </url>
   </scm>
   
@@ -541,6 +541,7 @@ Copyright (c) 2003, 2006 IBM Corporation.
               <phase>verify</phase>
               <!-- default configuration -->
               <configuration>
+                <consoleOutput>true</consoleOutput>
                 <excludes>
                   <exclude>release.properties</exclude> <!-- generated file -->
                   <exclude>README*</exclude>
