@@ -116,13 +116,13 @@
         
   <scm>
     <connection>
-      scm:svn:https://svn.apache.org/repos/asf/uima/build/trunk/parent-pom
+      scm:git:https://github.com/apache/uima-parent-pom
     </connection>
     <developerConnection>
-      scm:svn:https://svn.apache.org/repos/asf/uima/build/trunk/parent-pom
+      scm:git:https://github.com/apache/uima-parent-pom
     </developerConnection>
     <url>
-      https://svn.apache.org/viewvc/uima/build/trunk/parent-pom
+      https://github.com/apache/uima-parent-pom/tree/master
     </url>
   </scm>
   
