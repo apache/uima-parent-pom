@@ -167,7 +167,7 @@
     <!--  *********************************************************************************************************** -->
     <!--  *********************************************************************************************************** -->
     <parentPomPatchVersion>12</parentPomPatchVersion>  <!-- UGH need to change this manually for release !!! -->
-    <uimaBuildResourcesVersion>5</uimaBuildResourcesVersion>
+    <uimaBuildResourcesVersion>6-SNAPSHOT</uimaBuildResourcesVersion>
     <uimaWebsiteUrl>https://uima.apache.org</uimaWebsiteUrl>
     <uimaWebsiteDistributionUrl>scp://people.apache.org/www/uima.apache.org/</uimaWebsiteDistributionUrl>
     <maven.build.timestamp.format>yyMMdd_HHmm</maven.build.timestamp.format>
@@ -786,7 +786,7 @@ Copyright (c) 2003, 2006 IBM Corporation.
           <!-- to support multi-module source-release builds -->
           <plugin>
             <artifactId>maven-assembly-plugin</artifactId>
-            <dependencies>            
+            <dependencies>
               <dependency>
                 <groupId>org.apache.uima</groupId>
                 <artifactId>uima-build-resources</artifactId>
@@ -2450,11 +2450,11 @@ Copyright (c) 2003, 2006 IBM Corporation.
                 <version>${uimaBuildResourcesVersion}</version>
               </dependency>
             </dependencies>
-          </plugin>    
-        </plugins>       
+          </plugin>
+        </plugins>
       </build>
     </profile>
-        
+
     <!-- ********************************** -->
     <!-- *   Build OSGi bundle            * -->
     <!-- ********************************** -->     
@@ -2467,13 +2467,10 @@ Copyright (c) 2003, 2006 IBM Corporation.
       </activation>
            
       <build>  
-        
         <plugins> 
-        
           <plugin>
             <artifactId>maven-resources-plugin</artifactId>
             <executions>
-                            
               <!-- copy the base-bin dir to the osgi dir -->
               <execution>
                 <id>Copy base-bin to osgi</id>
@@ -2572,13 +2569,12 @@ Copyright (c) 2003, 2006 IBM Corporation.
                   <archive>
                     <manifestFile>${project.build.directory}/osgi/META-INF/MANIFEST.MF</manifestFile>
                   </archive>
-                </configuration>                
+                </configuration>
               </execution>
             </executions>
           </plugin>
-                             
         </plugins>
-      </build>             
+      </build>
     </profile>
  
     <!-- ********************************** -->
@@ -2592,14 +2588,11 @@ Copyright (c) 2003, 2006 IBM Corporation.
         </file>
       </activation>
       <build>  
-        
         <plugins>  
-                     
           <plugin>
             <groupId>org.apache.maven.plugins</groupId>
             <artifactId>maven-resources-plugin</artifactId>
             <executions>
-              
               <!-- add the contents of desc if it exists to the jar.  
                    This puts the things like the WhitespaceTokenizer.xml file into the Jar
                    and makes it easier for users to run this, without installing a pear. 
@@ -2618,7 +2611,7 @@ Copyright (c) 2003, 2006 IBM Corporation.
                   </resources>
                 </configuration>
               </execution>
-                   
+
               <!-- copy the base-bin dir to the pearPackaging dir -->
               <execution>
                 <id>Copy base-bin to pearPackaging</id>
@@ -2637,7 +2630,6 @@ Copyright (c) 2003, 2006 IBM Corporation.
                   </resources>
                 </configuration>
               </execution>
-                                      
             </executions>
           </plugin>
           
@@ -2672,7 +2664,7 @@ Copyright (c) 2003, 2006 IBM Corporation.
                 </configuration>
               </execution>
             </executions>
-          </plugin>              
+          </plugin>
 
           <!-- Attach PEAR artifact after PEAR is built -->
           <plugin>
@@ -2714,7 +2706,6 @@ Copyright (c) 2003, 2006 IBM Corporation.
       <build>
         <pluginManagement>
           <plugins>
-          
             <!--This plugin's configuration is used to store Eclipse m2e settings 
                 only. It has no influence on the Maven build itself. -->
             <plugin>
@@ -3022,36 +3013,62 @@ Copyright (c) 2003, 2006 IBM Corporation.
       </activation>
       
       <properties>
-        <!-- This property must be set in POMs inheriting from this one -->
-        <japicmp.postAnalysisScript />
+        <japicmp.postAnalysisScript>${project.build.directory}/japicmp-resources/japicmp/api-report.groovy</japicmp.postAnalysisScript>
       </properties>
-      
+
       <build>
         <pluginManagement>
           <plugins>
             <plugin>
-	            <groupId>org.apache.rat</groupId>
-		          <artifactId>apache-rat-plugin</artifactId>
-		          <executions>
-		            <execution>
-		              <id>default-cli</id>
-		              <configuration>
-		                <excludes combine.children="append">
-	                    <exclude>**/api-change-report/**/*.*</exclude>
-		                </excludes>
-		              </configuration>
-		            </execution>
-	          </executions>
-	          </plugin>
+              <groupId>org.apache.rat</groupId>
+              <artifactId>apache-rat-plugin</artifactId>
+              <executions>
+                <execution>
+                  <id>default-cli</id>
+                  <configuration>
+                    <excludes combine.children="append">
+                      <exclude>**/api-change-report/**/*.*</exclude>
+                    </excludes>
+                  </configuration>
+                </execution>
+              </executions>
+            </plugin>
           </plugins>
         </pluginManagement> 
         
         <plugins>
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-dependency-plugin</artifactId>
+            <executions>
+              <execution>
+                <id>provide-japicmp-postAnalysisScript</id>
+                <phase>prepare-package</phase>
+                <goals>
+                  <goal>unpack</goal>
+                </goals>
+                <configuration>
+                  <artifactItems>
+                    <artifactItem>
+                      <groupId>org.apache.uima</groupId>
+                      <artifactId>uima-build-resources</artifactId>
+                      <version>${uimaBuildResourcesVersion}</version>
+                      <type>jar</type>
+                      <overWrite>true</overWrite>
+                      <outputDirectory>${project.build.directory}/japicmp-resources/</outputDirectory>
+                      <includes>japicmp/api-report.groovy</includes>
+                    </artifactItem>
+                  </artifactItems>
+                </configuration>
+              </execution>
+            </executions>
+          </plugin>
+        
           <!-- https://siom79.github.io/japicmp/MavenPlugin.html -->
-          <plugin>              
+          <plugin>
             <groupId>com.github.siom79.japicmp</groupId>
             <artifactId>japicmp-maven-plugin</artifactId>
-            <version>0.13.0</version>
+            <version>0.14.4</version>
             <configuration>
               <oldVersion>
                 <dependency>
