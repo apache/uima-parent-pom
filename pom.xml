@@ -131,12 +131,11 @@
     <!-- the form of the url is from https://maven.apache.org/plugins/maven-changes-plugin/usage.html -->
     <!--url>https://issues.apache.org/jira/BrowseProject.jspa?projectId=12310570</url-->
     <url>https://issues.apache.org/jira/browse/UIMA</url>
-        
   </issueManagement>
   
   <ciManagement>
     <system>Jenkins</system>
-    <url>https://builds.apache.org/</url>
+    <url>https://ci-builds.apache.org/</url>
     <notifiers />
   </ciManagement>
   
@@ -201,7 +200,6 @@ Copyright (c) 2003, 2006 IBM Corporation.
          in standard Apache parent pom be used -->
     <!-- SourceReleaseAssemblyDescriptor>multimodule-source-release</sourceReleaseAssemblyDescriptor--> 
 
-
   <!-- ============================================= -->
   <!-- *  V E R S I O N S                            -->
   <!-- *  most inherited from apache-wide parent pom -->
@@ -210,7 +208,6 @@ Copyright (c) 2003, 2006 IBM Corporation.
     <felix.bundle.version>3.3.0</felix.bundle.version>
     
     <maven.surefire.heap>512m</maven.surefire.heap>
-    
   </properties>
  
   <dependencyManagement>
@@ -286,7 +283,6 @@ Copyright (c) 2003, 2006 IBM Corporation.
         <enabled>false</enabled>
       </releases>
     </repository>  --> 
-      
   </repositories>
   
   <pluginRepositories>
@@ -301,7 +297,7 @@ Copyright (c) 2003, 2006 IBM Corporation.
       <snapshots>
         <enabled>true</enabled>
         <checksumPolicy>fail</checksumPolicy>
-        <updatePolicy>never</updatePolicy>        
+        <updatePolicy>never</updatePolicy>
       </snapshots>
     </pluginRepository>
   </pluginRepositories>
@@ -331,6 +327,10 @@ Copyright (c) 2003, 2006 IBM Corporation.
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-deploy-plugin</artifactId>
           <version>2.8.2</version>
+          <configuration> 
+            <!-- https://issues.apache.org/jira/browse/UIMA-5367 -->
+            <retryFailedDeploymentCount>10</retryFailedDeploymentCount> 
+          </configuration> 
         </plugin>
 
         <plugin>
@@ -368,13 +368,13 @@ Copyright (c) 2003, 2006 IBM Corporation.
             </execution>
           </executions>
         </plugin>
-        
+
         <plugin>
           <groupId>org.codehaus.mojo</groupId>
           <artifactId>build-helper-maven-plugin</artifactId>
           <version>3.0.0</version>
         </plugin>
-                         
+
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-plugin-plugin</artifactId>
@@ -388,14 +388,13 @@ Copyright (c) 2003, 2006 IBM Corporation.
             </execution>
             <execution>
               <id>generate-helpmojo</id>
-              <goals><goal>helpmojo</goal></goals>            
+              <goals><goal>helpmojo</goal></goals>
             </execution>
           </executions>
           <configuration>
             <extractors><extractor>java-annotations</extractor></extractors>
-          </configuration>    
+          </configuration>
         </plugin>
-        
         
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
@@ -443,18 +442,18 @@ Copyright (c) 2003, 2006 IBM Corporation.
                 <name>pre</name>
                 <placement>X</placement>
               </tag>
-            </tags>                          
+            </tags>
           </configuration>
           <executions>
             <execution>
-              <id>attach-javadocs</id>          
+              <id>attach-javadocs</id>
               <goals><goal>jar</goal></goals>
               <!-- turn off javadoc build for each module by default
                    (unless apache-release - for speed) 
                    override in individual cases to turn back on if wanted --> 
-              <phase />            
+              <phase/>
             </execution>
-          </executions>          
+          </executions>
         </plugin>
 
         <plugin>
@@ -497,7 +496,6 @@ Copyright (c) 2003, 2006 IBM Corporation.
                   <artifactId>ant</artifactId>
                 </exclusion>
               </exclusions>
-              
             </dependency>
             <!-- next two enable <containsregexp> form for filesets -->
             <dependency>
@@ -576,15 +574,13 @@ Copyright (c) 2003, 2006 IBM Corporation.
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-changes-plugin</artifactId>
           <version>2.12.1</version>
-          <dependencies>   <!-- needed for java 11 -->
-             <dependency>
-             <groupId>javax.annotation</groupId>
-             <artifactId>javax.annotation-api</artifactId>
-             <version>1.3.2</version>
-             </dependency>
-           </dependencies>
-          
-          
+          <dependencies> <!-- needed for java 11 -->
+            <dependency>
+            <groupId>javax.annotation</groupId>
+            <artifactId>javax.annotation-api</artifactId>
+            <version>1.3.2</version>
+            </dependency>
+          </dependencies>
           <executions>
             <execution>
               <id>default-cli</id>
@@ -623,7 +619,6 @@ Copyright (c) 2003, 2006 IBM Corporation.
     </pluginManagement>
     
     <plugins>
-            
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-enforcer-plugin</artifactId>
@@ -685,12 +680,12 @@ Copyright (c) 2003, 2006 IBM Corporation.
                 <parseSpec>
                   <name>buildMonth</name>
                   <format>MMMM</format>
-                </parseSpec>                   
+                </parseSpec>
               </parseSpecs>
-            </configuration>               
+            </configuration>
           </execution>
         </executions>
-      </plugin>     
+      </plugin>
 
       <!-- this overrides the apache pom to 
            use this resource bundle which
@@ -702,7 +697,7 @@ Copyright (c) 2003, 2006 IBM Corporation.
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-remote-resources-plugin</artifactId>
-        <executions>      
+        <executions>
           <execution>
             <goals><goal>process</goal></goals>
             <configuration>
@@ -711,7 +706,7 @@ Copyright (c) 2003, 2006 IBM Corporation.
               </resourceBundles>
             </configuration>
           </execution>
-        </executions>        
+        </executions>
       </plugin>
       
       <plugin> <!-- https://issues.apache.org/jira/browse/UIMA-2966  -->
@@ -731,15 +726,12 @@ Copyright (c) 2003, 2006 IBM Corporation.
           </execution>
         </executions>
       </plugin>
-      
-    </plugins>     
-    
+    </plugins>
   </build>
   
   <!--reporting-->
   
-  <profiles>   
-    
+  <profiles>
     <!-- ************************************************** -->
     <!-- * apache-release                                 * -->
     <!-- *   NOTE: This profile is activated while        * --> 
@@ -780,9 +772,7 @@ Copyright (c) 2003, 2006 IBM Corporation.
           </plugins>
         </pluginManagement>
 
-
         <plugins>
-                 
           <!-- to support multi-module source-release builds -->
           <plugin>
             <artifactId>maven-assembly-plugin</artifactId>
@@ -803,23 +793,25 @@ Copyright (c) 2003, 2006 IBM Corporation.
                   <attach>false</attach>
                 </configuration>
               </execution>
-            </executions>            
+            </executions>
           </plugin>
-          
+        
           <!-- to run source plugin without forking -->
           <plugin>
             <groupId>org.apache.maven.plugins</groupId>
-            <artifactId>maven-source-plugin</artifactId>           
-            <executions>           
+            <artifactId>maven-source-plugin</artifactId>
+            <executions>
               <execution>
-                <id>attach-sources-nf</id>           
-                <goals><goal>jar-no-fork</goal></goals>
+                <id>attach-sources-nf</id>
+                <goals>
+                  <goal>jar-no-fork</goal>
+                </goals>
               </execution>
               <execution>
                 <id>attach-sources</id>
                 <phase />  <!-- turn off the plain jar one -->
-              </execution>             
-            </executions>        
+              </execution>
+            </executions>
           </plugin>
           
           <plugin>
@@ -945,6 +937,7 @@ Copyright (c) 2003, 2006 IBM Corporation.
       </build>     
     </profile>
 
+
     <!-- *************************************************** -->
     <!-- *   Run Rat report - for Jenkins                  * -->
     <!-- * https://issues.apache.org/jira/browse/UIMA-2590 * -->
@@ -968,13 +961,13 @@ Copyright (c) 2003, 2006 IBM Corporation.
       </build>     
     </profile>
 
+
     <!-- *********************************************** -->
     <!-- *  Run actions only for uima-wide parent pom  * -->
     <!-- *    ** not inherited by sub projects **      * -->
     <!-- *   Produce Jira report                       * -->
     <!-- *   attach patches for gpg and chksum plugins * -->
     <!-- *********************************************** -->
-
     <profile>
       <id>mavenJirareport</id>
       <activation>
@@ -1100,7 +1093,8 @@ Copyright (c) 2003, 2006 IBM Corporation.
       </build>
 
     </profile>
-    
+
+
     <!-- ********************************** -->
     <!-- *   Docbook Processing           * -->
     <!-- ********************************** -->
@@ -1419,12 +1413,12 @@ Copyright (c) 2003, 2006 IBM Corporation.
                 </configuration>
               </execution>
             </executions>
-          </plugin>           
-        </plugins>                    
+          </plugin>
+        </plugins>
       </build>
     </profile> 
-       
-    
+
+
     <!-- ************************************ -->
     <!-- * Build Custom Binary Distribution * -->
     <!-- ************************************ -->
@@ -1468,6 +1462,7 @@ Copyright (c) 2003, 2006 IBM Corporation.
               <skip>true</skip>
             </configuration>
           </plugin>
+          
           <plugin>
             <artifactId>maven-antrun-plugin</artifactId>
             <executions>
@@ -1502,10 +1497,10 @@ Copyright (c) 2003, 2006 IBM Corporation.
               </execution>
             </executions>
           </plugin>
-          
-        </plugins>                    
+        </plugins>
       </build>
     </profile>
+
 
     <!-- ************************************ -->
     <!-- *   Build Eclipse Plugin           * -->
@@ -1545,8 +1540,7 @@ Copyright (c) 2003, 2006 IBM Corporation.
           </resource>
         </resources>
      
-        <pluginManagement>
-          
+        <pluginManagement>          
           <!-- run the felix plugin in manifest mode
                because that plugin doesn't resolve
                all properties e.g., parsedVersion.osgiVersion -->
@@ -1611,12 +1605,10 @@ Copyright (c) 2003, 2006 IBM Corporation.
                 <useProjectReferences>false</useProjectReferences>
               </configuration>
             </plugin>
-                  
           </plugins>
         </pluginManagement> 
         
         <plugins>
-        
           <plugin> 
             <groupId>org.apache.maven.plugins</groupId>
             <artifactId>maven-antrun-plugin</artifactId>
@@ -1634,11 +1626,11 @@ Copyright (c) 2003, 2006 IBM Corporation.
               </execution>
             </executions>
           </plugin>
-        
-        </plugins>   
+        </plugins>
       </build>
     </profile>
-    
+
+
     <!-- ************************************ -->
     <!-- *   Build Eclipse Feature          * -->
     <!-- ************************************ -->
@@ -1951,7 +1943,6 @@ Copyright (c) 2003, 2006 IBM Corporation.
                     <!-- ========================================== -->
                     <!--   If apache-release, do checksums and sign -->
                     <!-- ========================================== -->
-                              
                     <if>
                       <equals arg1="${isApacheRelease}" arg2="true" />
                       <then>
@@ -2026,7 +2017,6 @@ Copyright (c) 2003, 2006 IBM Corporation.
                           </fileset>
                         </checksum>
                          -->
-                             
                         <echo message="Generating gpg signatures for artifacts.jar and content.jar" />
                         <apply executable="gpg" dir="${eclipseUpdateSubSite}" failonerror="true"> 
                           <arg value="--detach-sign" />
@@ -2037,15 +2027,12 @@ Copyright (c) 2003, 2006 IBM Corporation.
                             <include name="*.jar" />
                           </fileset>
                         </apply> 
-    
-                      </then>                      
-                    </if>          
-                                  
-                    
+                      </then>
+                    </if>
                   </target>
                 </configuration>
               </execution>
-    
+
               <!-- ================================================= -->
               <!--                                                   -->
               <!--       P O S T   JAR   S I G N I N G by Digicert   -->
@@ -2055,7 +2042,6 @@ Copyright (c) 2003, 2006 IBM Corporation.
               <!--   run using mvn                                   -->   
               <!--      antrun:run@make-subsite-after-signing        -->
               <!-- ================================================= -->
-
               <execution>
                 <id>make-subsite-after-signing</id>
                 <configuration>
@@ -2101,14 +2087,13 @@ Copyright (c) 2003, 2006 IBM Corporation.
                     
                     <!-- This is needed because the previous pre-build step already
                          updated the content and artifacts jar with the new versions -->
-                         
                     <delete verbose="true">
                       <fileset dir="${eclipseUpdateSubSite}" includes="content.jar,artifacts.jar" />
                     </delete>
                     <copy todir="${eclipseUpdateSubSite}" failonerror="false">
                       <fileset dir="${project.build.directory}/saved" includes="content.jar,artifacts.jar" />
-                    </copy>                          
-                    
+                    </copy>
+
                     <echo> </echo>
                     <echo>Generate the p2 metadata and publish new artifacts</echo>
                     <echo>--------------------------------------------------</echo>
@@ -2130,9 +2115,9 @@ Copyright (c) 2003, 2006 IBM Corporation.
                       <arg line="-publishArtifacts" />
                       <arg line="-reusePack200Files" />
                       <arg line="-compress" />
-                      <arg line="-append" />     
+                      <arg line="-append" />
                     </java>
-                    
+
                     <echo>Augment p2 metadata with category information</echo>
                     <echo>---------------------------------------------</echo>
                     <java jar="${eclipse-equinox-launcher}" fork="true" failonerror="true" maxmemory="256m">
@@ -2143,7 +2128,6 @@ Copyright (c) 2003, 2006 IBM Corporation.
                       <arg line="-compress" />
                     </java>  
           
-      
                     <echo> </echo>
                     <echo>Clearing previous checksums and signatures for eusWork plugins</echo>
                     <delete dir="${eusWork}">
@@ -2152,7 +2136,7 @@ Copyright (c) 2003, 2006 IBM Corporation.
                       <!-- include name="**/*.md5" /-->
                       <!-- <include name="**/*.sha1" /> -->
                     </delete>
-          
+
                     <echo message="Generating checksums for signed plugins" />
 
                     <checksum algorithm="SHA-512" fileext=".sha512" format="MD5SUM" forceoverwrite="yes">
@@ -2174,7 +2158,7 @@ Copyright (c) 2003, 2006 IBM Corporation.
                         <include name="**/*.jar" />
                       </fileset>
                     </checksum>  -->
-    
+
                     <echo message="Generating gpg signatures for new features and plugins" />
                     <apply executable="gpg" dir="${eusWork}" failonerror="true"> 
                       <arg value="--detach-sign" />
@@ -2185,8 +2169,8 @@ Copyright (c) 2003, 2006 IBM Corporation.
                         <include name="**/*.jar" />
                         <include name="**/*.jar.pack.gz" />
                       </fileset>
-                    </apply> 
-                   
+                    </apply>
+
                     <echo message="Copying the checksums and signatures to the update subsite" />
                     <copy todir="${eclipseUpdateSubSite}" failonerror="true">
                       <fileset dir="${eusWork}">
@@ -2204,8 +2188,8 @@ Copyright (c) 2003, 2006 IBM Corporation.
                       <include name="*.sha512" />
                       <!-- <include name="*.md5" /> -->
                       <!-- <include name="*.sha1" /> -->
-                    </delete> 
-                                     
+                    </delete>
+
                     <echo message="Generating checksums for updated artifacts.jar and content.jar" />
                     <checksum algorithm="SHA-512" fileext=".sha512" format="MD5SUM" forceoverwrite="yes">
                       <fileset dir="${eclipseUpdateSubSite}">
@@ -2251,7 +2235,6 @@ Copyright (c) 2003, 2006 IBM Corporation.
     <!-- * Build Simple Project Binary Assembly * -->
     <!-- **************************************** -->
     <!-- 
-     
      This profile holds common, factored-out settings for all 
      projects that are packaged as single projects
      (that is, not as multi-module projects), typically Sandbox projects.
@@ -2551,7 +2534,6 @@ Copyright (c) 2003, 2006 IBM Corporation.
                 </configuration>
               </execution>
             </executions>
-
           </plugin>
 
           <!-- Run JAR to create OSGi Jar -->          
@@ -2577,6 +2559,7 @@ Copyright (c) 2003, 2006 IBM Corporation.
       </build>
     </profile>
  
+
     <!-- ********************************** -->
     <!-- *   Build Standard PEAR          * -->
     <!-- ********************************** -->
@@ -2883,7 +2866,7 @@ Copyright (c) 2003, 2006 IBM Corporation.
         </pluginManagement>
       </build>
     </profile>
-    
+
 
     <!-- ********************************** -->
     <!-- * Code quality: spotbugs         * -->
@@ -3120,7 +3103,8 @@ Copyright (c) 2003, 2006 IBM Corporation.
         </plugins>
       </build>
     </profile>
-    
+
+
     <!-- ********************************** -->
     <!-- * Java 11 enablement             * -->
     <!-- ********************************** -->
@@ -3133,69 +3117,59 @@ Copyright (c) 2003, 2006 IBM Corporation.
         <jaxb.version>2.3.1</jaxb.version> 
         <jaxb.version01>2.3.0.1</jaxb.version01>
         <java.version>8</java.version>
-        <maven.compiler.source>${java.version}</maven.compiler.source>  <!-- can't do 11 with target 8  -->
-        <maven.compiler.target>${java.version}</maven.compiler.target>   <!-- still want to run in Java 8 -->
-        
+        <maven.compiler.source>${java.version}</maven.compiler.source> <!-- can't do 11 with target 8  -->
+        <maven.compiler.target>${java.version}</maven.compiler.target> <!-- still want to run in Java 8 -->
       </properties>
-      
       <dependencies>
-         <!-- 
-           - java.xml.bind and javax.annotation-api have been removed in Java 11 from the JDK, need to add it as dependency
-           -->
-         <dependency>
-           <groupId>javax.xml.bind</groupId>
-           <artifactId>jaxb-api</artifactId>
-           <version>${jaxb.version}</version>
-           <scope>runtime</scope>
-         </dependency>
-         <dependency>
-           <groupId>com.sun.xml.bind</groupId>
-           <artifactId>jaxb-core</artifactId>
-           <version>${jaxb.version01}</version>
-           <scope>runtime</scope>
-         </dependency>
-         <dependency>
-           <groupId>com.sun.xml.bind</groupId>
-           <artifactId>jaxb-impl</artifactId>
-           <version>${jaxb.version}</version>
-           <scope>runtime</scope>
-         </dependency>
-                  
-         <dependency>
-           <groupId>javax.annotation</groupId>
-           <artifactId>javax.annotation-api</artifactId>
-           <version>1.3.2</version>
-         </dependency>
-       </dependencies>
+        <!--
+          - java.xml.bind and javax.annotation-api have been removed in Java 11 from the JDK, need to add it 
+          as dependency
+        -->
+        <dependency>
+          <groupId>javax.xml.bind</groupId>
+          <artifactId>jaxb-api</artifactId>
+          <version>${jaxb.version}</version>
+          <scope>runtime</scope>
+        </dependency>
+        <dependency>
+          <groupId>com.sun.xml.bind</groupId>
+          <artifactId>jaxb-core</artifactId>
+          <version>${jaxb.version01}</version>
+          <scope>runtime</scope>
+        </dependency>
+        <dependency>
+          <groupId>com.sun.xml.bind</groupId>
+          <artifactId>jaxb-impl</artifactId>
+          <version>${jaxb.version}</version>
+          <scope>runtime</scope>
+        </dependency>
+        <dependency>
+          <groupId>javax.annotation</groupId>
+          <artifactId>javax.annotation-api</artifactId>
+          <version>1.3.2</version>
+        </dependency>
+      </dependencies>
        
       <build>
         <pluginManagement>
           <plugins>
-                                  
             <plugin>
               <groupId>org.apache.maven.plugins</groupId>
               <artifactId>maven-surefire-plugin</artifactId>
               <configuration>
-                  <argLine>
-                      --illegal-access=permit
-                  </argLine>
+                <argLine>--illegal-access=permit</argLine>
               </configuration>
-          </plugin>
-          <plugin>
+            </plugin>
+            <plugin>
               <groupId>org.apache.maven.plugins</groupId>
               <artifactId>maven-failsafe-plugin</artifactId>
               <configuration>
-                  <argLine>
-                      --illegal-access=permit
-                  </argLine>
+                  <argLine>--illegal-access=permit</argLine>
               </configuration>
-          </plugin>
-            
+            </plugin>
           </plugins>
         </pluginManagement>
       </build>
-
     </profile>
-    
   </profiles>
 </project>
