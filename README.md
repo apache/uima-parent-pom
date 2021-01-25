@@ -1,3 +1,5 @@
+[![Maven Central](https://maven-badges.herokuapp.com/maven-central/org.apache.uima/parent-pom/badge.svg)](https://maven-badges.herokuapp.com/maven-central/org.apache.uima/parent-pom/)
+
 Apache UIMA Parent POM
 ----------------------
 
