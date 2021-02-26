@@ -166,7 +166,7 @@
     <!--  *********************************************************************************************************** -->
     <!--  *********************************************************************************************************** -->
     <parentPomPatchVersion>12</parentPomPatchVersion>  <!-- UGH need to change this manually for release !!! -->
-    <uimaBuildResourcesVersion>6-SNAPSHOT</uimaBuildResourcesVersion>
+    <uimaBuildResourcesVersion>6</uimaBuildResourcesVersion>
     <uimaWebsiteUrl>https://uima.apache.org</uimaWebsiteUrl>
     <uimaWebsiteDistributionUrl>scp://people.apache.org/www/uima.apache.org/</uimaWebsiteDistributionUrl>
     <maven.build.timestamp.format>yyMMdd_HHmm</maven.build.timestamp.format>
