@@ -1553,7 +1553,6 @@
       </activation>
       <properties>
         <eusWork>${project.build.directory}/eus-work</eusWork>
-        <toBePacked>${project.build.directory}/toBePacked</toBePacked>
         <distsvnroot>https://dist.apache.org/</distsvnroot>
       </properties>
       <build>
@@ -1572,7 +1571,7 @@
           <!--         Above aproach abandoned, just be careful not to commit before vote   -->
           <!--                                                                              --> 
           <!--  svn (release) -> checkout                                                   --> 
-          <!--  srcs -> toBePacked -> eus-work - - - - +-> subsite -> (manual) commit       --> 
+          <!--  srcs -> eus-work - - - - +-> subsite -> (manual) commit       --> 
           <!--                                    SC         SC                             --> 
           <!--                                                                              --> 
           <!--    SC = sign & checksum                                                      --> 
@@ -1583,16 +1582,12 @@
           <!--                   O v e r a l l    F l o w                                   -->
           <!--                                                                              --> 
           <!--  PROCESS-SOURCES                                                             --> 
-          <!--     New plugins to be compressed -> target/toBePacked                        --> 
-          <!--                                                                              --> 
           <!--     New features to be included -> target/eus-work                           --> 
           <!--         (eus = Eclipse Update Site)                                          --> 
           <!--                                                                              --> 
           <!--     filter category.xml to pick up version #                                 --> 
           <!--                                                                              --> 
           <!--  PACKAGE                                                                     --> 
-          <!--     Pack step goes from target/toBePacked -> target/eus-work                 --> 
-          <!--                                                                              --> 
           <!--     Release SVN checkout -> target/eclipse-update-site/[component]           --> 
           <!--           (This is the current site - to be updated)                         --> 
           <!--                                                                              --> 
@@ -1654,7 +1649,6 @@
                 </goals>
                 <configuration>
                   <target>
-                    <delete dir="${toBePacked}" quiet="true" />
                     <delete dir="${eusWork}" />
                   </target>
                 </configuration>
@@ -1690,9 +1684,6 @@
                     <fail unless="eclipse.home"
                       message="********** Please set up and use an ant property eclipse.home set to an Eclipse installation at level 3.3 or later, e.g. c:/eclipses/3.3/eclipse" />
 
-                    <fail unless="uima-eclipse-jar-processor"
-                      message="********** Please add to your settings.xml file the property uima-eclipse-jar-processor, point to this within an Eclipse installation at level 4.2 or later, e.g. \$\{uima-maven-build-eclipse-home\}/plugins/org.eclipse.equinox.p2.jarprocessor_1.0.200.v20110808-1657.jar" />
-    
                     <!-- =================================== -->
                     <!-- SVN checkout from release           -->
                     <!--   and checkout to subsite           -->
@@ -1731,19 +1722,6 @@
                       </else>
                     </if>
 
-                    <echo>Compress plugin Jars using pack200 - this may take a minute or 2</echo>
-                    <java jar="${uima-eclipse-jar-processor}" fork="true" failonerror="true"
-                      maxmemory="256m">
-                      <arg line="-processAll" />
-                      <arg line="-repack" />
-                      <arg line="-pack" />
-                      <arg line="-verbose" />
-                           <!--  only pack the plugins.  The publisher won't copy packed "features", 
-                                 they are tiny anyways -->
-                      <arg line="-outputDir ${eusWork}/plugins" />
-                      <arg line="${toBePacked}" />
-                    </java>
-
                     <echo>Save conditioned Jars prior to signing, in case of redo</echo>
                     <echo>-------------------------------------------------------</echo>
                     <copy todir="${project.build.directory}/saved/features" failonerror="true">
@@ -1755,15 +1733,6 @@
                                             
                     <echo>Generate the p2 metadata and publish new artifacts</echo>
                     <!-- Append is needed because category info is incremental with each additional release -->
-                    <!-- publishArtifacts is needed to generate p2 metadata for the pack.gz forms -->
-                    <!--   
-                      - tried and failed: using ANT to copy artifacts to the target - doesn't update
-                        metadata for pack.gz form ! if you don't publish artifacts 
-                        -> doesn't update artifacts.jar 
-                     - deleting SNAPSHOT jars in the eclipse update subsite 
-                       -> fails because the previous metadata has info about those jars  
-                         and that isn't deleted, and continues to be used
-                    -->
                     <java jar="${eclipse-equinox-launcher}" fork="true" failonerror="true"
                       maxmemory="256m">
                       <arg
@@ -1773,7 +1742,6 @@
                       <arg line="-source ${eusWork}" />
                       <arg line="-configs ANY.ANY.ANY" />
                       <arg line="-publishArtifacts" />
-                      <arg line="-reusePack200Files" />
                       <arg line="-compress" />
                       <arg line="-append" />
                     </java>
@@ -1814,7 +1782,6 @@
                           <arg value="--batch" />
                           <fileset dir="${eusWork}">
                             <include name="**/*.jar" />
-                            <include name="**/*.jar.pack.gz" />
                           </fileset>
                         </apply>
 
@@ -1865,7 +1832,7 @@
               <!--                                                   -->
               <!--       P O S T   JAR   S I G N I N G by Digicert   -->
               <!--                                                   -->
-              <!--   Rerun pack,publish and sign after jar-signing   -->
+              <!--   Rerun publish and sign after jar-signing   -->
               <!--   Has NO GOAL or PHASE, so doesn't run normally   -->
               <!--   run using mvn                                   -->   
               <!--      antrun:run@make-subsite-after-signing        -->
@@ -1893,27 +1860,6 @@
                       <isset property="envVar.ECLIPSE_HOME" />
                     </condition>
 
-                    <echo>deleting previous version of packed files from work</echo>
-                    <echo>---------------------------------------------------</echo>
-                    <delete verbose="true">
-                      <fileset dir="${eusWork}/plugins" includes="*.pack.gz" />
-                    </delete>
-
-                    <echo>
-                    </echo>
-                    <echo>Compressing signed plugin Jars in eus-work using pack200 - this may take a
-                      minute or 2</echo>
-                    <echo>======================================================================================</echo>
-                    <java jar="${uima-eclipse-jar-processor}" fork="true" failonerror="true"
-                      maxmemory="256m">
-                      <arg line="-pack" />
-                      <arg line="-verbose" />
-                           <!--  only pack the plugins.  The publisher won't copy packed "features", 
-                                 they are tiny anyways -->
-                      <arg line="-outputDir ${eusWork}/plugins" />
-                      <arg line="${eusWork}/plugins" />
-                    </java>
-
                     <echo>
                     </echo>
                     <echo>Resetting the content and artifacts for the site</echo>
@@ -1935,14 +1881,6 @@
                     <echo>Generate the p2 metadata and publish new artifacts</echo>
                     <echo>--------------------------------------------------</echo>
                     <!-- Append is needed because category info is incremental with each additional release -->
-                    <!-- publishArtifacts is needed to generate p2 metadata for the pack.gz forms -->
-                    <!--   - tried and failed: using ANT to copy artifacts to the target - doesn't update metadata
-                             for pack.gz form ! if you don't publish artifacts
-                             - doesn't update artifacts.jar 
-                           - deleting SNAPSHOT jars in the eclipse update subsite 
-                             - fails because the previous metadata has info about those jars  
-                               and that isn't deleted, and continues to be used
-                    -->
                     <java jar="${eclipse-equinox-launcher}" fork="true" failonerror="true"
                       maxmemory="256m">
                       <arg
@@ -1952,7 +1890,6 @@
                       <arg line="-source ${eusWork}" />
                       <arg line="-configs ANY.ANY.ANY" />
                       <arg line="-publishArtifacts" />
-                      <arg line="-reusePack200Files" />
                       <arg line="-compress" />
                       <arg line="-append" />
                     </java>
@@ -1997,7 +1934,6 @@
                       <arg value="--batch" />
                       <fileset dir="${eusWork}">
                         <include name="**/*.jar" />
-                        <include name="**/*.jar.pack.gz" />
                       </fileset>
                     </apply>
 
