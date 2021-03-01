@@ -41,8 +41,9 @@
       eclipse   
     
 -->
-
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
 
   <parent>
@@ -56,34 +57,29 @@
   <artifactId>parent-pom</artifactId>
   <version>14-SNAPSHOT</version>
   <packaging>pom</packaging>
-  
+
   <name>Apache UIMA ${project.artifactId}</name>
-  <description>UIMA (Unstructured Information Management Architecture).
+  <description>
+    UIMA (Unstructured Information Management Architecture).
     UIMA promotes community development and reuse of annotators
     that extract metadata from unstructured information (text, audio, video, etc.);
     it provides for externalized declaration of type systems,
     component configuration, aggregation, and more,
-    supports scalablity, and provides tooling.</description>
-    
+    supports scalablity, and provides tooling.
+  </description>
+
   <url>${uimaWebsiteUrl}</url>
   <inceptionYear>2006</inceptionYear>
- 
+
   <mailingLists>
     <mailingList>
       <name>Apache UIMA Development List</name>
       <subscribe>dev-subscribe@uima.apache.org</subscribe>
       <unsubscribe>dev-unsubscribe@uima.apache.org</unsubscribe>
       <post>mailto:dev@uima.apache.org</post>
-      <archive>
-        https://mail-archives.apache.org/mod_mbox/uima-dev
-      </archive>
+      <archive>https://lists.apache.org/list.html?dev@uima.apache.org</archive>
       <otherArchives>
-        <otherArchive>
-          https://dir.gmane.org/gmane.comp.apache.uima.devel
-        </otherArchive>
-         <otherArchive>       
-           https://uima.markmail.org
-        </otherArchive>
+        <otherArchive>https://mail-archives.apache.org/mod_mbox/uima-dev</otherArchive>
       </otherArchives>
     </mailingList>
     <mailingList>
@@ -91,16 +87,9 @@
       <subscribe>user-subscribe@uima.apache.org</subscribe>
       <unsubscribe>user-unsubscribe@uima.apache.org</unsubscribe>
       <post>mailto:user@uima.apache.org</post>
-      <archive>
-        https://mail-archives.apache.org/mod_mbox/uima-user
-      </archive>
+      <archive>https://lists.apache.org/list.html?user@uima.apache.org</archive>
       <otherArchives>
-        <otherArchive>
-          https://dir.gmane.org/gmane.comp.apache.uima.general
-        </otherArchive>
-         <otherArchive>       
-           https://uima.markmail.org
-        </otherArchive>
+        <otherArchive>https://mail-archives.apache.org/mod_mbox/uima-user</otherArchive>
       </otherArchives>
     </mailingList>
     <mailingList>
@@ -108,38 +97,33 @@
       <subscribe>commits-subscribe@uima.apache.org</subscribe>
       <unsubscribe>commits-unsubscribe@uima.apache.org</unsubscribe>
       <post>mailto:commits@uima.apache.org</post>
-      <archive>
-        https://mail-archives.apache.org/mod_mbox/uima-commits
-      </archive>
+      <archive>https://lists.apache.org/list.html?commits@uima.apache.org</archive>
+      <otherArchives>
+        <otherArchive>https://mail-archives.apache.org/mod_mbox/uima-commits</otherArchive>
+      </otherArchives>
     </mailingList>
   </mailingLists>
-        
+
   <scm>
-    <connection>
-      scm:git:https://github.com/apache/uima-parent-pom
-    </connection>
-    <developerConnection>
-      scm:git:https://github.com/apache/uima-parent-pom
-    </developerConnection>
-    <url>
-      https://github.com/apache/uima-parent-pom/tree/master
-    </url>
+    <connection>scm:git:https://github.com/apache/uima-parent-pom</connection>
+    <developerConnection>scm:git:https://github.com/apache/uima-parent-pom</developerConnection>
+    <url>https://github.com/apache/uima-parent-pom</url>
   </scm>
-  
+
   <issueManagement>
     <system>Jira</system>
     <!-- the form of the url is from https://maven.apache.org/plugins/maven-changes-plugin/usage.html -->
     <!--url>https://issues.apache.org/jira/BrowseProject.jspa?projectId=12310570</url-->
     <url>https://issues.apache.org/jira/browse/UIMA</url>
   </issueManagement>
-  
+
   <ciManagement>
     <system>Jenkins</system>
     <url>https://ci-builds.apache.org/</url>
     <notifiers />
   </ciManagement>
   
-  <!-- distribution management - is inherited from Apache pom
+  <!-- distribution management - is inherited from Apache POM
        and specifies 
          https://repository.apache.org/service/local/staging/deploy/maven2
        and for snapshots:
@@ -151,21 +135,23 @@
       <id>uima.apache.org</id> <!-- following maven convention -->
       <name>Apache UIMA Website</name>
       <url>${uimaWebsiteDistributionUrl}</url>  <!-- on people.apache.org: /www/uima.apache.org -->
-    </site>  
+    </site>
   </distributionManagement>
 
   <properties>
-    <!--  this property is overridden in child projects that are released, to correspond to the 
-          Jira release category(ies) 
-          We specify something here, because if accidentally left blank, it 
-          generates a giant request for all changes -->
-    <jiraVersion>parent-pom-13</jiraVersion>  <!-- for parent-pom-13. Change for each release -->
+    <!--  
+      This property is overridden in child projects that are released, to correspond to the 
+      Jira release category(ies) We specify something here, because if accidentally left blank, it 
+      generates a giant request for all changes
+    -->
+    <!-- for parent-pom-14. Change for each release -->
+    <jiraVersion>parent-pom-14</jiraVersion>  
     <!--  *********************************************************************************************************** -->
     <!--                                 U  G  H   change manually for release (to remove -SNAPSHOT                 * -->
     <!--  *********************************************************************************************************** -->
     <!--  *********************************************************************************************************** -->
     <!--  *********************************************************************************************************** -->
-    <parentPomPatchVersion>12</parentPomPatchVersion>  <!-- UGH need to change this manually for release !!! -->
+    <parentPomPatchVersion>13</parentPomPatchVersion>  <!-- UGH need to change this manually for release !!! -->
     <uimaBuildResourcesVersion>6</uimaBuildResourcesVersion>
     <uimaWebsiteUrl>https://uima.apache.org</uimaWebsiteUrl>
     <uimaWebsiteDistributionUrl>scp://people.apache.org/www/uima.apache.org/</uimaWebsiteDistributionUrl>
@@ -181,20 +167,23 @@
     <dolUnzipped>${dolRepo}/docbook-olink</dolUnzipped>
     <dolBuiltFile>${project.build.directory}/</dolBuiltFile>
     <dolBuiltArtifactFile>${project.build.directory}/${dolZip}</dolBuiltArtifactFile>
-    
+
     <pdfPaperType>USletter</pdfPaperType>
     
     <!-- This next dir *must match* the one the PearPackagingMavenPlugin uses -->
     <pearPackagingDir>${project.build.directory}/pearPackaging</pearPackagingDir>    
   
-    <!-- poms wanting this need to set the postNoticeText to this value -->          
+    <!-- poms wanting this need to set the postNoticeText to this value -->
     <ibmNoticeText>
-Portions of Apache UIMA were originally developed by
-International Business Machines Corporation and are
-licensed to the Apache Software Foundation under the
-"Software Grant License Agreement", informally known as the
-"IBM UIMA License Agreement".
-Copyright (c) 2003, 2006 IBM Corporation.         
+      Portions of Apache UIMA were originally developed by
+      International Business
+      Machines Corporation and are
+      licensed to the Apache Software Foundation under the
+      "Software
+      Grant License Agreement", informally known as the
+      "IBM UIMA License Agreement".
+      Copyright (c)
+      2003, 2006 IBM Corporation.
     </ibmNoticeText> 
     <!-- next line commented out - to let standard source-release assembly descriptor as specified
          in standard Apache parent pom be used -->
@@ -206,54 +195,11 @@ Copyright (c) 2003, 2006 IBM Corporation.
   <!-- ============================================= -->
     <maven.version>3.0.5</maven.version>
     <felix.bundle.version>3.3.0</felix.bundle.version>
-    
+
     <maven.surefire.heap>512m</maven.surefire.heap>
   </properties>
- 
-  <dependencyManagement>
-    <dependencies>
-      <dependency>
-        <groupId>junit</groupId>
-        <artifactId>junit</artifactId>
-        <version>3.8.1</version>
-        <scope>test</scope>
-      </dependency>
-    </dependencies>
-  </dependencyManagement>
-  
-  <!-- can't put this dependency at the top level - 
-       causes them to be included in children -->
-  <!--dependencies>
-    <dependency>
-      <groupId>org.apache.uima</groupId>
-      <artifactId>uima-build-resources</artifactId>
-      <version>1-SNAPSHOT</version>
-    </dependency>
-  </dependencies-->
-  
-  <repositories>
-    <!-- note: inheritance does *NOT* merge subparts,
-         so, redeclare them -->           
-    <!-- define repositories for getting Eclipse parts
-         because the one in "central" gives broken parts
-    2017 - this repo not there anymore 
-    <repository>
-      <id>eclipsePlugins</id>
-      <name>Eclipse components</name>
-      <layout>default</layout>
-      <url>https://repo1.maven.org/eclipse</url>
-      
-      <releases>
-        <updatePolicy>never</updatePolicy>
-        <checksumPolicy>fail</checksumPolicy>
-      </releases>
-      
-      <snapshots>
-        <enabled>false</enabled>
-      </snapshots>
-    </repository>
-    -->
 
+  <repositories>
     <!-- modify central repository access:
          Turn on checksum checking-->
     <repository>
@@ -271,37 +217,9 @@ Copyright (c) 2003, 2006 IBM Corporation.
       <snapshots>
         <enabled>false</enabled>
       </snapshots>
-
     </repository>
-
-    <!-- inherited
-    <repository>
-      <id>apache.snapshots</id>
-      <name>Apache Snapshot Repository</name>
-      <url>https://repository.apache.org/snapshots</url>
-      <releases>
-        <enabled>false</enabled>
-      </releases>
-    </repository>  --> 
   </repositories>
-  
-  <pluginRepositories>
-    <pluginRepository>
-      <id>apache.snapshots.plugins</id>
-      <name>Apache Snapshot Repository - Maven plugins</name>
-      <url>https://repository.apache.org/snapshots</url>
-      <layout>default</layout>
-      <releases>
-        <enabled>false</enabled>
-      </releases>
-      <snapshots>
-        <enabled>true</enabled>
-        <checksumPolicy>fail</checksumPolicy>
-        <updatePolicy>never</updatePolicy>
-      </snapshots>
-    </pluginRepository>
-  </pluginRepositories>
-  
+
   <build>
     <pluginManagement>
       <plugins>
@@ -329,8 +247,8 @@ Copyright (c) 2003, 2006 IBM Corporation.
           <version>2.8.2</version>
           <configuration> 
             <!-- https://issues.apache.org/jira/browse/UIMA-5367 -->
-            <retryFailedDeploymentCount>10</retryFailedDeploymentCount> 
-          </configuration> 
+            <retryFailedDeploymentCount>10</retryFailedDeploymentCount>
+          </configuration>
         </plugin>
 
         <plugin>
@@ -340,21 +258,21 @@ Copyright (c) 2003, 2006 IBM Corporation.
         </plugin>
 
         <plugin>
-           <groupId>org.apache.maven.plugins</groupId>
-           <artifactId>maven-surefire-plugin</artifactId>
-           <version>2.22.2</version>
-         </plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-surefire-plugin</artifactId>
+          <version>2.22.2</version>
+        </plugin>
 
         <plugin>
-            <groupId>net.nicoulaj.maven.plugins</groupId>
-            <artifactId>checksum-maven-plugin</artifactId>
-            <version>1.8</version>
+          <groupId>net.nicoulaj.maven.plugins</groupId>
+          <artifactId>checksum-maven-plugin</artifactId>
+          <version>1.8</version>
         </plugin>
 
         <!-- assembly plugin 
              Disable running assembly:assembly with
              warning message to use install instead -->
-        <plugin> 
+        <plugin>
           <artifactId>maven-assembly-plugin</artifactId>
           <version>3.2.0</version>
           <executions>
@@ -388,32 +306,32 @@ Copyright (c) 2003, 2006 IBM Corporation.
             </execution>
             <execution>
               <id>generate-helpmojo</id>
-              <goals><goal>helpmojo</goal></goals>
+              <goals>
+                <goal>helpmojo</goal>
+              </goals>
             </execution>
           </executions>
           <configuration>
-            <extractors><extractor>java-annotations</extractor></extractors>
+            <extractors>
+              <extractor>java-annotations</extractor>
+            </extractors>
           </configuration>
         </plugin>
-        
+
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-compiler-plugin</artifactId>
           <version>3.8.1</version>
-          <configuration>
-            <source>${maven.compiler.source}</source>
-            <target>${maven.compiler.target}</target>
-            <!--encoding>UTF-8</encoding this inherited from apache pom 7 -->
-          </configuration>
         </plugin>
-        
+
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-javadoc-plugin</artifactId>
           <version>3.1.1</version>
           <configuration>
             <source>${maven.compiler.source}</source>
-            <javadocVersion>${maven.compiler.source}</javadocVersion> <!-- https://issues.apache.org/jira/browse/UIMA-5369 -->
+            <!-- https://issues.apache.org/jira/browse/UIMA-5369 -->
+            <javadocVersion>${maven.compiler.source}</javadocVersion>
             <notimestamp>true</notimestamp>
             <encoding>UTF-8</encoding>
             <!-- if next is omitted, causes all projects in reactor that don't
@@ -447,11 +365,13 @@ Copyright (c) 2003, 2006 IBM Corporation.
           <executions>
             <execution>
               <id>attach-javadocs</id>
-              <goals><goal>jar</goal></goals>
+              <goals>
+                <goal>jar</goal>
+              </goals>
               <!-- turn off javadoc build for each module by default
                    (unless apache-release - for speed) 
-                   override in individual cases to turn back on if wanted --> 
-              <phase/>
+                   override in individual cases to turn back on if wanted -->
+              <phase />
             </execution>
           </executions>
         </plugin>
@@ -479,7 +399,7 @@ Copyright (c) 2003, 2006 IBM Corporation.
             </archive>
           </configuration>
         </plugin>
-        
+
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-antrun-plugin</artifactId>
@@ -508,9 +428,9 @@ Copyright (c) 2003, 2006 IBM Corporation.
               <artifactId>jakarta-regexp</artifactId>
               <version>1.4</version>
             </dependency>
-          </dependencies>          
+          </dependencies>
         </plugin>
-      
+
         <plugin>
           <groupId>org.apache.felix</groupId>
           <artifactId>maven-bundle-plugin</artifactId>
@@ -522,12 +442,14 @@ Copyright (c) 2003, 2006 IBM Corporation.
           <executions>
             <execution>
               <id>uima-bundle</id>
-              <goals><goal>manifest</goal></goals>
+              <goals>
+                <goal>manifest</goal>
+              </goals>
               <phase>process-classes</phase>
             </execution>
           </executions>
         </plugin>
-        
+
         <plugin>
           <groupId>org.apache.rat</groupId>
           <artifactId>apache-rat-plugin</artifactId>
@@ -535,24 +457,26 @@ Copyright (c) 2003, 2006 IBM Corporation.
           <executions>
             <execution>
               <id>default-cli</id>
-              <goals><goal>check</goal></goals>
+              <goals>
+                <goal>check</goal>
+              </goals>
               <phase>verify</phase>
               <!-- default configuration -->
               <configuration>
                 <consoleOutput>true</consoleOutput>
                 <excludes>
+                  <exclude>.github/*</exclude> <!-- GitHub config/template files -->
                   <exclude>release.properties</exclude> <!-- generated file -->
                   <exclude>README*</exclude>
                   <exclude>RELEASE_NOTES*</exclude>
                   <exclude>issuesFixed/**</exclude> <!-- generated file -->
-                  <exclude>src/main/resources/docbook-shared/titlepage/*.xsl</exclude>
                   <exclude>marker-file-identifying-*</exclude> <!-- empty file -->
                   <exclude>DEPENDENCIES</exclude>  <!-- generated file -->
                   <exclude>**/MANIFEST.MF</exclude> <!-- MANIFEST.MF files cannot have comments -->
                   <exclude>**/*.ppt</exclude> <!--  power point sources -->
                   <exclude>**/*.sha512</exclude>
                   <exclude>**/*.patch.txt</exclude>
-                  <exclude>**/*.factorypath</exclude> <!-- Eclipse APT generated file -->
+                  <exclude>**/.factorypath</exclude> <!-- Eclipse APT generated file -->
                 </excludes>
               </configuration>
             </execution>
@@ -569,24 +493,26 @@ Copyright (c) 2003, 2006 IBM Corporation.
              by going to https://issues.apache.org/jira/browse/UIMA 
              and selecting "Releases" and then going to the 
              particular version and looking in the url for
-             that version. -->        
+             that version. -->
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-changes-plugin</artifactId>
           <version>2.12.1</version>
           <dependencies> <!-- needed for java 11 -->
             <dependency>
-            <groupId>javax.annotation</groupId>
-            <artifactId>javax.annotation-api</artifactId>
-            <version>1.3.2</version>
+              <groupId>javax.annotation</groupId>
+              <artifactId>javax.annotation-api</artifactId>
+              <version>1.3.2</version>
             </dependency>
           </dependencies>
           <executions>
             <execution>
               <id>default-cli</id>
-              <goals><goal>jira-report</goal></goals>
+              <goals>
+                <goal>jira-report</goal>
+              </goals>
               <!-- don't use generate-sources - because javadoc plugin re-exec's that -->
-              <phase>generate-resources</phase>        
+              <phase>generate-resources</phase>
               <configuration>
                 <useJql>true</useJql>
                 <fixVersionIds>${jiraVersion}</fixVersionIds>
@@ -603,13 +529,13 @@ Copyright (c) 2003, 2006 IBM Corporation.
             </execution>
           </executions>
         </plugin>
-        
+
         <plugin>
           <groupId>org.apache.uima</groupId>
           <artifactId>uima-build-helper-maven-plugin</artifactId>
           <version>7</version>
         </plugin>
-        
+
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-enforcer-plugin</artifactId>
@@ -617,7 +543,7 @@ Copyright (c) 2003, 2006 IBM Corporation.
         </plugin>
       </plugins>
     </pluginManagement>
-    
+
     <plugins>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
@@ -656,21 +582,25 @@ Copyright (c) 2003, 2006 IBM Corporation.
         <executions>
           <execution>
             <id>parse-project-version</id>
-            <goals><goal>parse-version</goal></goals>
+            <goals>
+              <goal>parse-version</goal>
+            </goals>
             <configuration>
               <propertyPrefix>parsedVersion</propertyPrefix>
             </configuration>
           </execution>
         </executions>
       </plugin>
-      
+
       <plugin>
         <groupId>org.apache.uima</groupId>
         <artifactId>uima-build-helper-maven-plugin</artifactId>
         <executions>
           <execution>
             <id>set buildYear and buildMonth</id>
-            <goals><goal>parse-date-time</goal></goals>
+            <goals>
+              <goal>parse-date-time</goal>
+            </goals>
             <configuration>
               <parseSpecs>
                 <parseSpec>
@@ -699,7 +629,9 @@ Copyright (c) 2003, 2006 IBM Corporation.
         <artifactId>maven-remote-resources-plugin</artifactId>
         <executions>
           <execution>
-            <goals><goal>process</goal></goals>
+            <goals>
+              <goal>process</goal>
+            </goals>
             <configuration>
               <resourceBundles>
                 <resourceBundle>org.apache.uima:uima-build-resources:${uimaBuildResourcesVersion}</resourceBundle>
@@ -708,19 +640,25 @@ Copyright (c) 2003, 2006 IBM Corporation.
           </execution>
         </executions>
       </plugin>
-      
+
       <plugin> <!-- https://issues.apache.org/jira/browse/UIMA-2966  -->
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-antrun-plugin</artifactId>
         <executions>
           <execution>
             <id>dup-meta-jar-cleanup</id>
-            <goals><goal>run</goal></goals>
+            <goals>
+              <goal>run</goal>
+            </goals>
             <phase>prepare-package</phase>  <!--  before Jar plugin -->
             <configuration>
               <target>
-                <delete file="${project.build.directory}/classes/META-INF/maven/${project.groupId}/${project.artifactId}/pom.xml" quiet="true" />
-                <delete file="${project.build.directory}/classes/META-INF/maven/${project.groupId}/${project.artifactId}/pom.properties" quiet="true" />              
+                <delete
+                  file="${project.build.directory}/classes/META-INF/maven/${project.groupId}/${project.artifactId}/pom.xml"
+                  quiet="true" />
+                <delete
+                  file="${project.build.directory}/classes/META-INF/maven/${project.groupId}/${project.artifactId}/pom.properties"
+                  quiet="true" />
               </target>
             </configuration>
           </execution>
@@ -730,7 +668,7 @@ Copyright (c) 2003, 2006 IBM Corporation.
   </build>
   
   <!--reporting-->
-  
+
   <profiles>
     <!-- ************************************************** -->
     <!-- * apache-release                                 * -->
@@ -742,33 +680,35 @@ Copyright (c) 2003, 2006 IBM Corporation.
     <!-- *    outer execution for mvn release...          * -->
     <!-- *    on the pom being released                   * -->
     <!-- ************************************************** -->
-    <!-- fix apache common pom --> 
+    <!-- fix apache common pom -->
     <profile>
       <id>apache-release</id>
       <properties>
         <isApacheRelease>true</isApacheRelease>
       </properties>
-      
+
       <build>
         <pluginManagement>
           <plugins>
             <plugin>
               <groupId>org.apache.maven.plugins</groupId>
-              <artifactId>maven-javadoc-plugin</artifactId> 
+              <artifactId>maven-javadoc-plugin</artifactId>
               <executions>
                 <execution>
-                  <id>attach-javadocs</id>          
-                  <goals><goal>jar</goal></goals>
+                  <id>attach-javadocs</id>
+                  <goals>
+                    <goal>jar</goal>
+                  </goals>
                   <!-- turn back on javadoc build for each module by default  
-                       https://issues.apache.org/jira/browse/UIMA-3251 --> 
-                  <phase>package</phase>            
+                       https://issues.apache.org/jira/browse/UIMA-3251 -->
+                  <phase>package</phase>
                 </execution>
-              </executions>          
+              </executions>
             </plugin>
             <plugin>
               <groupId>net.nicoulaj.maven.plugins</groupId>
               <artifactId>checksum-maven-plugin</artifactId>
-            </plugin>            
+            </plugin>
           </plugins>
         </pluginManagement>
 
@@ -813,7 +753,7 @@ Copyright (c) 2003, 2006 IBM Corporation.
               </execution>
             </executions>
           </plugin>
-          
+
           <plugin>
             <groupId>org.apache.rat</groupId>
             <artifactId>apache-rat-plugin</artifactId>
@@ -832,10 +772,12 @@ Copyright (c) 2003, 2006 IBM Corporation.
               <execution>
                 <id>maybe-fix-javadoc-line-ends</id>
                 <phase>pre-integration-test</phase>
-                <goals><goal>run</goal></goals>
+                <goals>
+                  <goal>run</goal>
+                </goals>
                 <configuration>
                   <target>
-                    <taskdef name="if" classname="net.sf.antcontrib.logic.IfTask" />                
+                    <taskdef name="if" classname="net.sf.antcontrib.logic.IfTask" />
                     <if>
                       <available file="${project.build.directory}/site/apidocs/" />
                       <then>
@@ -846,14 +788,21 @@ Copyright (c) 2003, 2006 IBM Corporation.
                       </then>
                     </if>
                     <!-- copy to target so checksum-maven-plugin can sha512 checkum it -->
-                    <property name="pom-file-tgt" location="${project.build.directory}/${project.build.finalName}.pom" />
-                    <property name="pom-file-src" location="${project.build.directory}/../pom.xml" />
+                    <property name="pom-file-tgt"
+                      location="${project.build.directory}/${project.build.finalName}.pom" />
+                    <property name="pom-file-src"
+                      location="${project.build.directory}/../pom.xml" />
                     <copy file="${pom-file-src}" tofile="${pom-file-tgt}" />
                     
                     <!-- patch gpg and checksum jars in local .m2 -->
-                <echo message="patch maven-gpg-plugin and checksum-maven-plugin. if get copy failure message, rerun this build" />
-                <copy verbose="true" overwrite="true" failonerror="false" file="${settings.localRepository}/org/apache/uima/parent-pom/${parentPomPatchVersion}/parent-pom-${parentPomPatchVersion}-gpg-plugin-patch.jar" tofile="${settings.localRepository}/org/apache/maven/plugins/maven-gpg-plugin/1.6/maven-gpg-plugin-1.6.jar" />
-                <copy verbose="true" overwrite="true" failonerror="false" file="${settings.localRepository}/org/apache/uima/parent-pom/${parentPomPatchVersion}/parent-pom-${parentPomPatchVersion}-checksum-plugin-patch.jar" tofile="${settings.localRepository}/net/nicoulaj/maven/plugins/checksum-maven-plugin/1.8/checksum-maven-plugin-1.8.jar" />
+                    <echo
+                      message="patch maven-gpg-plugin and checksum-maven-plugin. if get copy failure message, rerun this build" />
+                    <copy verbose="true" overwrite="true" failonerror="false"
+                      file="${settings.localRepository}/org/apache/uima/parent-pom/${parentPomPatchVersion}/parent-pom-${parentPomPatchVersion}-gpg-plugin-patch.jar"
+                      tofile="${settings.localRepository}/org/apache/maven/plugins/maven-gpg-plugin/1.6/maven-gpg-plugin-1.6.jar" />
+                    <copy verbose="true" overwrite="true" failonerror="false"
+                      file="${settings.localRepository}/org/apache/uima/parent-pom/${parentPomPatchVersion}/parent-pom-${parentPomPatchVersion}-checksum-plugin-patch.jar"
+                      tofile="${settings.localRepository}/net/nicoulaj/maven/plugins/checksum-maven-plugin/1.8/checksum-maven-plugin-1.8.jar" />
                   </target>
                 </configuration>
               </execution>
@@ -861,16 +810,20 @@ Copyright (c) 2003, 2006 IBM Corporation.
               <execution>
                 <id>sign and checksum source-release.zip</id>
                 <phase>verify</phase>  <!-- after source-release is built -->
-                <goals><goal>run</goal></goals>
+                <goals>
+                  <goal>run</goal>
+                </goals>
                 <configuration>
                   <target>
                     <taskdef name="if" classname="net.sf.antcontrib.logic.IfTask" />
-                    <property name="source-release" location="${project.build.directory}/${project.artifactId}-${project.version}-source-release.zip" />                
+                    <property name="source-release"
+                      location="${project.build.directory}/${project.artifactId}-${project.version}-source-release.zip" />
                     <if>
-                      <available file="${source-release}" /> 
+                      <available file="${source-release}" />
                       <then>
                         <echo message="Generating checksums for source-release.zip" />
-                        <checksum format="MD5SUM" forceoverwrite="yes" algorithm="SHA-512" fileext=".sha512" file="${source-release}" />
+                        <checksum format="MD5SUM" forceoverwrite="yes" algorithm="SHA-512"
+                          fileext=".sha512" file="${source-release}" />
                         <!-- <checksum format="MD5SUM" forceoverwrite="yes" algorithm="sha1" file="${source-release}" /> -->
                         <!-- <checksum format="MD5SUM" forceoverwrite="yes" algorithm="md5" file="${source-release}" />  -->
                         <echo message="Generating gpg signatures for source-release.zip" />
@@ -895,14 +848,15 @@ Copyright (c) 2003, 2006 IBM Corporation.
               <execution>
                 <id>load-plugin</id>
                 <phase>validate</phase>
-                <goals><goal>sign</goal></goals>
+                <goals>
+                  <goal>sign</goal>
+                </goals>
                 <configuration>
                   <skip>true</skip>
                 </configuration>
               </execution>
               <execution>
                 <id>sign-release-artifacts</id>
-                
                 <configuration>
                   <excludes>
                     <!--  <exclude>**/*.sha512</exclude>  https://issues.apache.org/jira/browse/UIMA-5897 -->
@@ -912,14 +866,15 @@ Copyright (c) 2003, 2006 IBM Corporation.
               </execution>
             </executions>
           </plugin>
-          
+
           <plugin>
             <groupId>net.nicoulaj.maven.plugins</groupId>
             <artifactId>checksum-maven-plugin</artifactId>
-            <executions>            
+            <executions>
               <execution>
                 <id>artifacts-checksum</id>
-                <phase>post-integration-test</phase>  <!-- run before gpg signing, so gpg can sign (ugh) the .sha512 needed for workaround -->
+                <!-- run before gpg signing, so gpg can sign (ugh) the .sha512 needed for workaround -->
+                <phase>post-integration-test</phase>
                 <goals>
                   <goal>artifacts</goal>
                 </goals>
@@ -932,19 +887,19 @@ Copyright (c) 2003, 2006 IBM Corporation.
                 </configuration>
               </execution>
             </executions>
-          </plugin>   
+          </plugin>
         </plugins>
-      </build>     
+      </build>
     </profile>
 
 
     <!-- *************************************************** -->
-    <!-- *   Run Rat report - for Jenkins                  * -->
+    <!-- * Run Rat report - for Jenkins                    * -->
     <!-- * https://issues.apache.org/jira/browse/UIMA-2590 * -->
     <!-- *************************************************** -->
     <profile>
       <id>run-rat-report</id>
-      
+
       <build>
         <plugins>
           <plugin>
@@ -955,10 +910,9 @@ Copyright (c) 2003, 2006 IBM Corporation.
                 <id>default-cli</id>
               </execution>
             </executions>
-          </plugin>          
-          
+          </plugin>
         </plugins>
-      </build>     
+      </build>
     </profile>
 
 
@@ -983,28 +937,17 @@ Copyright (c) 2003, 2006 IBM Corporation.
         <!-- It would be nice to have this only run when releasing, 
              but the activation clauses are currently only
              "ored" together, not "anded". -->
-             
-        <file><exists>marker-file-identifying-parent-pom</exists></file>
+
+        <file>
+          <exists>marker-file-identifying-parent-pom</exists>
+        </file>
       </activation>
       <build>
         <plugins>
           <plugin>
             <artifactId>maven-remote-resources-plugin</artifactId>
-        </plugin>
-
-          <!-- 
-          <plugin>
-            <artifactId>maven-assembly-plugin</artifactId>
-            <dependencies>            
-              <dependency>
-                <groupId>org.apache.uima</groupId>
-                <artifactId>uima-build-resources</artifactId>
-                <version>${uimaBuildResourcesVersion}</version>
-              </dependency>
-            </dependencies>
           </plugin>
-          
- -->
+
           <plugin>
             <artifactId>maven-changes-plugin</artifactId>
           </plugin>
@@ -1017,28 +960,36 @@ Copyright (c) 2003, 2006 IBM Corporation.
               <execution>
                 <id>setup-patch-jars</id>
                 <phase>process-resources</phase>
-                <goals><goal>run</goal></goals>
+                <goals>
+                  <goal>run</goal>
+                </goals>
                 <configuration>
-                  <target>                                      
-                    <property name="checksum-tgt" location="${project.build.directory}/${project.artifactId}-${project.version}-checksum-plugin-patch.jar" />
-                    <property name="checksum-src" location="${project.build.directory}/../src/resources/checksum-maven-plugin-1.8.jar" />
+                  <target>
+                    <property name="checksum-tgt"
+                      location="${project.build.directory}/${project.artifactId}-${project.version}-checksum-plugin-patch.jar" />
+                    <property name="checksum-src"
+                      location="${project.build.directory}/../src/resources/checksum-maven-plugin-1.8.jar" />
                     <copy file="${checksum-src}" tofile="${checksum-tgt}" verbose="true" />
-                    <property name="gpg-tgt" location="${project.build.directory}/${project.artifactId}-${project.version}-gpg-plugin-patch.jar" />
-                    <property name="gpg-src" location="${project.build.directory}/../src/resources/maven-gpg-plugin-1.6.jar" />
+                    <property name="gpg-tgt"
+                      location="${project.build.directory}/${project.artifactId}-${project.version}-gpg-plugin-patch.jar" />
+                    <property name="gpg-src"
+                      location="${project.build.directory}/../src/resources/maven-gpg-plugin-1.6.jar" />
                     <copy file="${gpg-src}" tofile="${gpg-tgt}" verbose="true" />
                   </target>
                 </configuration>
               </execution>
             </executions>
           </plugin>
-          
+
           <plugin>
             <groupId>org.codehaus.mojo</groupId>
             <artifactId>build-helper-maven-plugin</artifactId>
             <executions>
               <execution>
                 <id>attach-gpg-checksum-patch-jars</id>
-                <goals><goal>attach-artifact</goal></goals>
+                <goals>
+                  <goal>attach-artifact</goal>
+                </goals>
                 <phase>process-resources</phase>  <!-- before signing and checksum -->
                 <configuration>
                   <artifacts>
@@ -1051,12 +1002,11 @@ Copyright (c) 2003, 2006 IBM Corporation.
                       <file>${project.build.directory}/${project.artifactId}-${project.version}-gpg-plugin-patch.jar</file>
                       <type>jar</type>
                       <classifier>gpg-plugin-patch</classifier>
-                    </artifact>            
+                    </artifact>
                   </artifacts>
                 </configuration>
               </execution>
             </executions>
-            
           </plugin>
         </plugins>
       </build>
@@ -1066,10 +1016,10 @@ Copyright (c) 2003, 2006 IBM Corporation.
     <!-- * Override - don't produce Jira report * -->
     <!-- **************************************** -->
     
-    <!-- NOTE: if you use this, you MUST check in
-         the generated Jira report into SVN, otherwise
-         it won't appear in the release assemblies. -->
-    
+    <!-- 
+      NOTE: if you use this, you MUST check in the generated Jira report into SVN, otherwise
+      it won't appear in the release assemblies. 
+    -->
     <profile>
       <id>mavenJirareportSkip</id>
       <activation>
@@ -1084,14 +1034,13 @@ Copyright (c) 2003, 2006 IBM Corporation.
             <artifactId>maven-changes-plugin</artifactId>
             <executions>
               <execution>
-                <id>default-cli</id> 
+                <id>default-cli</id>
                 <phase />
               </execution>
-            </executions>  
+            </executions>
           </plugin>
         </plugins>
       </build>
-
     </profile>
 
 
@@ -1099,86 +1048,44 @@ Copyright (c) 2003, 2006 IBM Corporation.
     <!-- *   Docbook Processing           * -->
     <!-- ********************************** -->
 
-  <!-- Skip docbook processing unless
-       the leaf child project has a docbook directory -->  
+    <!-- Skip docbook processing unless the leaf child project has a docbook directory -->
     <profile>
       <id>process-docbook</id>
       <activation>
-        <file><exists>src/docbook</exists></file>
+        <file>
+          <exists>src/docbook</exists>
+        </file>
       </activation>
-     
-      <!--dependencies-->
-        <!-- can't have a dependency in the parent pom - unless you want it
-             inherited by all child poms -->
-        <!-- dependency>
-          <groupId>org.apache.uima</groupId>
-          <artifactId>uima-build-resources</artifactId>
-          <version>1-SNAPSHOT</version>
-        </dependency -->
-        
-        <!-- having a dependency specified on 1-SNAPSHOT blocks release --> 
-        <!--dependency>
-          <groupId>org.apache.uima</groupId>
-          <artifactId>${dolArtifactId}</artifactId>
-          <type>zip</type>
-          <classifier>${dolClassifier}</classifier>
-          <version>1-SNAPSHOT</version>
-        </dependency-->
-      <!--/dependencies-->
-      
-      
       
       <build>
         <plugins>
-          <!-- something to set some properties for dates used in copyright notices -->
-          <!-- Works, but is slow due to loading groovy -->      
-          <!--plugin>
-             <groupId>org.codehaus.groovy.maven</groupId>
-             <artifactId>gmaven-plugin</artifactId>
-             <version>1.0</version>
-             <executions>
-                <execution>
-                   <phase>prepare-package</phase>
-                   <goals>
-                      <goal>execute</goal>
-                   </goals>
-                   <configuration>
-                      <source>
-                      import java.util.Date 
-                      import java.text.MessageFormat 
-                      def varYear = MessageFormat.format("{0,date,yyyy}", new Date())
-                      def varMonth = MessageFormat.format("{0,date,MMMMMMMMM}", new Date()) 
-                      project.properties['buildYear'] = varYear
-                      project.properties['buildMonth'] = varMonth
-                      </source>
-                   </configuration>
-                </execution>
-             </executions>
-          </plugin-->
-                    
-          <!-- use the dependency:unpack goal to get the shared resource
-               that has the docbook-shared directory 
-               Unpack into spot relative to project - because
-               these are referred to in docbook sources using
-               relative references
+          <!-- 
+            Use the dependency:unpack goal to get the shared resource that has the docbook-shared 
+            directory. 
+            
+            Unpack into spot relative to project - because these are referred to in docbook sources
+            using relative references
                
-               also unpack next to docbook-olink in
-               repository location for olink info, because
-               the site.xml files use relative location to
-               get at the uima entities -->
+            Also unpack next to docbook-olink in repository location for olink info, because the 
+            site.xml files use relative location to get at the uima entities
+          -->
           <plugin>
             <groupId>org.apache.maven.plugins</groupId>
             <artifactId>maven-dependency-plugin</artifactId>
             <executions>
               <execution>
-                <!-- use the dependency:unpack goal to get the shared resource
-                     that has the docbook-shared directory 
-                     Unpack into spot relative to project - because
-                     these are referred to in docbook sources using
-                     relative references -->
+                <!-- 
+                  Use the dependency:unpack goal to get the shared resource that has the 
+                  docbook-shared directory 
+                  
+                  Unpack into spot relative to project - because these are referred to in docbook
+                  sources using relative references 
+                -->
                 <id>copyDocbookInfo</id>
                 <phase>prepare-package</phase>
-                <goals><goal>unpack</goal></goals>
+                <goals>
+                  <goal>unpack</goal>
+                </goals>
                 <configuration>
                   <overWriteIfNewer>true</overWriteIfNewer>
                   <artifactItems>
@@ -1194,13 +1101,15 @@ Copyright (c) 2003, 2006 IBM Corporation.
               </execution>
 
               <execution>
-                <!-- also unpack next to docbook-olink in
-                     repository location for olink info, because
-                     the site.xml files use relative location to
-                     get at the uima entities -->
+                <!-- 
+                  Also unpack next to docbook-olink in repository location for olink info, because
+                  the site.xml files use relative location to get at the UIMA entities
+                -->
                 <id>copyDocbookInfoNextToOlink</id>
                 <phase>prepare-package</phase>
-                <goals><goal>unpack</goal></goals>
+                <goals>
+                  <goal>unpack</goal>
+                </goals>
                 <configuration>
                   <overWriteIfNewer>true</overWriteIfNewer>
                   <markersDirectory>${dolRepo}/dependency-maven-plugin-markers</markersDirectory>
@@ -1216,12 +1125,13 @@ Copyright (c) 2003, 2006 IBM Corporation.
                 </configuration>
               </execution>
 
-              <!-- use the dependency:unpack goal to get the
-                   olink databases  -->
+              <!-- use the dependency:unpack goal to get the olink databases  -->
               <execution>
                 <id>getOlink</id>
                 <phase>prepare-package</phase>
-                <goals><goal>unpack</goal></goals>
+                <goals>
+                  <goal>unpack</goal>
+                </goals>
                 <configuration>
                   <overWriteIfNewer>true</overWriteIfNewer>
                   <markersDirectory>${dolRepo}/dependency-maven-plugin-markers</markersDirectory>
@@ -1236,21 +1146,21 @@ Copyright (c) 2003, 2006 IBM Corporation.
                     </artifactItem>
                   </artifactItems>
                 </configuration>
-              </execution>                         
+              </execution>
             </executions>
-          </plugin>        
-          
+          </plugin>
+
           <plugin>
             <groupId>com.agilejava.docbkx</groupId>
             <artifactId>docbkx-maven-plugin</artifactId>
             <version>2.0.14</version>
-            <configuration>  <!-- general configuration for both html and pdf -->
+            <configuration>  <!-- general configuration for both HTML and PDF -->
               <sourceDirectory>${basedir}/src/docbook</sourceDirectory>
               <includes>${bookNameRoot}.xml</includes>
               <highlightSource>1</highlightSource>
               <xincludeSupported>true</xincludeSupported>
-              <!-- olink common to pdf and html -->
-              <collectXrefTargets>yes</collectXrefTargets>                  
+              <!-- olink common to PDF and HTML -->
+              <collectXrefTargets>yes</collectXrefTargets>
             </configuration>
             <executions>
               <execution>
@@ -1263,103 +1173,32 @@ Copyright (c) 2003, 2006 IBM Corporation.
                   <targetDirectory>${project.build.directory}/site/d</targetDirectory>
                   <htmlCustomization>${project.build.directory}/docbook-shared/top/html-single.xsl</htmlCustomization>
                   <!-- olink -->
-                  <targetDatabaseDocument>file:///${dolUnzipped}/htmlsingle/site.xml</targetDatabaseDocument>              
+                  <targetDatabaseDocument>file:///${dolUnzipped}/htmlsingle/site.xml</targetDatabaseDocument>
                   <targetsFilename>${dolUnzipped}/htmlsingle/${bookNameRoot}.db</targetsFilename>
                 </configuration>
               </execution>
               <execution>
                 <id>pdf</id>
-                <goals><goal>generate-pdf</goal></goals>
+                <goals>
+                  <goal>generate-pdf</goal>
+                </goals>
                 <phase>package</phase>
                 <configuration>
-                  <!-- pdf: generate first in docbkx, then move.  
-                       because pdf generates an extra temp file xxx.fo
-                       which we want to keep a bit in target in case of debug need -->
-                       
+                  <!-- 
+                    PDF: generate first in docbkx, then move. Because PDF generates an extra temp
+                    file xxx.fo which we want to keep a bit in target in case of debug need
+                  -->
                   <foCustomization>${project.build.directory}/docbook-shared/top/pdf.xsl</foCustomization>
                   <!-- olink -->
                   <targetDatabaseDocument>file:///${dolUnzipped}/pdf/site.xml</targetDatabaseDocument>
-                  <targetsFilename>${dolUnzipped}/pdf/${bookNameRoot}.db</targetsFilename>                 
-                  
+                  <targetsFilename>${dolUnzipped}/pdf/${bookNameRoot}.db</targetsFilename>
                   <fop1Extensions>true</fop1Extensions>
-                      
                   <fontSelectionStrategy>character-by-character</fontSelectionStrategy>
-                  
-                  <fonts>
-                    <!-- embedded fonts -->
-                    <!--
-                    This information must exactly match the font specified
-                    in the fo file. Otherwise it will use a default font.
-            
-                    For example,
-                    <fo:inline font-family="Arial" font-weight="bold" font-style="normal">
-                        Arial-normal-normal font
-                    </fo:inline>
-                    for the font triplet specified by:
-                    <font-triplet name="Arial" style="normal" weight="bold" />
-            
-                    If you do not want to embed the font in the pdf document
-                    then do not include the "embed-url" attribute.
-                    The font will be needed where the document is viewed
-                    for it to be displayed properly.
-            
-                    possible styles: normal | italic | oblique | backslant
-                    possible weights: normal | bold | 100 | 200 | 300 | 400
-                                      | 500 | 600 | 700 | 800 | 900
-                    (normal = 400, bold = 700)
-                    -->
-            
-                    <!--
-                    <font metrics-url="arial.xml" kerning="yes" embed-url="arial.ttf">
-                      <font-triplet name="Arial" style="normal" weight="normal" />
-                      <font-triplet name="ArialMT" style="normal" weight="normal" />
-                    </font>
-                    <font metrics-url="arialb.xml" kerning="yes" embed-url="arialb.ttf">
-                      <font-triplet name="Arial" style="normal" weight="bold" />
-                      <font-triplet name="ArialMT" style="normal" weight="bold" />
-                    </font>
-                    -->
-                    
-                    <!-- per UIMA-1051 - change to use standard Times Roman default PDF font -->
-                    <!--font>
-                      <name>Palatino</name>
-                      <style>normal</style>
-                      <weight>normal</weight>
-                      <kerning>yes</kerning>
-                      <embedFile>c:/Windows/Fonts/pala.TTF</embedFile>
-                      <metricsFile>${project.build.directory}/docbook-shared/fonts/palatino.xml</metricsFile>
-                    </font>
-                    <font>
-                      <name>Palatino</name>
-                      <style>normal</style>
-                      <weight>bold</weight>
-                      <kerning>yes</kerning>
-                      <embedFile>c:/Windows/Fonts/palab.TTF</embedFile>
-                      <metricsFile>${project.build.directory}/docbook-shared/fonts/palatino-bold.xml</metricsFile>
-                    </font>
-                    <font>
-                      <name>Palatino</name>
-                      <style>italic</style>
-                      <weight>normal</weight>
-                      <kerning>yes</kerning>
-                      <embedFile>c:/Windows/Fonts/palai.TTF</embedFile>
-                      <metricsFile>${project.build.directory}/docbook-shared/fonts/palatino-italic.xml</metricsFile>
-                    </font>
-                    <font>
-                      <name>Palatino</name>
-                      <style>italic</style>
-                      <weight>bold</weight>
-                      <kerning>yes</kerning>
-                      <embedFile>c:/Windows/Fonts/palabi.TTF</embedFile>
-                      <metricsFile>${project.build.directory}/docbook-shared/fonts/palatino-bold-italic.xml</metricsFile>
-                    </font-->
-                    
-                  </fonts>
-                  <paperType>${pdfPaperType}</paperType>                 
+                  <paperType>${pdfPaperType}</paperType>
                 </configuration>
-              </execution>          
+              </execution>
             </executions>
-    
+
             <dependencies>
               <dependency>
                 <groupId>org.docbook</groupId>
@@ -1367,47 +1206,59 @@ Copyright (c) 2003, 2006 IBM Corporation.
                 <version>4.4</version>
                 <scope>runtime</scope>
               </dependency>
-            </dependencies>   
+            </dependencies>
           </plugin>
-        
+
           <plugin>
             <artifactId>maven-resources-plugin</artifactId>
             <executions>
-              <!-- copy the images to the html/images dir -->  
+              <!-- copy the images to the html/images dir -->
               <execution>
                 <id>docbook-copy-images</id>
-                <goals><goal>copy-resources</goal></goals>
+                <goals>
+                  <goal>copy-resources</goal>
+                </goals>
                 <phase>package</phase>
                 <configuration>
                   <outputDirectory>${project.build.directory}/site/d/images</outputDirectory>
                   <resources>
-                    <resource><directory>src/docbook/images</directory></resource>
+                    <resource>
+                      <directory>src/docbook/images</directory>
+                    </resource>
                   </resources>
                 </configuration>
               </execution>
-              <!-- copy the css stylesheet to the html dir -->  
+              <!-- copy the CSS stylesheet to the HTML dir -->
               <execution>
                 <id>docbook-copy-css</id>
-                <goals><goal>copy-resources</goal></goals>
+                <goals>
+                  <goal>copy-resources</goal>
+                </goals>
                 <phase>package</phase>
                 <configuration>
                   <outputDirectory>${project.build.directory}/site/d/css</outputDirectory>
                   <resources>
-                    <resource><directory>${project.build.directory}/docbook-shared/css</directory></resource>
+                    <resource>
+                      <directory>${project.build.directory}/docbook-shared/css</directory>
+                    </resource>
                   </resources>
                 </configuration>
               </execution>
-              <!-- move the pdf from the docbkx to the site/d/ -->  
+              <!-- move the pdf from the docbkx to the site/d/ -->
               <execution>
                 <id>docbook-move-pdf</id>
-                <goals><goal>copy-resources</goal></goals>  <!-- no "move" goal, use copy -->
+                <goals>
+                  <goal>copy-resources</goal>
+                </goals>  <!-- no "move" goal, use copy -->
                 <phase>package</phase>
                 <configuration>
                   <outputDirectory>${project.build.directory}/site/d</outputDirectory>
                   <resources>
                     <resource>
                       <directory>${project.build.directory}/docbkx/pdf</directory>
-                      <excludes><exclude>**.fo</exclude></excludes>
+                      <excludes>
+                        <exclude>**.fo</exclude>
+                      </excludes>
                     </resource>
                   </resources>
                 </configuration>
@@ -1425,20 +1276,23 @@ Copyright (c) 2003, 2006 IBM Corporation.
     <profile>
       <id>build distribution</id>
       <activation>
-        <file><exists>src/main/assembly/bin.xml</exists></file>
+        <file>
+          <exists>src/main/assembly/bin.xml</exists>
+        </file>
       </activation>
       <build>
         <plugins>
-          
-          <!-- assembly plugin 
-               configuration to create bin and src distributions
-               from conventional places -->
-          <plugin> 
+          <!-- 
+            assembly configuration to create bin and src distributions from conventional places
+          -->
+          <plugin>
             <artifactId>maven-assembly-plugin</artifactId>
             <executions>
               <execution>
                 <id>uima-distr</id>
-                <goals><goal>single</goal></goals>
+                <goals>
+                  <goal>single</goal>
+                </goals>
                 <phase>integration-test</phase> <!-- after first copies from jar/docbk pkg -->
                 <configuration>
                   <descriptors>
@@ -1448,50 +1302,39 @@ Copyright (c) 2003, 2006 IBM Corporation.
                   </descriptors>
                   <finalName>${assemblyFinalName}</finalName>
                   <tarLongFileMode>gnu</tarLongFileMode>
-                </configuration>              
+                </configuration>
               </execution>
             </executions>
           </plugin>
 
           <!-- https://issues.apache.org/jira/browse/UIMA-2008 -->
-          <!-- no maven deployment of this project's artifacts -->
-          <!-- binary build artifact deployed from apache mirror system after release -->
+          <!-- no Maven deployment of this project's artifacts -->
+          <!-- binary build artifact deployed from Apache mirror system after release -->
           <plugin>
-            <artifactId>maven-deploy-plugin</artifactId>      
+            <artifactId>maven-deploy-plugin</artifactId>
             <configuration>
               <skip>true</skip>
             </configuration>
           </plugin>
-          
+
           <plugin>
             <artifactId>maven-antrun-plugin</artifactId>
             <executions>
               <execution>
                 <id>generate checksums for binary artifacts</id>
-                <goals><goal>run</goal></goals>
+                <goals>
+                  <goal>run</goal>
+                </goals>
                 <phase>verify</phase>
                 <configuration>
                   <target>
-                    <checksum algorithm="SHA-512" fileext=".sha512" format="MD5SUM" forceoverwrite="yes">
+                    <checksum algorithm="SHA-512" fileext=".sha512" format="MD5SUM"
+                      forceoverwrite="yes">
                       <fileset dir="${project.build.directory}">
                         <include name="*.zip" />
                         <include name="*.gz" />
                       </fileset>
                     </checksum>
-                    <!-- 
-                    <checksum algorithm="sha1" format="MD5SUM" forceoverwrite="yes">
-                      <fileset dir="${project.build.directory}">
-                        <include name="*.zip" />
-                        <include name="*.gz" />
-                      </fileset>
-                    </checksum>
-                    <checksum algorithm="md5" format="MD5SUM" forceoverwrite="yes">
-                      <fileset dir="${project.build.directory}">
-                        <include name="*.zip" />
-                        <include name="*.gz" />
-                      </fileset>
-                    </checksum>
-                     -->
                   </target>
                 </configuration>
               </execution>
@@ -1524,7 +1367,7 @@ Copyright (c) 2003, 2006 IBM Corporation.
         <finalName>${project.artifactId}_${parsedVersion.osgiVersion}</finalName>         
                 
         <!-- resources are "merged" -->
-            <!-- needed to copy resources, icons, and the plugin.xml to the result -->
+        <!-- needed to copy resources, icons, and the plugin.xml to the result -->
         <resources>
           <resource>
             <directory>.</directory>
@@ -1539,11 +1382,12 @@ Copyright (c) 2003, 2006 IBM Corporation.
             <directory>src/main/resources</directory>
           </resource>
         </resources>
-     
+
         <pluginManagement>          
-          <!-- run the felix plugin in manifest mode
-               because that plugin doesn't resolve
-               all properties e.g., parsedVersion.osgiVersion -->
+          <!-- 
+            run the felix plugin in manifest mode because that plugin doesn't resolve all properties
+            e.g., parsedVersion.osgiVersion
+          -->
           <plugins>
             <plugin>
               <groupId>org.apache.felix</groupId>
@@ -1551,15 +1395,17 @@ Copyright (c) 2003, 2006 IBM Corporation.
               <executions>
                 <execution>
                   <id>uima-bundle</id>
-                  <goals><goal>manifest</goal></goals>
+                  <goals>
+                    <goal>manifest</goal>
+                  </goals>
                   <phase>process-classes</phase>
                   <configuration>
                     <!-- we put the generate manifest in the spot where Eclipse 
                          plugins think it will be -->
-                   <manifestLocation>META-INF/</manifestLocation>
+                    <manifestLocation>META-INF/</manifestLocation>
                   </configuration>
                 </execution>
-                <!-- turn off unneeded executions --> 
+                <!-- turn off unneeded executions -->
                 <execution>
                   <id>default-deploy</id>
                   <phase />
@@ -1575,7 +1421,7 @@ Copyright (c) 2003, 2006 IBM Corporation.
               </executions>
             </plugin>
     
-            <!-- pick up the manifest felix generates -->        
+            <!-- pick up the manifest felix generates -->
             <plugin>
               <groupId>org.apache.maven.plugins</groupId>
               <artifactId>maven-jar-plugin</artifactId>
@@ -1583,10 +1429,10 @@ Copyright (c) 2003, 2006 IBM Corporation.
                 <archive>
                   <manifestFile>META-INF/MANIFEST.MF</manifestFile>
                 </archive>
-              </configuration>       
+              </configuration>
             </plugin>
     
-            <!-- special eclipse:eclipse configuration for Eclipse plugins -->        
+            <!-- special eclipse:eclipse configuration for Eclipse plugins -->
             <plugin>
               <groupId>org.apache.maven.plugins</groupId>
               <artifactId>maven-eclipse-plugin</artifactId>
@@ -1606,18 +1452,20 @@ Copyright (c) 2003, 2006 IBM Corporation.
               </configuration>
             </plugin>
           </plugins>
-        </pluginManagement> 
-        
+        </pluginManagement>
+
         <plugins>
-          <plugin> 
+          <plugin>
             <groupId>org.apache.maven.plugins</groupId>
             <artifactId>maven-antrun-plugin</artifactId>
             <executions>              
-              <!-- https://issues.apache.org/jira/browse/UIMA-2967  -->
+              <!-- https://issues.apache.org/jira/browse/UIMA-2967 -->
               <execution>
                 <id>clear-META-INF</id>
-                <goals><goal>run</goal></goals>
-                <phase>compile</phase>  <!--  before maven-bundle-plugin plugin -->
+                <goals>
+                  <goal>run</goal>
+                </goals>
+                <phase>compile</phase>  <!-- before maven-bundle-plugin plugin -->
                 <configuration>
                   <target>
                     <delete file="META-INF/MANIFEST.MF" quiet="true" />
@@ -1643,7 +1491,7 @@ Copyright (c) 2003, 2006 IBM Corporation.
       </activation>
       <build>
         <finalName>${project.artifactId}_${parsedVersion.osgiVersion}</finalName>
-        <!-- turn on filtering for these resources -->         
+        <!-- turn on filtering for these resources -->
         <resources>
           <resource>
             <directory>${basedir}</directory>
@@ -1656,13 +1504,14 @@ Copyright (c) 2003, 2006 IBM Corporation.
           </resource>
         </resources>
 
-        <!-- The feature.xml is filtered here, rather than in going from the 
-             top level place to the Jar, because Eclipse feature manipulation
-             uses the top level value.         
+        <!-- 
+          The feature.xml is filtered here, rather than in going from the  top level place to the
+          Jar, because Eclipse feature manipulation uses the top level value.         
          -->
         <plugins>
-          <!-- filter the feature.xml to have the right version info 
-              for Eclipse at the top level --> 
+          <!-- 
+            filter the feature.xml to have the right version info for Eclipse at the top level
+          -->
           <plugin>
             <artifactId>maven-resources-plugin</artifactId>
             <executions>
@@ -1670,16 +1519,20 @@ Copyright (c) 2003, 2006 IBM Corporation.
                 <id>filter feature.xml</id>
                 <!-- run before process-resources, which uses this result -->
                 <phase>generate-resources</phase>
-                <goals><goal>copy-resources</goal></goals>
+                <goals>
+                  <goal>copy-resources</goal>
+                </goals>
                 <configuration>
                   <outputDirectory>${basedir}</outputDirectory>
                   <resources>
                     <resource>
                       <directory>src/main/resources</directory>
-                      <includes><include>feature.xml</include></includes>
+                      <includes>
+                        <include>feature.xml</include>
+                      </includes>
                       <filtering>true</filtering>
                     </resource>
-                  </resources> 
+                  </resources>
                 </configuration>
               </execution>
             </executions>
@@ -1702,7 +1555,6 @@ Copyright (c) 2003, 2006 IBM Corporation.
         <eusWork>${project.build.directory}/eus-work</eusWork>
         <toBePacked>${project.build.directory}/toBePacked</toBePacked>
         <distsvnroot>https://dist.apache.org/</distsvnroot>
-<!--         <distsvnroot>file:///svn/t/</distsvnroot>    -->
       </properties>
       <build>
         <plugins>
@@ -1772,29 +1624,34 @@ Copyright (c) 2003, 2006 IBM Corporation.
                 <id>filter-category.xml</id>
                 <!-- run before package, which uses this result -->
                 <phase>process-sources</phase>
-                <goals><goal>copy-resources</goal></goals>
+                <goals>
+                  <goal>copy-resources</goal>
+                </goals>
                 <configuration>
                   <outputDirectory>${basedir}</outputDirectory>
                   <resources>
                     <resource>
                       <directory>src/main/resources</directory>
-                      <includes><include>category.xml</include></includes>
+                      <includes>
+                        <include>category.xml</include>
+                      </includes>
                       <filtering>true</filtering>
                     </resource>
-                  </resources> 
+                  </resources>
                 </configuration>
               </execution>
             </executions>
-          </plugin>          
-          
+          </plugin>
+
           <plugin>
             <artifactId>maven-antrun-plugin</artifactId>
             <executions>
-            
               <execution>
                 <id>BuildUpdateSite-clearWorkAreas</id>
                 <phase>initialize</phase>
-                <goals><goal>run</goal></goals>
+                <goals>
+                  <goal>run</goal>
+                </goals>
                 <configuration>
                   <target>
                     <delete dir="${toBePacked}" quiet="true" />
@@ -1802,11 +1659,13 @@ Copyright (c) 2003, 2006 IBM Corporation.
                   </target>
                 </configuration>
               </execution>
-              
+
               <execution>
                 <id>BuildUpdateSite-pack-svnget-buildMetadata-commit-to-dev</id>
-                <phase>package</phase>  
-                <goals><goal>run</goal></goals>
+                <phase>package</phase>
+                <goals>
+                  <goal>run</goal>
+                </goals>
                 <configuration>
                   <target>
                     <taskdef name="if" classname="net.sf.antcontrib.logic.IfTask" />
@@ -1815,35 +1674,40 @@ Copyright (c) 2003, 2006 IBM Corporation.
                     <!--   Check we can access build tools   -->
                     <!-- =================================== -->
                     <!-- if the property uima-maven-build-eclipse-home is set, use it, otherwise don't -->
-                    <condition property="eclipse.home" value="${uima-maven-build-eclipse-home}">
+                    <condition property="eclipse.home"
+                      value="${uima-maven-build-eclipse-home}">
                       <not>
-                        <equals arg1="${uima-maven-build-eclipse-home}" arg2="$${uima-maven-build-eclipse-home}" />
+                        <equals arg1="${uima-maven-build-eclipse-home}"
+                          arg2="$${uima-maven-build-eclipse-home}" />
                       </not>
                     </condition>
-    
+
                     <property environment="envVar" />
                     <condition property="eclipse.home" value="${envVar.ECLIPSE_HOME}">
                       <isset property="envVar.ECLIPSE_HOME" />
                     </condition>
-    
-                    <fail unless="eclipse.home" message="********** Please set up and use an ant property eclipse.home set to an Eclipse installation at level 3.3 or later, e.g. c:/eclipses/3.3/eclipse" />
-    
-                    <fail unless="uima-eclipse-jar-processor" message="********** Please add to your settings.xml file the property uima-eclipse-jar-processor, point to this within an Eclipse installation at level 4.2 or later, e.g. \$\{uima-maven-build-eclipse-home\}/plugins/org.eclipse.equinox.p2.jarprocessor_1.0.200.v20110808-1657.jar" />
+
+                    <fail unless="eclipse.home"
+                      message="********** Please set up and use an ant property eclipse.home set to an Eclipse installation at level 3.3 or later, e.g. c:/eclipses/3.3/eclipse" />
+
+                    <fail unless="uima-eclipse-jar-processor"
+                      message="********** Please add to your settings.xml file the property uima-eclipse-jar-processor, point to this within an Eclipse installation at level 4.2 or later, e.g. \$\{uima-maven-build-eclipse-home\}/plugins/org.eclipse.equinox.p2.jarprocessor_1.0.200.v20110808-1657.jar" />
     
                     <!-- =================================== -->
                     <!-- SVN checkout from release           -->
                     <!--   and checkout to subsite           -->
                     <!-- =================================== -->
-                   
+
                     <if>
                       <equals arg1="${isApacheRelease}" arg2="true" />
                       <then>
-    
-                        <echo>checking out eclipse update subsite ${eclipseUpdateSiteComponent} from dist ...release...</echo>
+                        <echo>checking out eclipse update subsite ${eclipseUpdateSiteComponent} from
+                          dist ...release...</echo>
                         <delete dir="${eclipseUpdateSubSite}" quiet="true" />
                         <exec executable="svn" failonerror="true">
                           <arg value="checkout" />
-                          <arg value="${distsvnroot}repos/dist/release/uima/eclipse-update-site/${eclipseUpdateSiteComponent}" />
+                          <arg
+                            value="${distsvnroot}repos/dist/release/uima/eclipse-update-site/${eclipseUpdateSiteComponent}" />
                           <arg value="${eclipseUpdateSubSite}" />
                         </exec> 
                         
@@ -1860,66 +1724,50 @@ Copyright (c) 2003, 2006 IBM Corporation.
                          -->
                       </then>
                       <else>
-                        <echo>skipping checkout of current svn dist release (because not apache-release)</echo>
+                        <echo>skipping checkout of current svn dist release (because not
+                          apache-release)</echo>
                         <!-- https://issues.apache.org/jira/browse/UIMA-3501 -->
                         <delete dir="${eclipseUpdateSubSite}" quiet="true" />
                       </else>
                     </if>
-                      
+
                     <echo>Compress plugin Jars using pack200 - this may take a minute or 2</echo>
-                    <java jar="${uima-eclipse-jar-processor}" fork="true" failonerror="true" maxmemory="256m">
+                    <java jar="${uima-eclipse-jar-processor}" fork="true" failonerror="true"
+                      maxmemory="256m">
                       <arg line="-processAll" />
                       <arg line="-repack" />
                       <arg line="-pack" />
                       <arg line="-verbose" />
                            <!--  only pack the plugins.  The publisher won't copy packed "features", 
-                                 they are tiny anyways --> 
+                                 they are tiny anyways -->
                       <arg line="-outputDir ${eusWork}/plugins" />
                       <arg line="${toBePacked}" />
                     </java>
-                    
+
                     <echo>Save conditioned Jars prior to signing, in case of redo</echo>
-                    <echo>-------------------------------------------------------</echo> 
+                    <echo>-------------------------------------------------------</echo>
                     <copy todir="${project.build.directory}/saved/features" failonerror="true">
-                      <fileset dir="${eusWork}/features" includes="*.jar" />                 
+                      <fileset dir="${eusWork}/features" includes="*.jar" />
                     </copy>
                     <copy todir="${project.build.directory}/saved/plugins" failonerror="true">
-                       <fileset dir="${eusWork}/plugins" includes="*.jar" />                 
+                      <fileset dir="${eusWork}/plugins" includes="*.jar" />
                     </copy>
-                                             
-                    <!--FAILED EXPERIMENT: COMMENTED OUT
-                           manually publish - eusWork to subsite
-                           rename to follow Eclipse conventions 
-                    <echo>Copy jar and jar.pack.gz artifacts to the target subsite</echo>
-                    -->
-                    <!-- mimic publish action of renaming artifacts from -SNAPSHOT to .SNAPSHOT -->
-                    <!-- We do an ANT copy because the publishArtifacts won't copy if the target
-                           has an indentically-named artifact (as is often the case during
-                           testing, with the artifact ending in -SNAPSHOT) -->
-                    <!--  
-                    <copy todir="${eclipseUpdateSubSite}">
-                      <fileset dir="${eusWork}" />
-                      <compositemapper>
-                        <globmapper from="*-SNAPSHOT.jar" to="*.SNAPSHOT.jar" />
-                        <globmapper from="*-SNAPSHOT.jar.pack.gz" to="*.SNAPSHOT.jar.pack.gz" />
-                        <regexpmapper from="^(.(?!-SNAPSHOT))*\.jar(.*)$$" to="\0" />                     
-                      </compositemapper>
-                    </copy>
-                     -->
-                           
-                    
+                                            
                     <echo>Generate the p2 metadata and publish new artifacts</echo>
                     <!-- Append is needed because category info is incremental with each additional release -->
                     <!-- publishArtifacts is needed to generate p2 metadata for the pack.gz forms -->
-                    <!--   - tried and failed: using ANT to copy artifacts to the target - doesn't update metadata
-                             for pack.gz form ! if you don't publish artifacts
-                             - doesn't update artifacts.jar 
-                           - deleting SNAPSHOT jars in the eclipse update subsite 
-                             - fails because the previous metadata has info about those jars  
-                               and that isn't deleted, and continues to be used
+                    <!--   
+                      - tried and failed: using ANT to copy artifacts to the target - doesn't update
+                        metadata for pack.gz form ! if you don't publish artifacts 
+                        -> doesn't update artifacts.jar 
+                     - deleting SNAPSHOT jars in the eclipse update subsite 
+                       -> fails because the previous metadata has info about those jars  
+                         and that isn't deleted, and continues to be used
                     -->
-                    <java jar="${eclipse-equinox-launcher}" fork="true" failonerror="true" maxmemory="256m">
-                      <arg line="-application org.eclipse.equinox.p2.publisher.FeaturesAndBundlesPublisher" />
+                    <java jar="${eclipse-equinox-launcher}" fork="true" failonerror="true"
+                      maxmemory="256m">
+                      <arg
+                        line="-application org.eclipse.equinox.p2.publisher.FeaturesAndBundlesPublisher" />
                       <arg line="-metadataRepository file:///${eclipseUpdateSubSite}" />
                       <arg line="-artifactRepository file:///${eclipseUpdateSubSite}" />
                       <arg line="-source ${eusWork}" />
@@ -1927,12 +1775,14 @@ Copyright (c) 2003, 2006 IBM Corporation.
                       <arg line="-publishArtifacts" />
                       <arg line="-reusePack200Files" />
                       <arg line="-compress" />
-                      <arg line="-append" />     
+                      <arg line="-append" />
                     </java>
-                    
+
                     <echo>Augment p2 metadata with category information</echo>
-                    <java jar="${eclipse-equinox-launcher}" fork="true" failonerror="true" maxmemory="256m">
-                      <arg line="-application org.eclipse.equinox.p2.publisher.CategoryPublisher" />
+                    <java jar="${eclipse-equinox-launcher}" fork="true" failonerror="true"
+                      maxmemory="256m">
+                      <arg
+                        line="-application org.eclipse.equinox.p2.publisher.CategoryPublisher" />
                       <arg line="-metadataRepository file:///${eclipseUpdateSubSite}" />
                       <arg line="-categoryDefinition file:///${basedir}/category.xml" />
                       <arg line="-categoryQualifier apache-uima" />
@@ -1948,28 +1798,16 @@ Copyright (c) 2003, 2006 IBM Corporation.
                       <then>
 
                         <echo message="Generating checksums for new features and plugins" />
-                        <checksum algorithm="SHA-512" fileext=".sha512" format="MD5SUM" forceoverwrite="yes">
+                        <checksum algorithm="SHA-512" fileext=".sha512" format="MD5SUM"
+                          forceoverwrite="yes">
                           <fileset dir="${eusWork}">
                             <include name="**/*.gz" />
                             <include name="**/*.jar" />
                           </fileset>
                         </checksum>
                         
-                        <!-- 
-                        <checksum algorithm="sha1" format="MD5SUM" forceoverwrite="yes">
-                          <fileset dir="${eusWork}">
-                            <include name="**/*.gz" />
-                            <include name="**/*.jar" />
-                          </fileset>
-                        </checksum>
-                        <checksum algorithm="md5" format="MD5SUM" forceoverwrite="yes">
-                          <fileset dir="${eusWork}">
-                            <include name="**/*.gz" />
-                            <include name="**/*.jar" />
-                          </fileset>
-                        </checksum> -->
                         <echo message="Generating gpg signatures for new features and plugins" />
-                        <apply executable="gpg" dir="${eusWork}" failonerror="true"> 
+                        <apply executable="gpg" dir="${eusWork}" failonerror="true">
                           <arg value="--detach-sign" />
                           <arg value="--armor" />
                           <!-- batch flag needed to avoid gpg hang up -->
@@ -1978,55 +1816,45 @@ Copyright (c) 2003, 2006 IBM Corporation.
                             <include name="**/*.jar" />
                             <include name="**/*.jar.pack.gz" />
                           </fileset>
-                        </apply> 
-                        
-                        <echo message="Copying the checksums and signatures to the update subsite" />
+                        </apply>
+
+                        <echo
+                          message="Copying the checksums and signatures to the update subsite" />
                         <copy todir="${eclipseUpdateSubSite}" failonerror="true">
                           <fileset dir="${eusWork}">
                             <include name="**/*.asc" />
                             <include name="**/*.sha512" />
-                            <!-- <include name="**/*.md5" />  -->
-                            <!-- <include name="**/*.sha1" /> -->
                           </fileset>
                         </copy>
-    
-                        <echo message="Clearing previous checksums and signatures for update artifacts.jar and content.jar" />
+
+                        <echo
+                          message="Clearing previous checksums and signatures for update artifacts.jar and content.jar" />
                         <delete dir="${eclipseUpdateSubSite}">
                           <include name="*.asc" />
                           <include name="**/*.sha512" />
-                          <!-- <include name="*.md5" />  -->
-                          <!-- <include name="*.sha1" /> -->
-                        </delete> 
-                                          
-                        <echo message="Generating checksums for updated artifacts.jar and content.jar" />
-                        <checksum algorithm="SHA-512" fileext=".sha512" format="MD5SUM" forceoverwrite="yes">
-                          <fileset dir="${eclipseUpdateSubSite}">
-                             <include name="*.jar" />
-                          </fileset>
-                        </checksum>
-    
-                        <!-- 
-                        <checksum algorithm="sha1" format="MD5SUM" forceoverwrite="yes">
-                          <fileset dir="${eclipseUpdateSubSite}">
-                             <include name="*.jar" />
-                          </fileset>
-                        </checksum>
-                        <checksum algorithm="md5" format="MD5SUM" forceoverwrite="yes">
+                        </delete>
+
+                        <echo
+                          message="Generating checksums for updated artifacts.jar and content.jar" />
+                        <checksum algorithm="SHA-512" fileext=".sha512" format="MD5SUM"
+                          forceoverwrite="yes">
                           <fileset dir="${eclipseUpdateSubSite}">
                             <include name="*.jar" />
                           </fileset>
                         </checksum>
-                         -->
-                        <echo message="Generating gpg signatures for artifacts.jar and content.jar" />
-                        <apply executable="gpg" dir="${eclipseUpdateSubSite}" failonerror="true"> 
+    
+                        <echo
+                          message="Generating gpg signatures for artifacts.jar and content.jar" />
+                        <apply executable="gpg" dir="${eclipseUpdateSubSite}"
+                          failonerror="true">
                           <arg value="--detach-sign" />
                           <arg value="--armor" />
-                          <!-- batch flag needed to avoid gpg hang up -->
+                          <!-- batch flag needed to avoid GPG hang up -->
                           <arg value="--batch" />
                           <fileset dir="${eclipseUpdateSubSite}">
                             <include name="*.jar" />
                           </fileset>
-                        </apply> 
+                        </apply>
                       </then>
                     </if>
                   </target>
@@ -2052,52 +1880,61 @@ Copyright (c) 2003, 2006 IBM Corporation.
                     <!--   Check we can access build tools   -->
                     <!-- =================================== -->
                     <!-- if the property uima-maven-build-eclipse-home is set, use it, otherwise don't -->
-                    <condition property="eclipse.home" value="${uima-maven-build-eclipse-home}">
+                    <condition property="eclipse.home"
+                      value="${uima-maven-build-eclipse-home}">
                       <not>
-                        <equals arg1="${uima-maven-build-eclipse-home}" arg2="$${uima-maven-build-eclipse-home}" />
+                        <equals arg1="${uima-maven-build-eclipse-home}"
+                          arg2="$${uima-maven-build-eclipse-home}" />
                       </not>
                     </condition>
-    
+
                     <property environment="envVar" />
                     <condition property="eclipse.home" value="${envVar.ECLIPSE_HOME}">
                       <isset property="envVar.ECLIPSE_HOME" />
                     </condition>
-    
+
                     <echo>deleting previous version of packed files from work</echo>
                     <echo>---------------------------------------------------</echo>
                     <delete verbose="true">
                       <fileset dir="${eusWork}/plugins" includes="*.pack.gz" />
                     </delete>
-    
-                    <echo> </echo>
-                    <echo>Compressing signed plugin Jars in eus-work using pack200 - this may take a minute or 2</echo>
+
+                    <echo>
+                    </echo>
+                    <echo>Compressing signed plugin Jars in eus-work using pack200 - this may take a
+                      minute or 2</echo>
                     <echo>======================================================================================</echo>
-                    <java jar="${uima-eclipse-jar-processor}" fork="true" failonerror="true" maxmemory="256m">
+                    <java jar="${uima-eclipse-jar-processor}" fork="true" failonerror="true"
+                      maxmemory="256m">
                       <arg line="-pack" />
                       <arg line="-verbose" />
                            <!--  only pack the plugins.  The publisher won't copy packed "features", 
-                                 they are tiny anyways --> 
+                                 they are tiny anyways -->
                       <arg line="-outputDir ${eusWork}/plugins" />
                       <arg line="${eusWork}/plugins" />
                     </java>
-                    
-                    <echo> </echo>
+
+                    <echo>
+                    </echo>
                     <echo>Resetting the content and artifacts for the site</echo>
                     <echo>------------------------------------------------</echo>
                     
                     <!-- This is needed because the previous pre-build step already
                          updated the content and artifacts jar with the new versions -->
                     <delete verbose="true">
-                      <fileset dir="${eclipseUpdateSubSite}" includes="content.jar,artifacts.jar" />
+                      <fileset dir="${eclipseUpdateSubSite}"
+                        includes="content.jar,artifacts.jar" />
                     </delete>
                     <copy todir="${eclipseUpdateSubSite}" failonerror="false">
-                      <fileset dir="${project.build.directory}/saved" includes="content.jar,artifacts.jar" />
+                      <fileset dir="${project.build.directory}/saved"
+                        includes="content.jar,artifacts.jar" />
                     </copy>
 
-                    <echo> </echo>
+                    <echo>
+                    </echo>
                     <echo>Generate the p2 metadata and publish new artifacts</echo>
                     <echo>--------------------------------------------------</echo>
-                     <!-- Append is needed because category info is incremental with each additional release -->
+                    <!-- Append is needed because category info is incremental with each additional release -->
                     <!-- publishArtifacts is needed to generate p2 metadata for the pack.gz forms -->
                     <!--   - tried and failed: using ANT to copy artifacts to the target - doesn't update metadata
                              for pack.gz form ! if you don't publish artifacts
@@ -2106,8 +1943,10 @@ Copyright (c) 2003, 2006 IBM Corporation.
                              - fails because the previous metadata has info about those jars  
                                and that isn't deleted, and continues to be used
                     -->
-                    <java jar="${eclipse-equinox-launcher}" fork="true" failonerror="true" maxmemory="256m">
-                      <arg line="-application org.eclipse.equinox.p2.publisher.FeaturesAndBundlesPublisher" />
+                    <java jar="${eclipse-equinox-launcher}" fork="true" failonerror="true"
+                      maxmemory="256m">
+                      <arg
+                        line="-application org.eclipse.equinox.p2.publisher.FeaturesAndBundlesPublisher" />
                       <arg line="-metadataRepository file:///${eclipseUpdateSubSite}" />
                       <arg line="-artifactRepository file:///${eclipseUpdateSubSite}" />
                       <arg line="-source ${eusWork}" />
@@ -2120,15 +1959,18 @@ Copyright (c) 2003, 2006 IBM Corporation.
 
                     <echo>Augment p2 metadata with category information</echo>
                     <echo>---------------------------------------------</echo>
-                    <java jar="${eclipse-equinox-launcher}" fork="true" failonerror="true" maxmemory="256m">
-                      <arg line="-application org.eclipse.equinox.p2.publisher.CategoryPublisher" />
+                    <java jar="${eclipse-equinox-launcher}" fork="true" failonerror="true"
+                      maxmemory="256m">
+                      <arg
+                        line="-application org.eclipse.equinox.p2.publisher.CategoryPublisher" />
                       <arg line="-metadataRepository file:///${eclipseUpdateSubSite}" />
                       <arg line="-categoryDefinition file:///${basedir}/category.xml" />
                       <arg line="-categoryQualifier apache-uima" />
                       <arg line="-compress" />
-                    </java>  
-          
-                    <echo> </echo>
+                    </java>
+
+                    <echo>
+                    </echo>
                     <echo>Clearing previous checksums and signatures for eusWork plugins</echo>
                     <delete dir="${eusWork}">
                       <include name="**/*.asc" />
@@ -2139,28 +1981,16 @@ Copyright (c) 2003, 2006 IBM Corporation.
 
                     <echo message="Generating checksums for signed plugins" />
 
-                    <checksum algorithm="SHA-512" fileext=".sha512" format="MD5SUM" forceoverwrite="yes">
+                    <checksum algorithm="SHA-512" fileext=".sha512" format="MD5SUM"
+                      forceoverwrite="yes">
                       <fileset dir="${eusWork}">
                         <include name="**/*.gz" />
                         <include name="**/*.jar" />
                       </fileset>
                     </checksum>
-                    <!-- 
-                    <checksum algorithm="sha1" format="MD5SUM" forceoverwrite="yes">
-                      <fileset dir="${eusWork}">
-                        <include name="**/*.gz" />
-                        <include name="**/*.jar" />
-                      </fileset>
-                    </checksum>
-                    <checksum algorithm="md5" format="MD5SUM" forceoverwrite="yes">
-                      <fileset dir="${eusWork}">
-                        <include name="**/*.gz" />
-                        <include name="**/*.jar" />
-                      </fileset>
-                    </checksum>  -->
 
                     <echo message="Generating gpg signatures for new features and plugins" />
-                    <apply executable="gpg" dir="${eusWork}" failonerror="true"> 
+                    <apply executable="gpg" dir="${eusWork}" failonerror="true">
                       <arg value="--detach-sign" />
                       <arg value="--armor" />
                       <!-- batch flag needed to avoid gpg hang up -->
@@ -2181,8 +2011,10 @@ Copyright (c) 2003, 2006 IBM Corporation.
                       </fileset>
                     </copy>
 
-                    <echo> </echo>
-                    <echo message="Clearing previous checksums and signatures for update artifacts.jar and content.jar" />
+                    <echo>
+                    </echo>
+                    <echo
+                      message="Clearing previous checksums and signatures for update artifacts.jar and content.jar" />
                     <delete dir="${eclipseUpdateSubSite}">
                       <include name="*.asc" />
                       <include name="*.sha512" />
@@ -2190,28 +2022,17 @@ Copyright (c) 2003, 2006 IBM Corporation.
                       <!-- <include name="*.sha1" /> -->
                     </delete>
 
-                    <echo message="Generating checksums for updated artifacts.jar and content.jar" />
-                    <checksum algorithm="SHA-512" fileext=".sha512" format="MD5SUM" forceoverwrite="yes">
-                      <fileset dir="${eclipseUpdateSubSite}">
-                         <include name="*.jar" />
-                      </fileset>
-                    </checksum> 
-
-                    <!-- 
-                    <checksum algorithm="sha1" format="MD5SUM" forceoverwrite="yes">
-                      <fileset dir="${eclipseUpdateSubSite}">
-                         <include name="*.jar" />
-                      </fileset>
-                    </checksum> 
-                    <checksum algorithm="md5" format="MD5SUM" forceoverwrite="yes">
+                    <echo
+                      message="Generating checksums for updated artifacts.jar and content.jar" />
+                    <checksum algorithm="SHA-512" fileext=".sha512" format="MD5SUM"
+                      forceoverwrite="yes">
                       <fileset dir="${eclipseUpdateSubSite}">
                         <include name="*.jar" />
                       </fileset>
-                    </checksum>
-                     -->
+                    </checksum> 
 
                     <echo message="Generating gpg signatures for artifacts.jar and content.jar" />
-                    <apply executable="gpg" dir="${eclipseUpdateSubSite}" failonerror="true"> 
+                    <apply executable="gpg" dir="${eclipseUpdateSubSite}" failonerror="true">
                       <arg value="--detach-sign" />
                       <arg value="--armor" />
                       <!-- batch flag needed to avoid gpg hang up -->
@@ -2219,15 +2040,15 @@ Copyright (c) 2003, 2006 IBM Corporation.
                       <fileset dir="${eclipseUpdateSubSite}">
                         <include name="*.jar" />
                       </fileset>
-                    </apply> 
+                    </apply>
                   </target>
                 </configuration>
               </execution>
-              
+
             </executions>
           </plugin>
         </plugins>
-      
+
       </build>
     </profile>
 
@@ -2257,7 +2078,7 @@ Copyright (c) 2003, 2006 IBM Corporation.
        dependencies on other artifacts: 
          Specified as scope runtime or compile causes these to be included in the lib dir
        
-    -->    
+    -->
     <profile>
       <id>build simple project binary assembly</id>
       <activation>
@@ -2265,7 +2086,7 @@ Copyright (c) 2003, 2006 IBM Corporation.
           <exists>marker-file-identifying-single-project</exists>
         </file>
       </activation>
-      <build>        
+      <build>
         <plugins>
 
           <!-- ********************************************* -->
@@ -2297,10 +2118,10 @@ Copyright (c) 2003, 2006 IBM Corporation.
             <executions>
               <execution>
                 <id>attach-javadocs</id>          
-                <!-- turn on javadoc build for each module --> 
+                <!-- turn on javadoc build for each module -->
                 <phase>prepare-package</phase>  <!-- before package, in case package needs the result -->
               </execution>
-            </executions>           
+            </executions>
           </plugin>
               
           <!-- Build  base -->
@@ -2312,7 +2133,7 @@ Copyright (c) 2003, 2006 IBM Corporation.
                        PLEASE LIST EXPLICITLY AND MODIFY THE LICENSE/NOTICE
                        APPROPRIATELY
                   
-                 Runs during process-resources -->                        
+                 Runs during process-resources -->
           <plugin>
             <groupId>org.apache.maven.plugins</groupId>
             <artifactId>maven-dependency-plugin</artifactId>
@@ -2320,7 +2141,9 @@ Copyright (c) 2003, 2006 IBM Corporation.
               <!-- Copy the dependencies to the target/base-bin/lib folder -->
               <execution>
                 <id>copy dependencies to base-bin/lib</id>
-                <goals><goal>copy-dependencies</goal></goals>
+                <goals>
+                  <goal>copy-dependencies</goal>
+                </goals>
                 <phase>process-resources</phase>
                 <configuration>
                   <outputDirectory>${project.build.directory}/base-bin/lib</outputDirectory>
@@ -2330,7 +2153,7 @@ Copyright (c) 2003, 2006 IBM Corporation.
               </execution>
             </executions>
           </plugin>
-          
+
           <plugin>
             <groupId>org.apache.maven.plugins</groupId>
             <artifactId>maven-resources-plugin</artifactId>
@@ -2339,7 +2162,9 @@ Copyright (c) 2003, 2006 IBM Corporation.
               <!-- add directories if they exist -->
               <execution>
                 <id>copy standard dirs and files to base-bin</id>
-                <goals><goal>copy-resources</goal></goals>
+                <goals>
+                  <goal>copy-resources</goal>
+                </goals>
                 <phase>process-resources</phase>  <!-- required -->
                 <configuration>
                   <outputDirectory>${project.build.directory}/base-bin</outputDirectory>
@@ -2360,7 +2185,7 @@ Copyright (c) 2003, 2006 IBM Corporation.
                         <include>readme*</include>
                         <include>RELEASE_NOTES*</include>
                         <include>ReleaseNotes*</include>
-                        <include>issuesFixed/**</include> 
+                        <include>issuesFixed/**</include>
                       </includes>
                     </resource>
                     <resource>
@@ -2370,31 +2195,36 @@ Copyright (c) 2003, 2006 IBM Corporation.
                 </configuration>
               </execution>
               
-              
               <!-- copy generated Jar to base-bin/lib spot -->
               <execution>
                 <id>copy standard target jar to base-bin/lib</id>
-                <goals><goal>copy-resources</goal></goals>
+                <goals>
+                  <goal>copy-resources</goal>
+                </goals>
                 <phase>pre-integration-test</phase>  <!-- a phase after jar -->
                 <configuration>
                   <outputDirectory>${project.build.directory}/base-bin/lib</outputDirectory>
                   <resources>
                     <resource>
                       <directory>${project.build.directory}</directory>
-                      <includes><include>*.jar</include></includes>
+                      <includes>
+                        <include>*.jar</include>
+                      </includes>
                       <excludes>
                         <exclude>*-sources.jar</exclude>
                         <exclude>*-osgi.jar</exclude>
-                      </excludes>     
+                      </excludes>
                     </resource>
                   </resources>
                 </configuration>
               </execution>
               
-              <!-- copy generated docbook artifacts -->        
+              <!-- copy generated docbook artifacts -->
               <execution>
                 <id>copy generated docbook artifacts to base-bin/doc folder</id>
-                <goals><goal>copy-resources</goal></goals>
+                <goals>
+                  <goal>copy-resources</goal>
+                </goals>
                 <phase>pre-integration-test</phase>  <!-- a phase after docbkx (package) phase -->
                 <configuration>
                   <outputDirectory>${project.build.directory}/base-bin/doc</outputDirectory>
@@ -2404,17 +2234,19 @@ Copyright (c) 2003, 2006 IBM Corporation.
                     </resource>
                   </resources>
                 </configuration>
-              </execution>          
+              </execution>
             </executions>
           </plugin>
-                  
+
           <plugin>
             <groupId>org.apache.maven.plugins</groupId>
             <artifactId>maven-assembly-plugin</artifactId>
             <executions>
               <execution>
                 <id>binary-release</id> <!-- is "classifier" - match maven convention -->
-                <goals><goal>single</goal></goals>
+                <goals>
+                  <goal>single</goal>
+                </goals>
                 <phase>integration-test</phase>  <!-- after first copies from jar/docbk pkg -->
                 <configuration>
                   <runOnlyAtExecutionRoot>true</runOnlyAtExecutionRoot>
@@ -2440,7 +2272,7 @@ Copyright (c) 2003, 2006 IBM Corporation.
 
     <!-- ********************************** -->
     <!-- *   Build OSGi bundle            * -->
-    <!-- ********************************** -->     
+    <!-- ********************************** -->
     <profile>
       <id>build OSGi bundle for annotator</id>
       <activation>
@@ -2448,23 +2280,27 @@ Copyright (c) 2003, 2006 IBM Corporation.
           <exists>marker-file-identifying-osgi-project</exists>
         </file>
       </activation>
-           
-      <build>  
-        <plugins> 
+
+      <build>
+        <plugins>
           <plugin>
             <artifactId>maven-resources-plugin</artifactId>
             <executions>
               <!-- copy the base-bin dir to the osgi dir -->
               <execution>
                 <id>Copy base-bin to osgi</id>
-                <goals><goal>copy-resources</goal></goals>
+                <goals>
+                  <goal>copy-resources</goal>
+                </goals>
                 <phase>integration-test</phase>
                 <configuration>
                   <outputDirectory>${project.build.directory}/osgi</outputDirectory>
                   <resources>
                     <resource>
                       <directory>${project.build.directory}/base-bin</directory>
-                      <includes><include>**</include></includes>
+                      <includes>
+                        <include>**</include>
+                      </includes>
                       <excludes>
                         <exclude>doc/**</exclude>
                         <exclude>docs/**</exclude>
@@ -2484,13 +2320,15 @@ Copyright (c) 2003, 2006 IBM Corporation.
                  a) local projects override scope to "provided" and
                  b) this would result in the jars being copied for
                     the common build -->
-         
+
           <plugin>
             <artifactId>maven-dependency-plugin</artifactId>
             <executions>
               <execution>
                 <id>Copy uima dependencies to osgi/lib</id>
-                <goals><goal>copy</goal></goals>
+                <goals>
+                  <goal>copy</goal>
+                </goals>
                 <phase>process-resources</phase>
                 <configuration>
                   <outputDirectory>${project.build.directory}/osgi/lib</outputDirectory>
@@ -2504,8 +2342,8 @@ Copyright (c) 2003, 2006 IBM Corporation.
                 </configuration>
               </execution>
             </executions>
-          </plugin> 
-          
+          </plugin>
+
           <plugin>
             <groupId>org.apache.felix</groupId>
             <artifactId>maven-bundle-plugin</artifactId>
@@ -2513,7 +2351,9 @@ Copyright (c) 2003, 2006 IBM Corporation.
               <execution>
                 <id>uima-bundle</id>
                 <phase>integration-test</phase>
-                <goals><goal>manifest</goal></goals>
+                <goals>
+                  <goal>manifest</goal>
+                </goals>
                 <configuration>
                   <buildDirectory>${project.build.directory}/osgi</buildDirectory>
                   <manifestLocation>${project.build.directory}/osgi/META-INF</manifestLocation>
@@ -2536,13 +2376,15 @@ Copyright (c) 2003, 2006 IBM Corporation.
             </executions>
           </plugin>
 
-          <!-- Run JAR to create OSGi Jar -->          
+          <!-- Run JAR to create OSGi Jar -->
           <plugin>
             <artifactId>maven-jar-plugin</artifactId>
             <executions>
               <execution>
                 <id>Create OSGi Jar</id>
-                <goals><goal>jar</goal></goals>
+                <goals>
+                  <goal>jar</goal>
+                </goals>
                 <phase>integration-test</phase> <!-- after above build step -->
                 <configuration>
                   <finalName>${project.groupId}.${project.artifactId}_${parsedVersion.osgiVersion}</finalName>
@@ -2570,8 +2412,8 @@ Copyright (c) 2003, 2006 IBM Corporation.
           <exists>marker-file-identifying-standard-pear</exists>
         </file>
       </activation>
-      <build>  
-        <plugins>  
+      <build>
+        <plugins>
           <plugin>
             <groupId>org.apache.maven.plugins</groupId>
             <artifactId>maven-resources-plugin</artifactId>
@@ -2582,14 +2424,18 @@ Copyright (c) 2003, 2006 IBM Corporation.
                    The Tagger project uses this technique, for instance -->
               <execution>
                 <id>copy desc so its contents can be found in Jar</id>
-                <goals><goal>copy-resources</goal></goals>
+                <goals>
+                  <goal>copy-resources</goal>
+                </goals>
                 <phase>process-resources</phase>  <!-- required -->
                 <configuration>
                   <outputDirectory>${project.build.outputDirectory}</outputDirectory>
                   <resources>
                     <resource>
                       <directory>desc</directory>
-                      <includes><include>**</include></includes>
+                      <includes>
+                        <include>**</include>
+                      </includes>
                     </resource>
                   </resources>
                 </configuration>
@@ -2598,14 +2444,18 @@ Copyright (c) 2003, 2006 IBM Corporation.
               <!-- copy the base-bin dir to the pearPackaging dir -->
               <execution>
                 <id>Copy base-bin to pearPackaging</id>
-                <goals><goal>copy-resources</goal></goals>
+                <goals>
+                  <goal>copy-resources</goal>
+                </goals>
                 <phase>integration-test</phase> <!-- after first copies from jar/docbk pkg -->
                 <configuration>
                   <outputDirectory>${project.build.directory}/pearPackaging</outputDirectory>
                   <resources>
                     <resource>
                       <directory>${project.build.directory}/base-bin</directory>
-                      <includes><include>**</include></includes>
+                      <includes>
+                        <include>**</include>
+                      </includes>
                       <excludes>
                         <exclude>**/*-javadoc.jar</exclude>
                       </excludes>
@@ -2615,16 +2465,16 @@ Copyright (c) 2003, 2006 IBM Corporation.
               </execution>
             </executions>
           </plugin>
-          
+
           <plugin>
             <artifactId>maven-javadoc-plugin</artifactId>
             <executions>
               <execution>
                 <id>attach-javadocs</id>          
-                <!-- turn on javadoc build for each module --> 
-                <phase>package</phase> 
+                <!-- turn on javadoc build for each module -->
+                <phase>package</phase>
               </execution>
-            </executions>           
+            </executions>
           </plugin>
           
           <!-- build the PEAR -->
@@ -2632,15 +2482,17 @@ Copyright (c) 2003, 2006 IBM Corporation.
             <groupId>org.apache.uima</groupId>
             <artifactId>PearPackagingMavenPlugin</artifactId>
             <version>2.10.5</version>
-            <extensions>true</extensions>        
+            <extensions>true</extensions>
             <executions>
               <execution>
                 <id>build uima annnotator Pear</id>
-                <goals><goal>package</goal></goals>
+                <goals>
+                  <goal>package</goal>
+                </goals>
                    <!-- needs to run after the jar is built
                         after docbooks are packaged and copied to pearPackaging/doc folder -->
                 <phase>integration-test</phase>  <!-- after first copies from jar/docbk pkg -->
-                <configuration> 
+                <configuration>
                   <datapath>$main_root/resources</datapath>
                   <componentId>${project.artifactId}</componentId>
                   <mainComponentDesc>${pearMainDescriptor}</mainComponentDesc>
@@ -2656,8 +2508,10 @@ Copyright (c) 2003, 2006 IBM Corporation.
             <executions>
               <execution>
                 <id>attach-pear-artifact</id>
-                <phase>post-integration-test</phase>  
-                <goals><goal>attach-artifact</goal></goals>
+                <phase>post-integration-test</phase>
+                <goals>
+                  <goal>attach-artifact</goal>
+                </goals>
                 <configuration>
                   <artifacts>
                     <artifact>
@@ -2669,9 +2523,7 @@ Copyright (c) 2003, 2006 IBM Corporation.
               </execution>
             </executions>
           </plugin>
-     
         </plugins>
-        
       </build>
     </profile>
     
@@ -2994,7 +2846,7 @@ Copyright (c) 2003, 2006 IBM Corporation.
           <exists>marker-file-identifying-api-compatibility-check</exists>
         </file>
       </activation>
-      
+
       <properties>
         <japicmp.postAnalysisScript>${project.build.directory}/japicmp-resources/japicmp/api-report.groovy</japicmp.postAnalysisScript>
       </properties>
@@ -3017,8 +2869,8 @@ Copyright (c) 2003, 2006 IBM Corporation.
               </executions>
             </plugin>
           </plugins>
-        </pluginManagement> 
-        
+        </pluginManagement>
+
         <plugins>
           <plugin>
             <groupId>org.apache.maven.plugins</groupId>
@@ -3083,7 +2935,9 @@ Copyright (c) 2003, 2006 IBM Corporation.
               <execution>
                 <id>copy-API-change-report</id>
                 <phase>install</phase>  <!-- must follow verify -->
-                <goals><goal>run</goal></goals>
+                <goals>
+                  <goal>run</goal>
+                </goals>
                 <configuration>
                   <target>
                     <taskdef name="if" classname="net.sf.antcontrib.logic.IfTask" />
@@ -3114,7 +2968,7 @@ Copyright (c) 2003, 2006 IBM Corporation.
         <jdk>11</jdk>
       </activation>
       <properties>
-        <jaxb.version>2.3.1</jaxb.version> 
+        <jaxb.version>2.3.1</jaxb.version>
         <jaxb.version01>2.3.0.1</jaxb.version01>
         <java.version>8</java.version>
         <maven.compiler.source>${java.version}</maven.compiler.source> <!-- can't do 11 with target 8  -->
@@ -3149,7 +3003,7 @@ Copyright (c) 2003, 2006 IBM Corporation.
           <version>1.3.2</version>
         </dependency>
       </dependencies>
-       
+
       <build>
         <pluginManagement>
           <plugins>
@@ -3164,7 +3018,7 @@ Copyright (c) 2003, 2006 IBM Corporation.
               <groupId>org.apache.maven.plugins</groupId>
               <artifactId>maven-failsafe-plugin</artifactId>
               <configuration>
-                  <argLine>--illegal-access=permit</argLine>
+                <argLine>--illegal-access=permit</argLine>
               </configuration>
             </plugin>
           </plugins>
