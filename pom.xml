@@ -470,13 +470,18 @@
                   <exclude>README*</exclude>
                   <exclude>RELEASE_NOTES*</exclude>
                   <exclude>issuesFixed/**</exclude> <!-- generated file -->
-                  <exclude>marker-file-identifying-*</exclude> <!-- empty file -->
+                  <!-- Maven profile trigger files -->
+                  <exclude>**/marker-file-identifying-*</exclude>
                   <exclude>DEPENDENCIES</exclude>  <!-- generated file -->
                   <exclude>**/MANIFEST.MF</exclude> <!-- MANIFEST.MF files cannot have comments -->
                   <exclude>**/*.ppt</exclude> <!--  power point sources -->
                   <exclude>**/*.sha512</exclude>
                   <exclude>**/*.patch.txt</exclude>
                   <exclude>**/.factorypath</exclude> <!-- Eclipse APT generated file -->
+                  <exclude>**/.idea/**</exclude> <!-- IDEA config files -->
+                  <exclude>**/.settings/**</exclude> <!-- Eclipse config files -->
+                  <exclude>**/.project</exclude> <!-- Eclipse config files -->
+                  <exclude>**/.classpath</exclude> <!-- Eclipse config files -->
                 </excludes>
               </configuration>
             </execution>
