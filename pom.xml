@@ -41,9 +41,7 @@
       eclipse   
     
 -->
-<project xmlns="http://maven.apache.org/POM/4.0.0"
-  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
 
   <parent>
@@ -55,7 +53,7 @@
 
   <groupId>org.apache.uima</groupId>
   <artifactId>parent-pom</artifactId>
-  <version>14-SNAPSHOT</version>
+  <version>15-SNAPSHOT</version>
   <packaging>pom</packaging>
 
   <name>Apache UIMA ${project.artifactId}</name>
@@ -108,6 +106,7 @@
     <connection>scm:git:https://github.com/apache/uima-parent-pom</connection>
     <developerConnection>scm:git:https://github.com/apache/uima-parent-pom</developerConnection>
     <url>https://github.com/apache/uima-parent-pom</url>
+    <tag>HEAD</tag>
   </scm>
 
   <issueManagement>
@@ -151,7 +150,7 @@
     <!--  *********************************************************************************************************** -->
     <!--  *********************************************************************************************************** -->
     <!--  *********************************************************************************************************** -->
-    <parentPomPatchVersion>13</parentPomPatchVersion>  <!-- UGH need to change this manually for release !!! -->
+    <parentPomPatchVersion>14</parentPomPatchVersion>  <!-- UGH need to change this manually for release !!! -->
     <uimaBuildResourcesVersion>6</uimaBuildResourcesVersion>
     <uimaWebsiteUrl>https://uima.apache.org</uimaWebsiteUrl>
     <uimaWebsiteDistributionUrl>scp://people.apache.org/www/uima.apache.org/</uimaWebsiteDistributionUrl>
@@ -658,12 +657,8 @@
             <phase>prepare-package</phase>  <!--  before Jar plugin -->
             <configuration>
               <target>
-                <delete
-                  file="${project.build.directory}/classes/META-INF/maven/${project.groupId}/${project.artifactId}/pom.xml"
-                  quiet="true" />
-                <delete
-                  file="${project.build.directory}/classes/META-INF/maven/${project.groupId}/${project.artifactId}/pom.properties"
-                  quiet="true" />
+                <delete file="${project.build.directory}/classes/META-INF/maven/${project.groupId}/${project.artifactId}/pom.xml" quiet="true" />
+                <delete file="${project.build.directory}/classes/META-INF/maven/${project.groupId}/${project.artifactId}/pom.properties" quiet="true" />
               </target>
             </configuration>
           </execution>
@@ -793,21 +788,14 @@
                       </then>
                     </if>
                     <!-- copy to target so checksum-maven-plugin can sha512 checkum it -->
-                    <property name="pom-file-tgt"
-                      location="${project.build.directory}/${project.build.finalName}.pom" />
-                    <property name="pom-file-src"
-                      location="${project.build.directory}/../pom.xml" />
+                    <property name="pom-file-tgt" location="${project.build.directory}/${project.build.finalName}.pom" />
+                    <property name="pom-file-src" location="${project.build.directory}/../pom.xml" />
                     <copy file="${pom-file-src}" tofile="${pom-file-tgt}" />
                     
                     <!-- patch gpg and checksum jars in local .m2 -->
-                    <echo
-                      message="patch maven-gpg-plugin and checksum-maven-plugin. if get copy failure message, rerun this build" />
-                    <copy verbose="true" overwrite="true" failonerror="false"
-                      file="${settings.localRepository}/org/apache/uima/parent-pom/${parentPomPatchVersion}/parent-pom-${parentPomPatchVersion}-gpg-plugin-patch.jar"
-                      tofile="${settings.localRepository}/org/apache/maven/plugins/maven-gpg-plugin/1.6/maven-gpg-plugin-1.6.jar" />
-                    <copy verbose="true" overwrite="true" failonerror="false"
-                      file="${settings.localRepository}/org/apache/uima/parent-pom/${parentPomPatchVersion}/parent-pom-${parentPomPatchVersion}-checksum-plugin-patch.jar"
-                      tofile="${settings.localRepository}/net/nicoulaj/maven/plugins/checksum-maven-plugin/1.8/checksum-maven-plugin-1.8.jar" />
+                    <echo message="patch maven-gpg-plugin and checksum-maven-plugin. if get copy failure message, rerun this build" />
+                    <copy verbose="true" overwrite="true" failonerror="false" file="${settings.localRepository}/org/apache/uima/parent-pom/${parentPomPatchVersion}/parent-pom-${parentPomPatchVersion}-gpg-plugin-patch.jar" tofile="${settings.localRepository}/org/apache/maven/plugins/maven-gpg-plugin/1.6/maven-gpg-plugin-1.6.jar" />
+                    <copy verbose="true" overwrite="true" failonerror="false" file="${settings.localRepository}/org/apache/uima/parent-pom/${parentPomPatchVersion}/parent-pom-${parentPomPatchVersion}-checksum-plugin-patch.jar" tofile="${settings.localRepository}/net/nicoulaj/maven/plugins/checksum-maven-plugin/1.8/checksum-maven-plugin-1.8.jar" />
                   </target>
                 </configuration>
               </execution>
@@ -821,14 +809,12 @@
                 <configuration>
                   <target>
                     <taskdef name="if" classname="net.sf.antcontrib.logic.IfTask" />
-                    <property name="source-release"
-                      location="${project.build.directory}/${project.artifactId}-${project.version}-source-release.zip" />
+                    <property name="source-release" location="${project.build.directory}/${project.artifactId}-${project.version}-source-release.zip" />
                     <if>
                       <available file="${source-release}" />
                       <then>
                         <echo message="Generating checksums for source-release.zip" />
-                        <checksum format="MD5SUM" forceoverwrite="yes" algorithm="SHA-512"
-                          fileext=".sha512" file="${source-release}" />
+                        <checksum format="MD5SUM" forceoverwrite="yes" algorithm="SHA-512" fileext=".sha512" file="${source-release}" />
                         <!-- <checksum format="MD5SUM" forceoverwrite="yes" algorithm="sha1" file="${source-release}" /> -->
                         <!-- <checksum format="MD5SUM" forceoverwrite="yes" algorithm="md5" file="${source-release}" />  -->
                         <echo message="Generating gpg signatures for source-release.zip" />
@@ -970,15 +956,11 @@
                 </goals>
                 <configuration>
                   <target>
-                    <property name="checksum-tgt"
-                      location="${project.build.directory}/${project.artifactId}-${project.version}-checksum-plugin-patch.jar" />
-                    <property name="checksum-src"
-                      location="${project.build.directory}/../src/resources/checksum-maven-plugin-1.8.jar" />
+                    <property name="checksum-tgt" location="${project.build.directory}/${project.artifactId}-${project.version}-checksum-plugin-patch.jar" />
+                    <property name="checksum-src" location="${project.build.directory}/../src/resources/checksum-maven-plugin-1.8.jar" />
                     <copy file="${checksum-src}" tofile="${checksum-tgt}" verbose="true" />
-                    <property name="gpg-tgt"
-                      location="${project.build.directory}/${project.artifactId}-${project.version}-gpg-plugin-patch.jar" />
-                    <property name="gpg-src"
-                      location="${project.build.directory}/../src/resources/maven-gpg-plugin-1.6.jar" />
+                    <property name="gpg-tgt" location="${project.build.directory}/${project.artifactId}-${project.version}-gpg-plugin-patch.jar" />
+                    <property name="gpg-src" location="${project.build.directory}/../src/resources/maven-gpg-plugin-1.6.jar" />
                     <copy file="${gpg-src}" tofile="${gpg-tgt}" verbose="true" />
                   </target>
                 </configuration>
@@ -1333,8 +1315,7 @@
                 <phase>verify</phase>
                 <configuration>
                   <target>
-                    <checksum algorithm="SHA-512" fileext=".sha512" format="MD5SUM"
-                      forceoverwrite="yes">
+                    <checksum algorithm="SHA-512" fileext=".sha512" format="MD5SUM" forceoverwrite="yes">
                       <fileset dir="${project.build.directory}">
                         <include name="*.zip" />
                         <include name="*.gz" />
@@ -1673,11 +1654,9 @@
                     <!--   Check we can access build tools   -->
                     <!-- =================================== -->
                     <!-- if the property uima-maven-build-eclipse-home is set, use it, otherwise don't -->
-                    <condition property="eclipse.home"
-                      value="${uima-maven-build-eclipse-home}">
+                    <condition property="eclipse.home" value="${uima-maven-build-eclipse-home}">
                       <not>
-                        <equals arg1="${uima-maven-build-eclipse-home}"
-                          arg2="$${uima-maven-build-eclipse-home}" />
+                        <equals arg1="${uima-maven-build-eclipse-home}" arg2="$${uima-maven-build-eclipse-home}" />
                       </not>
                     </condition>
 
@@ -1686,8 +1665,7 @@
                       <isset property="envVar.ECLIPSE_HOME" />
                     </condition>
 
-                    <fail unless="eclipse.home"
-                      message="********** Please set up and use an ant property eclipse.home set to an Eclipse installation at level 3.3 or later, e.g. c:/eclipses/3.3/eclipse" />
+                    <fail unless="eclipse.home" message="********** Please set up and use an ant property eclipse.home set to an Eclipse installation at level 3.3 or later, e.g. c:/eclipses/3.3/eclipse" />
 
                     <!-- =================================== -->
                     <!-- SVN checkout from release           -->
@@ -1702,8 +1680,7 @@
                         <delete dir="${eclipseUpdateSubSite}" quiet="true" />
                         <exec executable="svn" failonerror="true">
                           <arg value="checkout" />
-                          <arg
-                            value="${distsvnroot}repos/dist/release/uima/eclipse-update-site/${eclipseUpdateSiteComponent}" />
+                          <arg value="${distsvnroot}repos/dist/release/uima/eclipse-update-site/${eclipseUpdateSiteComponent}" />
                           <arg value="${eclipseUpdateSubSite}" />
                         </exec> 
                         
@@ -1738,10 +1715,8 @@
                                             
                     <echo>Generate the p2 metadata and publish new artifacts</echo>
                     <!-- Append is needed because category info is incremental with each additional release -->
-                    <java jar="${eclipse-equinox-launcher}" fork="true" failonerror="true"
-                      maxmemory="256m">
-                      <arg
-                        line="-application org.eclipse.equinox.p2.publisher.FeaturesAndBundlesPublisher" />
+                    <java jar="${eclipse-equinox-launcher}" fork="true" failonerror="true" maxmemory="256m">
+                      <arg line="-application org.eclipse.equinox.p2.publisher.FeaturesAndBundlesPublisher" />
                       <arg line="-metadataRepository file:///${eclipseUpdateSubSite}" />
                       <arg line="-artifactRepository file:///${eclipseUpdateSubSite}" />
                       <arg line="-source ${eusWork}" />
@@ -1752,10 +1727,8 @@
                     </java>
 
                     <echo>Augment p2 metadata with category information</echo>
-                    <java jar="${eclipse-equinox-launcher}" fork="true" failonerror="true"
-                      maxmemory="256m">
-                      <arg
-                        line="-application org.eclipse.equinox.p2.publisher.CategoryPublisher" />
+                    <java jar="${eclipse-equinox-launcher}" fork="true" failonerror="true" maxmemory="256m">
+                      <arg line="-application org.eclipse.equinox.p2.publisher.CategoryPublisher" />
                       <arg line="-metadataRepository file:///${eclipseUpdateSubSite}" />
                       <arg line="-categoryDefinition file:///${basedir}/category.xml" />
                       <arg line="-categoryQualifier apache-uima" />
@@ -1771,8 +1744,7 @@
                       <then>
 
                         <echo message="Generating checksums for new features and plugins" />
-                        <checksum algorithm="SHA-512" fileext=".sha512" format="MD5SUM"
-                          forceoverwrite="yes">
+                        <checksum algorithm="SHA-512" fileext=".sha512" format="MD5SUM" forceoverwrite="yes">
                           <fileset dir="${eusWork}">
                             <include name="**/*.gz" />
                             <include name="**/*.jar" />
@@ -1790,8 +1762,7 @@
                           </fileset>
                         </apply>
 
-                        <echo
-                          message="Copying the checksums and signatures to the update subsite" />
+                        <echo message="Copying the checksums and signatures to the update subsite" />
                         <copy todir="${eclipseUpdateSubSite}" failonerror="true">
                           <fileset dir="${eusWork}">
                             <include name="**/*.asc" />
@@ -1799,26 +1770,21 @@
                           </fileset>
                         </copy>
 
-                        <echo
-                          message="Clearing previous checksums and signatures for update artifacts.jar and content.jar" />
+                        <echo message="Clearing previous checksums and signatures for update artifacts.jar and content.jar" />
                         <delete dir="${eclipseUpdateSubSite}">
                           <include name="*.asc" />
                           <include name="**/*.sha512" />
                         </delete>
 
-                        <echo
-                          message="Generating checksums for updated artifacts.jar and content.jar" />
-                        <checksum algorithm="SHA-512" fileext=".sha512" format="MD5SUM"
-                          forceoverwrite="yes">
+                        <echo message="Generating checksums for updated artifacts.jar and content.jar" />
+                        <checksum algorithm="SHA-512" fileext=".sha512" format="MD5SUM" forceoverwrite="yes">
                           <fileset dir="${eclipseUpdateSubSite}">
                             <include name="*.jar" />
                           </fileset>
                         </checksum>
     
-                        <echo
-                          message="Generating gpg signatures for artifacts.jar and content.jar" />
-                        <apply executable="gpg" dir="${eclipseUpdateSubSite}"
-                          failonerror="true">
+                        <echo message="Generating gpg signatures for artifacts.jar and content.jar" />
+                        <apply executable="gpg" dir="${eclipseUpdateSubSite}" failonerror="true">
                           <arg value="--detach-sign" />
                           <arg value="--armor" />
                           <!-- batch flag needed to avoid GPG hang up -->
@@ -1852,11 +1818,9 @@
                     <!--   Check we can access build tools   -->
                     <!-- =================================== -->
                     <!-- if the property uima-maven-build-eclipse-home is set, use it, otherwise don't -->
-                    <condition property="eclipse.home"
-                      value="${uima-maven-build-eclipse-home}">
+                    <condition property="eclipse.home" value="${uima-maven-build-eclipse-home}">
                       <not>
-                        <equals arg1="${uima-maven-build-eclipse-home}"
-                          arg2="$${uima-maven-build-eclipse-home}" />
+                        <equals arg1="${uima-maven-build-eclipse-home}" arg2="$${uima-maven-build-eclipse-home}" />
                       </not>
                     </condition>
 
@@ -1873,12 +1837,10 @@
                     <!-- This is needed because the previous pre-build step already
                          updated the content and artifacts jar with the new versions -->
                     <delete verbose="true">
-                      <fileset dir="${eclipseUpdateSubSite}"
-                        includes="content.jar,artifacts.jar" />
+                      <fileset dir="${eclipseUpdateSubSite}" includes="content.jar,artifacts.jar" />
                     </delete>
                     <copy todir="${eclipseUpdateSubSite}" failonerror="false">
-                      <fileset dir="${project.build.directory}/saved"
-                        includes="content.jar,artifacts.jar" />
+                      <fileset dir="${project.build.directory}/saved" includes="content.jar,artifacts.jar" />
                     </copy>
 
                     <echo>
@@ -1886,10 +1848,8 @@
                     <echo>Generate the p2 metadata and publish new artifacts</echo>
                     <echo>--------------------------------------------------</echo>
                     <!-- Append is needed because category info is incremental with each additional release -->
-                    <java jar="${eclipse-equinox-launcher}" fork="true" failonerror="true"
-                      maxmemory="256m">
-                      <arg
-                        line="-application org.eclipse.equinox.p2.publisher.FeaturesAndBundlesPublisher" />
+                    <java jar="${eclipse-equinox-launcher}" fork="true" failonerror="true" maxmemory="256m">
+                      <arg line="-application org.eclipse.equinox.p2.publisher.FeaturesAndBundlesPublisher" />
                       <arg line="-metadataRepository file:///${eclipseUpdateSubSite}" />
                       <arg line="-artifactRepository file:///${eclipseUpdateSubSite}" />
                       <arg line="-source ${eusWork}" />
@@ -1901,10 +1861,8 @@
 
                     <echo>Augment p2 metadata with category information</echo>
                     <echo>---------------------------------------------</echo>
-                    <java jar="${eclipse-equinox-launcher}" fork="true" failonerror="true"
-                      maxmemory="256m">
-                      <arg
-                        line="-application org.eclipse.equinox.p2.publisher.CategoryPublisher" />
+                    <java jar="${eclipse-equinox-launcher}" fork="true" failonerror="true" maxmemory="256m">
+                      <arg line="-application org.eclipse.equinox.p2.publisher.CategoryPublisher" />
                       <arg line="-metadataRepository file:///${eclipseUpdateSubSite}" />
                       <arg line="-categoryDefinition file:///${basedir}/category.xml" />
                       <arg line="-categoryQualifier apache-uima" />
@@ -1923,8 +1881,7 @@
 
                     <echo message="Generating checksums for signed plugins" />
 
-                    <checksum algorithm="SHA-512" fileext=".sha512" format="MD5SUM"
-                      forceoverwrite="yes">
+                    <checksum algorithm="SHA-512" fileext=".sha512" format="MD5SUM" forceoverwrite="yes">
                       <fileset dir="${eusWork}">
                         <include name="**/*.gz" />
                         <include name="**/*.jar" />
@@ -1954,8 +1911,7 @@
 
                     <echo>
                     </echo>
-                    <echo
-                      message="Clearing previous checksums and signatures for update artifacts.jar and content.jar" />
+                    <echo message="Clearing previous checksums and signatures for update artifacts.jar and content.jar" />
                     <delete dir="${eclipseUpdateSubSite}">
                       <include name="*.asc" />
                       <include name="*.sha512" />
@@ -1963,10 +1919,8 @@
                       <!-- <include name="*.sha1" /> -->
                     </delete>
 
-                    <echo
-                      message="Generating checksums for updated artifacts.jar and content.jar" />
-                    <checksum algorithm="SHA-512" fileext=".sha512" format="MD5SUM"
-                      forceoverwrite="yes">
+                    <echo message="Generating checksums for updated artifacts.jar and content.jar" />
+                    <checksum algorithm="SHA-512" fileext=".sha512" format="MD5SUM" forceoverwrite="yes">
                       <fileset dir="${eclipseUpdateSubSite}">
                         <include name="*.jar" />
                       </fileset>
