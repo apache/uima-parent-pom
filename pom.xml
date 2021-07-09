@@ -295,7 +295,7 @@
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-plugin-plugin</artifactId>
-          <version>3.6.0</version>
+          <version>3.6.1</version>
           <executions>
             <execution>
               <!-- force to use process-classes phase so runs after Java Annotations are available -->
