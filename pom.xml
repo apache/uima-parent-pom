@@ -464,7 +464,7 @@
               <configuration>
                 <consoleOutput>true</consoleOutput>
                 <excludes>
-                  <exclude>.github/*</exclude> <!-- GitHub config/template files -->
+                  <exclude>.github/**/*</exclude> <!-- GitHub config/template files -->
                   <exclude>release.properties</exclude> <!-- generated file -->
                   <exclude>README*</exclude>
                   <exclude>RELEASE_NOTES*</exclude>
