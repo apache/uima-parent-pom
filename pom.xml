@@ -821,8 +821,6 @@
                       <then>
                         <echo message="Generating checksums for source-release.zip" />
                         <checksum format="MD5SUM" forceoverwrite="yes" algorithm="SHA-512" fileext=".sha512" file="${source-release}" />
-                        <!-- <checksum format="MD5SUM" forceoverwrite="yes" algorithm="sha1" file="${source-release}" /> -->
-                        <!-- <checksum format="MD5SUM" forceoverwrite="yes" algorithm="md5" file="${source-release}" />  -->
                         <echo message="Generating gpg signatures for source-release.zip" />
                         <exec executable="gpg" failonerror="true">
                           <arg value="--detach-sign" />
@@ -856,7 +854,7 @@
                 <id>sign-release-artifacts</id>
                 <configuration>
                   <excludes>
-                    <!--  <exclude>**/*.sha512</exclude>  https://issues.apache.org/jira/browse/UIMA-5897 -->
+                    <exclude>**/*.sha512</exclude>
                     <exclude>**/*.asc</exclude>
                   </excludes>
                 </configuration>
@@ -1828,8 +1826,6 @@
                     <delete dir="${eusWork}">
                       <include name="**/*.asc" />
                       <include name="**/*.sha512" />
-                      <!-- include name="**/*.md5" /-->
-                      <!-- <include name="**/*.sha1" /> -->
                     </delete>
 
                     <echo message="Generating checksums for signed plugins" />
@@ -1857,8 +1853,6 @@
                       <fileset dir="${eusWork}">
                         <include name="**/*.asc" />
                         <include name="**/*.sha512" />
-                        <!-- include name="**/*.md5" /-->
-                        <!-- <include name="**/*.sha1" /> -->
                       </fileset>
                     </copy>
 
@@ -1868,8 +1862,6 @@
                     <delete dir="${eclipseUpdateSubSite}">
                       <include name="*.asc" />
                       <include name="*.sha512" />
-                      <!-- <include name="*.md5" /> -->
-                      <!-- <include name="*.sha1" /> -->
                     </delete>
 
                     <echo message="Generating checksums for updated artifacts.jar and content.jar" />
