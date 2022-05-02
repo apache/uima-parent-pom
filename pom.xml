@@ -45,9 +45,9 @@
   <modelVersion>4.0.0</modelVersion>
 
   <parent>
-    <artifactId>apache</artifactId>
     <groupId>org.apache</groupId>
-    <version>23</version>
+    <artifactId>apache</artifactId>
+    <version>26</version>
     <relativePath />
   </parent>
 
@@ -231,7 +231,7 @@
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-dependency-plugin</artifactId>
-          <version>3.1.1</version>
+          <version>3.3.0</version>
         </plugin>
 
         <plugin>
@@ -243,7 +243,7 @@
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-resources-plugin</artifactId>
-          <version>3.1.0</version>
+          <version>3.2.0</version>
         </plugin>
 
         <plugin>
@@ -271,7 +271,7 @@
         <plugin>
           <groupId>net.nicoulaj.maven.plugins</groupId>
           <artifactId>checksum-maven-plugin</artifactId>
-          <version>1.8</version>
+          <version>1.11</version>
         </plugin>
 
         <!-- assembly plugin 
@@ -279,7 +279,7 @@
              warning message to use install instead -->
         <plugin>
           <artifactId>maven-assembly-plugin</artifactId>
-          <version>3.2.0</version>
+          <version>3.3.0</version>
           <executions>
             <execution>
               <id>default-cli</id>
@@ -306,7 +306,7 @@
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-plugin-plugin</artifactId>
-          <version>3.6.1</version>
+          <version>3.6.4</version>
           <executions>
             <execution>
               <!-- force to use process-classes phase so runs after Java Annotations are available -->
@@ -331,13 +331,13 @@
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-compiler-plugin</artifactId>
-          <version>3.8.1</version>
+          <version>3.10.1</version>
         </plugin>
 
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-javadoc-plugin</artifactId>
-          <version>3.1.1</version>
+          <version>3.4.0</version>
           <configuration>
             <source>${maven.compiler.source}</source>
             <!-- https://issues.apache.org/jira/browse/UIMA-5369 -->
@@ -347,7 +347,7 @@
             <!-- if next is omitted, causes all projects in reactor that don't
                      already have full javadocs built, to have them built -->
             <detectOfflineLinks>false</detectOfflineLinks>
-            <quiet>true</quiet>            
+            <quiet>true</quiet>
             <!-- identify tags we use so we don't get warning messages for them -->
             <tags>
               <tag>
@@ -389,7 +389,7 @@
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-jar-plugin</artifactId>
-          <version>3.2.0</version>
+          <version>3.2.2</version>
           <configuration>
             <archive>
               <manifestEntries>
@@ -413,7 +413,7 @@
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-antrun-plugin</artifactId>
-          <version>1.8</version>
+          <version>3.1.0</version>
           <dependencies>
             <dependency> <!-- for ant extension supporting "if" -->
               <groupId>ant-contrib</groupId>
@@ -427,16 +427,11 @@
                 </exclusion>
               </exclusions>
             </dependency>
-            <!-- next two enable <containsregexp> form for filesets -->
+            <!-- <containsregexp> form for filesets -->
             <dependency>
               <groupId>org.apache.ant</groupId>
               <artifactId>ant-apache-regexp</artifactId>
-              <version>1.10.1</version>
-            </dependency>
-            <dependency>
-              <groupId>jakarta-regexp</groupId>
-              <artifactId>jakarta-regexp</artifactId>
-              <version>1.4</version>
+              <version>1.10.12</version>
             </dependency>
           </dependencies>
         </plugin>
@@ -444,10 +439,7 @@
         <plugin>
           <groupId>org.apache.felix</groupId>
           <artifactId>maven-bundle-plugin</artifactId>
-          <!-- version 2.0.0 fails -->
-          <!-- version 2.3.4 eliminates spurious warning messages -->
-          <!-- version 2.5 has accidental dependency on Java 6 -->
-          <version>3.3.0</version>
+          <version>5.1.5</version>
           <extensions>true</extensions>
           <executions>
             <execution>
@@ -554,7 +546,7 @@
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-enforcer-plugin</artifactId>
-          <version>3.0.0-M3</version>
+          <version>3.0.0</version>
         </plugin>
       </plugins>
     </pluginManagement>
@@ -798,15 +790,12 @@
                         </fixcrlf>
                       </then>
                     </if>
+                    
+                    <!-- FIXME: Why do the checksum on the POM? I think this can be removed -->
                     <!-- copy to target so checksum-maven-plugin can sha512 checkum it -->
                     <property name="pom-file-tgt" location="${project.build.directory}/${project.build.finalName}.pom" />
                     <property name="pom-file-src" location="${project.build.directory}/../pom.xml" />
                     <copy file="${pom-file-src}" tofile="${pom-file-tgt}" />
-                    
-                    <!-- patch gpg and checksum jars in local .m2 -->
-                    <echo message="patch maven-gpg-plugin and checksum-maven-plugin. if get copy failure message, rerun this build" />
-                    <copy verbose="true" overwrite="true" failonerror="false" file="${settings.localRepository}/org/apache/uima/parent-pom/${parentPomPatchVersion}/parent-pom-${parentPomPatchVersion}-gpg-plugin-patch.jar" tofile="${settings.localRepository}/org/apache/maven/plugins/maven-gpg-plugin/1.6/maven-gpg-plugin-1.6.jar" />
-                    <copy verbose="true" overwrite="true" failonerror="false" file="${settings.localRepository}/org/apache/uima/parent-pom/${parentPomPatchVersion}/parent-pom-${parentPomPatchVersion}-checksum-plugin-patch.jar" tofile="${settings.localRepository}/net/nicoulaj/maven/plugins/checksum-maven-plugin/1.8/checksum-maven-plugin-1.8.jar" />
                   </target>
                 </configuration>
               </execution>
@@ -846,6 +835,7 @@
           <plugin>
             <groupId>org.apache.maven.plugins</groupId>
             <artifactId>maven-gpg-plugin</artifactId>
+            <version>3.0.1</version>
             <executions>
               <execution>
                 <id>load-plugin</id>
@@ -1151,7 +1141,7 @@
           <plugin>
             <groupId>com.agilejava.docbkx</groupId>
             <artifactId>docbkx-maven-plugin</artifactId>
-            <version>2.0.14</version>
+            <version>2.0.17</version>
             <configuration>  <!-- general configuration for both HTML and PDF -->
               <sourceDirectory>${basedir}/src/docbook</sourceDirectory>
               <includes>${bookNameRoot}.xml</includes>
@@ -2636,7 +2626,7 @@
           <plugin>
             <groupId>com.github.spotbugs</groupId>
             <artifactId>spotbugs-maven-plugin</artifactId>
-            <version>3.1.12.2</version>
+            <version>4.6.0.0</version>
             <executions>
               <execution>
                 <id>default</id>
@@ -2677,7 +2667,7 @@
           <plugin>
             <groupId>org.jacoco</groupId>
             <artifactId>jacoco-maven-plugin</artifactId>
-            <version>0.8.5</version>
+            <version>0.8.8</version>
             <executions>
               <execution>
                 <id>default-prepare-agent</id>
@@ -2721,7 +2711,7 @@
           <plugin>
             <groupId>org.apache.maven.plugins</groupId>
             <artifactId>maven-pmd-plugin</artifactId>
-            <version>3.12.0</version>
+            <version>3.16.0</version>
             <executions>
               <execution>
                 <phase>package</phase>
@@ -2809,7 +2799,7 @@
           <plugin>
             <groupId>com.github.siom79.japicmp</groupId>
             <artifactId>japicmp-maven-plugin</artifactId>
-            <version>0.14.4</version>
+            <version>0.15.7</version>
             <configuration>
               <oldVersion>
                 <dependency>
