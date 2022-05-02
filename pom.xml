@@ -948,59 +948,6 @@
           <plugin>
             <artifactId>maven-changes-plugin</artifactId>
           </plugin>
-
-          <!-- copy patch jars to project-build-dir with name change
-                 otherwise the checksum plugin wont work on them -->
-          <plugin>
-            <artifactId>maven-antrun-plugin</artifactId>
-            <executions>
-              <execution>
-                <id>setup-patch-jars</id>
-                <phase>process-resources</phase>
-                <goals>
-                  <goal>run</goal>
-                </goals>
-                <configuration>
-                  <target>
-                    <property name="checksum-tgt" location="${project.build.directory}/${project.artifactId}-${project.version}-checksum-plugin-patch.jar" />
-                    <property name="checksum-src" location="${project.build.directory}/../src/resources/checksum-maven-plugin-1.8.jar" />
-                    <copy file="${checksum-src}" tofile="${checksum-tgt}" verbose="true" />
-                    <property name="gpg-tgt" location="${project.build.directory}/${project.artifactId}-${project.version}-gpg-plugin-patch.jar" />
-                    <property name="gpg-src" location="${project.build.directory}/../src/resources/maven-gpg-plugin-1.6.jar" />
-                    <copy file="${gpg-src}" tofile="${gpg-tgt}" verbose="true" />
-                  </target>
-                </configuration>
-              </execution>
-            </executions>
-          </plugin>
-
-          <plugin>
-            <groupId>org.codehaus.mojo</groupId>
-            <artifactId>build-helper-maven-plugin</artifactId>
-            <executions>
-              <execution>
-                <id>attach-gpg-checksum-patch-jars</id>
-                <goals>
-                  <goal>attach-artifact</goal>
-                </goals>
-                <phase>process-resources</phase>  <!-- before signing and checksum -->
-                <configuration>
-                  <artifacts>
-                    <artifact>
-                      <file>${project.build.directory}/${project.artifactId}-${project.version}-checksum-plugin-patch.jar</file>
-                      <type>jar</type>
-                      <classifier>checksum-plugin-patch</classifier>
-                    </artifact>
-                    <artifact>
-                      <file>${project.build.directory}/${project.artifactId}-${project.version}-gpg-plugin-patch.jar</file>
-                      <type>jar</type>
-                      <classifier>gpg-plugin-patch</classifier>
-                    </artifact>
-                  </artifacts>
-                </configuration>
-              </execution>
-            </executions>
-          </plugin>
         </plugins>
       </build>
     </profile>
