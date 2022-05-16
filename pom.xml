@@ -144,13 +144,12 @@
       generates a giant request for all changes
     -->
     <!-- for parent-pom-14. Change for each release -->
-    <jiraVersion>parent-pom-14</jiraVersion>  
+    <jiraVersion>parent-pom-15</jiraVersion>  
     <!--  *********************************************************************************************************** -->
     <!--                                 U  G  H   change manually for release (to remove -SNAPSHOT                 * -->
     <!--  *********************************************************************************************************** -->
     <!--  *********************************************************************************************************** -->
     <!--  *********************************************************************************************************** -->
-    <parentPomPatchVersion>14</parentPomPatchVersion>  <!-- UGH need to change this manually for release !!! -->
     <uimaBuildResourcesVersion>6</uimaBuildResourcesVersion>
     <uimaWebsiteUrl>https://uima.apache.org</uimaWebsiteUrl>
     <uimaWebsiteDistributionUrl>scp://people.apache.org/www/uima.apache.org/</uimaWebsiteDistributionUrl>
