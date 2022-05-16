@@ -227,7 +227,7 @@
           <artifactId>maven-gpg-plugin</artifactId>
           <version>3.0.1</version>
         </plugin>
-      
+
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-remote-resources-plugin</artifactId>
@@ -868,8 +868,6 @@
             <executions>
               <execution>
                 <id>artifacts-checksum</id>
-                <!-- run before gpg signing, so gpg can sign (ugh) the .sha512 needed for workaround -->
-                <phase>post-integration-test</phase>
                 <goals>
                   <goal>artifacts</goal>
                 </goals>
@@ -994,7 +992,7 @@
           <exists>src/docbook</exists>
         </file>
       </activation>
-      
+
       <build>
         <plugins>
           <!-- 
@@ -1663,7 +1661,7 @@
                     <copy todir="${project.build.directory}/saved/plugins" failonerror="true">
                       <fileset dir="${eusWork}/plugins" includes="*.jar" />
                     </copy>
-                                            
+
                     <echo>Generate the p2 metadata and publish new artifacts</echo>
                     <!-- Append is needed because category info is incremental with each additional release -->
                     <java jar="${eclipse-equinox-launcher}" fork="true" failonerror="true" maxmemory="256m">
@@ -1701,7 +1699,7 @@
                             <include name="**/*.jar" />
                           </fileset>
                         </checksum>
-                        
+
                         <echo message="Generating gpg signatures for new features and plugins" />
                         <apply executable="gpg" dir="${eusWork}" failonerror="true">
                           <arg value="--detach-sign" />
@@ -1733,7 +1731,7 @@
                             <include name="*.jar" />
                           </fileset>
                         </checksum>
-    
+
                         <echo message="Generating gpg signatures for artifacts.jar and content.jar" />
                         <apply executable="gpg" dir="${eclipseUpdateSubSite}" failonerror="true">
                           <arg value="--detach-sign" />
@@ -1869,7 +1867,7 @@
                       <fileset dir="${eclipseUpdateSubSite}">
                         <include name="*.jar" />
                       </fileset>
-                    </checksum> 
+                    </checksum>
 
                     <echo message="Generating gpg signatures for artifacts.jar and content.jar" />
                     <apply executable="gpg" dir="${eclipseUpdateSubSite}" failonerror="true">
