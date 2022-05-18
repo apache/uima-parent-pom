@@ -150,7 +150,6 @@
     <!--  *********************************************************************************************************** -->
     <!--  *********************************************************************************************************** -->
     <!--  *********************************************************************************************************** -->
-    <parentPomPatchVersion>14</parentPomPatchVersion>  <!-- UGH need to change this manually for release !!! -->
     <uimaBuildResourcesVersion>6</uimaBuildResourcesVersion>
     <uimaWebsiteUrl>https://uima.apache.org</uimaWebsiteUrl>
     <uimaWebsiteDistributionUrl>scp://people.apache.org/www/uima.apache.org/</uimaWebsiteDistributionUrl>
