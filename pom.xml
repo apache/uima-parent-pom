@@ -191,7 +191,9 @@
   <!-- *  V E R S I O N S                            -->
   <!-- *  most inherited from apache-wide parent pom -->
   <!-- ============================================= -->
-    <maven.version>3.0.5</maven.version>
+    <maven.version>3.2.2</maven.version>
+    <!-- Tycho requires at least Java 11 -->
+    <javaVersionMinBuild>11</javaVersionMinBuild>
     <felix.bundle.version>3.3.0</felix.bundle.version>
 
     <maven.surefire.heap>512m</maven.surefire.heap>
@@ -470,6 +472,7 @@
               <configuration>
                 <consoleOutput>true</consoleOutput>
                 <excludes>
+                  <exclude>**/.tycho-consumer-pom.xml</exclude>
                   <exclude>.github/**/*</exclude> <!-- GitHub config/template files -->
                   <exclude>release.properties</exclude> <!-- generated file -->
                   <exclude>README*</exclude>
@@ -477,6 +480,7 @@
                   <exclude>issuesFixed/**</exclude> <!-- generated file -->
                   <!-- Maven profile trigger files -->
                   <exclude>**/marker-file-identifying-*</exclude>
+                  <exclude>**/marker-file-enabling-*</exclude>
                   <exclude>DEPENDENCIES</exclude>  <!-- generated file -->
                   <exclude>**/MANIFEST.MF</exclude> <!-- MANIFEST.MF files cannot have comments -->
                   <exclude>**/*.ppt</exclude> <!--  power point sources -->
@@ -570,7 +574,7 @@
                   <version>${maven.version}</version>
                 </requireMavenVersion>
                 <requireJavaVersion>
-                  <version>${maven.compiler.target}</version>
+                  <version>${javaVersionMinBuild}</version>
                 </requireJavaVersion>
               </rules>
             </configuration>
@@ -670,6 +674,14 @@
           </execution>
         </executions>
       </plugin>
+
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-release-plugin</artifactId>
+        <configuration>
+          <autoVersionSubmodules>true</autoVersionSubmodules>
+        </configuration>
+      </plugin>
     </plugins>
   </build>
   
@@ -678,7 +690,7 @@
   <profiles>
     <!-- ************************************************** -->
     <!-- * apache-release                                 * -->
-    <!-- *   NOTE: This profile is activated while        * --> 
+    <!-- *   NOTE: This profile is activated while        * -->
     <!-- *    running the Maven build pipeline, usually   * -->
     <!-- *      clean verify (for mvn release:prepare) or * -->
     <!-- *      deploy (for mvn release;perform),         * -->
@@ -710,10 +722,6 @@
                   <phase>package</phase>
                 </execution>
               </executions>
-            </plugin>
-            <plugin>
-              <groupId>net.nicoulaj.maven.plugins</groupId>
-              <artifactId>checksum-maven-plugin</artifactId>
             </plugin>
           </plugins>
         </pluginManagement>
@@ -768,7 +776,7 @@
                 <id>default-cli</id>
               </execution>
             </executions>
-          </plugin>      
+          </plugin>
           
           <!-- to fix up any generated Javadocs to have consistent line ends in html files -->
           <!-- runs in several phases after package -->
@@ -804,7 +812,6 @@
                 </goals>
                 <configuration>
                   <target>
-                    <!-- FIXME: Why do the checksum on the POM? I think this can be removed -->
                     <!-- copy to target so checksum-maven-plugin can sha512 checkum it -->
                     <property name="pom-file-tgt"
                       location="${project.build.directory}/${project.artifactId}-${project.version}.pom" />
@@ -890,6 +897,10 @@
                 </configuration>
               </execution>
               <execution>
+                <!-- 
+                  - The POM checksum needs a separate treatment because it is not included in the 
+                  - attached artifacts.
+                  -->
                 <id>pom-checksum</id>
                 <goals>
                   <goal>files</goal>
@@ -917,6 +928,10 @@
             <artifactId>build-helper-maven-plugin</artifactId>
             <executions>
               <execution>
+                <!-- 
+                  - The POM checksum needs a separate treatment because it is not included in the 
+                  - attached artifacts.
+                  -->
                 <id>attach-artifacts</id>
                 <phase>verify</phase>
                 <goals>
@@ -939,8 +954,7 @@
 
 
     <!-- *************************************************** -->
-    <!-- * Run Rat report - for Jenkins                    * -->
-    <!-- * https://issues.apache.org/jira/browse/UIMA-2590 * -->
+    <!-- * Run Rat report                                  * -->
     <!-- *************************************************** -->
     <profile>
       <id>run-rat-report</id>
@@ -960,29 +974,12 @@
       </build>
     </profile>
 
-
     <!-- *********************************************** -->
-    <!-- *  Run actions only for uima-wide parent pom  * -->
-    <!-- *    ** not inherited by sub projects **      * -->
-    <!-- *   Produce Jira report                       * -->
-    <!-- *   attach patches for gpg and chksum plugins * -->
+    <!-- * Generate JIRA issues report                 * -->
     <!-- *********************************************** -->
     <profile>
       <id>mavenJirareport</id>
       <activation>
-        <!-- NOTE: if you try to make this work more generally, by 
-             using a marker file in all top-level release projects,
-             this approach fails because for other top-level
-             release projects, it substitutes the value of
-             the jiraVersion property from the top level pom, not
-             the pom being released.  So other release projects include
-             this kind of profile within themselves, in a profile
-             for "apache-release" triggered by name. -->
-             
-        <!-- It would be nice to have this only run when releasing, 
-             but the activation clauses are currently only
-             "ored" together, not "anded". -->
-
         <file>
           <exists>marker-file-identifying-parent-pom</exists>
         </file>
@@ -994,36 +991,33 @@
           </plugin>
 
           <plugin>
-            <artifactId>maven-changes-plugin</artifactId>
+            <artifactId>maven-clean-plugin</artifactId>
+            <executions>
+              <execution>
+                <id>clean-jira-changes-report</id>
+                <phase>clean</phase>
+                <goals>
+                  <goal>clean</goal>
+                </goals>
+                <configuration>
+                  <filesets>
+                    <fileset>
+                      <directory>issuesFixed</directory>
+                    </fileset>
+                  </filesets>
+                </configuration>
+              </execution>
+            </executions>
           </plugin>
-        </plugins>
-      </build>
-    </profile>
-    
-    <!-- **************************************** -->
-    <!-- * Override - don't produce Jira report * -->
-    <!-- **************************************** -->
-    
-    <!-- 
-      NOTE: if you use this, you MUST check in the generated Jira report into SVN, otherwise
-      it won't appear in the release assemblies. 
-    -->
-    <profile>
-      <id>mavenJirareportSkip</id>
-      <activation>
-        <property>
-          <name>maven.jiraReport.skip</name>
-        </property>
-      </activation>
-      <build>
-        <plugins>
-          <!-- Skip jira report -->
+          
           <plugin>
             <artifactId>maven-changes-plugin</artifactId>
             <executions>
               <execution>
                 <id>default-cli</id>
-                <phase />
+                <configuration>
+                  <fixVersionIds>${jiraVersion}</fixVersionIds>
+                </configuration>
               </execution>
             </executions>
           </plugin>
@@ -2902,6 +2896,209 @@
             </plugin>
           </plugins>
         </pluginManagement>
+      </build>
+    </profile>
+
+
+    <!-- *********************************************** -->
+    <!-- * Enable Tycho                                * -->
+    <!-- *********************************************** -->
+    <profile>
+      <id>tycho</id>
+      <activation>
+        <property>
+          <name>!disable-tycho</name>
+        </property>
+      </activation>
+      
+      <properties>
+        <tycho-version>2.7.3</tycho-version>
+      </properties>
+      
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-release-plugin</artifactId>
+            <configuration>
+              <!-- 
+                - Tycho-managed Eclipse files during release 
+                -
+                - We do not need the 'org.apache.maven.plugins:maven-scm-plugin:1.9.5:checkin' goal 
+                - here because the release plugin automatically commits twice during the 'prepare' phase
+                -->
+              <preparationGoals>
+                org.eclipse.tycho:tycho-versions-plugin:${tycho-version}:update-eclipse-metadata
+                org.apache.maven.plugins:maven-scm-plugin:1.9.5:add
+              </preparationGoals>
+              <completionGoals>
+                org.eclipse.tycho:tycho-versions-plugin:${tycho-version}:update-eclipse-metadata
+                org.apache.maven.plugins:maven-scm-plugin:1.9.5:add
+              </completionGoals>
+            </configuration>
+          </plugin>
+          
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-scm-plugin</artifactId>
+            <executions>
+              <execution>
+                <!-- 
+                  - Tycho-managed Eclipse files during release 
+                  -->
+                <id>default-cli</id>
+                <goals>
+                  <goal>add</goal>
+                  <goal>checkin</goal>
+                </goals>
+                <configuration>
+                  <includes>
+                    *-eclipse-*/META-INF/MANIFEST.MF,
+                    *-eclipse-*/feature.xml,
+                    *-eclipse-*/*.product,
+                    *-eclipse-*/category.xml
+                  </includes>
+                  <excludes>**/target/**</excludes>
+                  <message>Changing the Eclipse files versions</message>
+                </configuration>
+              </execution>
+            </executions>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+        
+    <!-- *********************************************** -->
+    <!-- * Enable Tycho in a module                    * -->
+    <!-- *********************************************** -->
+    <profile>
+      <id>tycho-module</id>
+      <activation>
+        <file>
+          <exists>marker-file-identifying-tycho-module</exists>
+        </file>
+      </activation>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>org.eclipse.tycho</groupId>
+            <artifactId>tycho-maven-plugin</artifactId>
+            <version>${tycho-version}</version>
+            <extensions>true</extensions>
+          </plugin>
+          <plugin>
+            <groupId>org.eclipse.tycho</groupId>
+            <artifactId>target-platform-configuration</artifactId>
+            <version>${tycho-version}</version>
+            <configuration>
+              <pomDependencies>consider</pomDependencies>
+            </configuration>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+    
+    <!-- *********************************************** -->
+    <!-- * Enable auto-staging of release artifacts    * -->
+    <!-- *                                             * -->
+    <!-- * Modules need to place their artifacts into  * -->
+    <!-- * ${staging-local-root}                       * -->
+    <!-- *********************************************** -->
+    <profile>
+      <id>apache-release-rc-auto-staging-config</id>
+      <activation>
+        <property>
+          <name>!disable-rc-auto-staging</name>
+        </property>
+      </activation>
+      
+      <properties>
+        <releaseCandidateNum></releaseCandidateNum>
+        <staging-scm-root>scm:svn:https://dist.apache.org/repos/dist/dev/uima/</staging-scm-root>
+        <staging-local-root>${project.build.directory}/staging</staging-local-root>
+        <staging-folder>${project.artifactId}-${project.version}-RC-${staging-timestamp}-${candidate-id}</staging-folder>
+      </properties>
+    </profile>
+    
+    <profile>
+      <id>apache-release-rc-auto-staging</id>
+      <activation>
+        <property>
+          <name>!disable-rc-auto-staging</name>
+        </property>
+        <file>
+          <exists>marker-file-enabling-auto-staging</exists>
+        </file>
+      </activation>
+      
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>org.codehaus.mojo</groupId>
+            <artifactId>buildnumber-maven-plugin</artifactId>
+            <executions>
+              <execution>
+                <id>generate-candidate-id</id>
+                <phase>initialize</phase>
+                <goals>
+                  <goal>create</goal>
+                </goals>
+                <configuration>
+                  <buildNumberPropertyName>candidate-id</buildNumberPropertyName>
+                  <timestampPropertyName>staging-timestamp</timestampPropertyName>
+                  <shortRevisionLength>7</shortRevisionLength>
+                  <timestampFormat>yyyyMMddHHmm</timestampFormat>
+                  <timezone>Z</timezone>
+                </configuration>
+              </execution>
+            </executions>
+          </plugin>
+        
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-scm-plugin</artifactId>
+            <executions>
+              <execution>
+                <id>checkout-staging</id>
+                <phase>initialize</phase>
+                <goals>
+                  <goal>checkout</goal>
+                </goals>
+                <configuration>
+                  <connectionType>developerConnection</connectionType>
+                  <developerConnectionUrl>${staging-scm-root}</developerConnectionUrl>
+                  <checkoutDirectory>${staging-local-root}</checkoutDirectory>
+                </configuration>
+              </execution>
+              <execution>
+                <id>add-staging-files</id>
+                <phase>deploy</phase>
+                <goals>
+                  <goal>add</goal>
+                </goals>
+                <configuration>
+                  <connectionType>developerConnection</connectionType>
+                  <developerConnectionUrl>${staging-scm-root}</developerConnectionUrl>
+                  <basedir>${staging-local-root}</basedir>
+                  <includes>${staging-folder}/**/*</includes>
+                </configuration>
+              </execution>
+              <execution>
+                <id>commit-staging-files</id>
+                <phase>deploy</phase>
+                <goals>
+                  <goal>checkin</goal>
+                </goals>
+                <configuration>
+                  <connectionType>developerConnection</connectionType>
+                  <developerConnectionUrl>${staging-scm-root}</developerConnectionUrl>
+                  <basedir>${staging-local-root}</basedir>
+                  <message>Staging release artifacts for ${project.artifactId}-${project.version}-RC-${staging-timestamp}-${candidate-id}</message>
+                </configuration>
+              </execution>
+            </executions>
+          </plugin>
+        </plugins>
       </build>
     </profile>
   </profiles>
