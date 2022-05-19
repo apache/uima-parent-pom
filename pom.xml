@@ -2849,8 +2849,8 @@
       </properties>
       <dependencies>
         <!--
-          - java.xml.bind and javax.annotation-api have been removed in Java 11 from the JDK, need to add it 
-          as dependency
+          - java.xml.bind and javax.annotation-api have been removed in Java 11 from the JDK, need 
+          - to add them as dependencies
         -->
         <dependency>
           <groupId>javax.xml.bind</groupId>
@@ -2871,15 +2871,30 @@
           <scope>runtime</scope>
         </dependency>
         <dependency>
-          <groupId>javax.annotation</groupId>
-          <artifactId>javax.annotation-api</artifactId>
-          <version>1.3.2</version>
+          <groupId>javax.activation</groupId>
+          <artifactId>javax.activation-api</artifactId>
+          <version>1.2.0</version>
         </dependency>
       </dependencies>
 
       <build>
         <pluginManagement>
           <plugins>
+            <plugin>
+              <groupId>org.apache.maven.plugins</groupId>
+              <artifactId>maven-dependency-plugin</artifactId>
+              <configuration>
+                <ignoredUnusedDeclaredDependencies combine.children="append">
+                  <!--
+                    - JAXB is used via reflection and cannot be detected by Maven
+                  -->
+                  <dependency>javax.xml.bind:jaxb-api</dependency>
+                  <dependency>com.sun.xml.bind:jaxb-core</dependency>
+                  <dependency>com.sun.xml.bind:jaxb-impl</dependency>
+                  <dependency>javax.activation:javax.activation-api</dependency>
+                </ignoredUnusedDeclaredDependencies>
+              </configuration>
+            </plugin>
             <plugin>
               <groupId>org.apache.maven.plugins</groupId>
               <artifactId>maven-surefire-plugin</artifactId>
