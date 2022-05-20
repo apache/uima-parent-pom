@@ -53,7 +53,7 @@
 
   <groupId>org.apache.uima</groupId>
   <artifactId>parent-pom</artifactId>
-  <version>15-SNAPSHOT</version>
+  <version>15</version>
   <packaging>pom</packaging>
 
   <name>Apache UIMA ${project.artifactId}</name>
@@ -97,7 +97,7 @@
     <connection>scm:git:https://github.com/apache/uima-parent-pom</connection>
     <developerConnection>scm:git:https://github.com/apache/uima-parent-pom</developerConnection>
     <url>https://github.com/apache/uima-parent-pom</url>
-    <tag>HEAD</tag>
+    <tag>parent-pom-15</tag>
   </scm>
 
   <issueManagement>
@@ -826,10 +826,8 @@
                 <configuration>
                   <target>
                     <!-- copy to target so checksum-maven-plugin can sha512 checkum it -->
-                    <property name="pom-file-tgt"
-                      location="${project.build.directory}/${project.artifactId}-${project.version}.pom" />
-                    <property name="pom-file-src"
-                      location="${project.build.directory}/../pom.xml" />
+                    <property name="pom-file-tgt" location="${project.build.directory}/${project.artifactId}-${project.version}.pom" />
+                    <property name="pom-file-src" location="${project.build.directory}/../pom.xml" />
                     <copy file="${pom-file-src}" tofile="${pom-file-tgt}" />
                   </target>
                 </configuration>
@@ -843,14 +841,12 @@
                 <configuration>
                   <target>
                     <taskdef name="if" classname="net.sf.antcontrib.logic.IfTask" />
-                    <property name="source-release"
-                      location="${project.build.directory}/${project.artifactId}-${project.version}-source-release.zip" />
+                    <property name="source-release" location="${project.build.directory}/${project.artifactId}-${project.version}-source-release.zip" />
                     <if>
                       <available file="${source-release}" />
                       <then>
                         <echo message="Generating checksums for source-release.zip" />
-                        <checksum format="MD5SUM" forceoverwrite="yes" algorithm="SHA-512"
-                          fileext=".sha512" file="${source-release}" />
+                        <checksum format="MD5SUM" forceoverwrite="yes" algorithm="SHA-512" fileext=".sha512" file="${source-release}" />
                         <echo message="Generating gpg signatures for source-release.zip" />
                         <exec executable="gpg" failonerror="true">
                           <arg value="--detach-sign" />
@@ -3044,7 +3040,7 @@
       </activation>
       
       <properties>
-        <releaseCandidateNum></releaseCandidateNum>
+        <releaseCandidateNum />
         <staging-scm-root>scm:svn:https://dist.apache.org/repos/dist/dev/uima/</staging-scm-root>
         <staging-local-root>${project.build.directory}/staging</staging-local-root>
         <staging-folder>${project.artifactId}-${project.version}-RC-${staging-timestamp}-${candidate-id}</staging-folder>
