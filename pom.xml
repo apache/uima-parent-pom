@@ -53,7 +53,7 @@
 
   <groupId>org.apache.uima</groupId>
   <artifactId>parent-pom</artifactId>
-  <version>16-SNAPSHOT</version>
+  <version>15-SNAPSHOT</version>
   <packaging>pom</packaging>
 
   <name>Apache UIMA ${project.artifactId}</name>
@@ -2933,14 +2933,27 @@
         <property>
           <name>!disable-tycho</name>
         </property>
-        <file>
-          <exists>marker-file-enabling-tycho-release</exists>
-        </file>
       </activation>
       
       <properties>
         <tycho-version>2.7.3</tycho-version>
       </properties>
+    </profile>
+
+
+    <!-- *********************************************** -->
+    <!-- * Enable Tycho during release builds          * -->
+    <!-- *********************************************** -->
+    <profile>
+      <id>tycho-release</id>
+      <activation>
+        <property>
+          <name>!disable-tycho</name>
+        </property>
+        <file>
+          <exists>marker-file-enabling-tycho-release</exists>
+        </file>
+      </activation>
       
       <build>
         <plugins>
