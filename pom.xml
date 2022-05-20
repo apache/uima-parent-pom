@@ -824,11 +824,48 @@
                   <goal>run</goal>
                 </goals>
                 <configuration>
+                  <!-- copy to target so checksum-maven-plugin can sha512 checkum it -->
                   <target>
-                    <!-- copy to target so checksum-maven-plugin can sha512 checkum it -->
+                    <taskdef name="if" classname="net.sf.antcontrib.logic.IfTask" />
+                    <if>
+                      <!-- 
+                        - In some Tycho modules (e.g. feature modules), Tycho generates a "consumer
+                        - pom" which may contain additional information injected by Tycho based on
+                        - the Eclipse metadata files. If such a consumer pom is present, we need
+                        - to use it as a basis for calculating the SHA512 hash and the GPG signature
+                        -->
+                      <available file="${project.basedir}/.tycho-consumer-pom.xml" />
+                      <then>
+                        <property name="pom-file-src" location="${project.basedir}/.tycho-consumer-pom.xml" />
+                      </then>
+                      <else>
+                        <property name="pom-file-src" location="${project.basedir}/pom.xml" />
+                      </else>
+                    </if>
                     <property name="pom-file-tgt" location="${project.build.directory}/${project.artifactId}-${project.version}.pom" />
-                    <property name="pom-file-src" location="${project.build.directory}/../pom.xml" />
                     <copy file="${pom-file-src}" tofile="${pom-file-tgt}" />
+                  </target>
+                </configuration>
+              </execution>
+              <execution>
+                <!-- 
+                  - The POM checksum needs a separate treatment because it is not included in the 
+                  - attached artifacts.
+                  - Cannot use checksum-maven-plugin:files here because of 
+                  - https://github.com/nicoulaj/checksum-maven-plugin/issues/136
+                  -->
+                <id>pom-checksum</id>
+                <phase>verify</phase>
+                <goals>
+                  <goal>run</goal>
+                </goals>
+                <configuration>
+                  <target>
+                    <checksum algorithm="SHA-512" fileext=".sha512" format="MD5SUM" forceoverwrite="yes">
+                      <fileset dir="${project.build.directory}">
+                        <include name="${project.artifactId}-${project.version}.pom" />
+                      </fileset>
+                    </checksum>
                   </target>
                 </configuration>
               </execution>
@@ -892,6 +929,7 @@
             <groupId>net.nicoulaj.maven.plugins</groupId>
             <artifactId>checksum-maven-plugin</artifactId>
             <executions>
+              <!-- POM checksum is calculated separately above using antrun - see comment there -->
               <execution>
                 <id>artifacts-checksum</id>
                 <goals>
@@ -903,30 +941,6 @@
                   <algorithms>
                     <algorithm>SHA-512</algorithm>
                   </algorithms>
-                </configuration>
-              </execution>
-              <execution>
-                <!-- 
-                  - The POM checksum needs a separate treatment because it is not included in the 
-                  - attached artifacts.
-                  -->
-                <id>pom-checksum</id>
-                <goals>
-                  <goal>files</goal>
-                </goals>
-                <configuration>
-                  <appendFilename>true</appendFilename>
-                  <algorithms>
-                    <algorithm>SHA-512</algorithm>
-                  </algorithms>
-                  <fileSets>
-                    <fileSet>
-                      <directory>${project.build.directory}</directory>
-                      <includes>
-                        <include>${project.artifactId}-${project.version}.pom</include>
-                      </includes>
-                    </fileSet>
-                  </fileSets>
                 </configuration>
               </execution>
             </executions>
