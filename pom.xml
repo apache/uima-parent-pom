@@ -2937,6 +2937,9 @@
         <property>
           <name>!disable-tycho</name>
         </property>
+        <file>
+          <exists>marker-file-enable-tycho-release</exists>
+        </file>
       </activation>
       
       <properties>
