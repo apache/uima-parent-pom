@@ -660,6 +660,28 @@
         <artifactId>maven-antrun-plugin</artifactId>
         <executions>
           <execution>
+            <id>fix-text-file-line-endings</id>
+            <goals>
+              <goal>run</goal>
+            </goals>
+            <phase>compile</phase>
+            <configuration>
+              <target>
+                <taskdef name="if" classname="net.sf.antcontrib.logic.IfTask" />
+                <if>
+                  <available file="${project.build.outputDirectory}" />
+                  <then>
+                    <fixcrlf srcdir="${project.build.outputDirectory}">
+                      <include name="**/META-INF/DEPENDENCIES" />
+                      <include name="**/META-INF/LICENSE" />
+                      <include name="**/META-INF/NOTICE" />
+                    </fixcrlf>
+                  </then>
+                </if>
+              </target>
+            </configuration>
+          </execution>
+          <execution>
             <id>dup-meta-jar-cleanup</id>
             <goals>
               <goal>run</goal>
@@ -672,7 +694,7 @@
               </target>
             </configuration>
           </execution>
-        </executions>
+                 </executions>
       </plugin>
 
       <plugin>
