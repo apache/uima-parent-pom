@@ -76,9 +76,6 @@
       <unsubscribe>dev-unsubscribe@uima.apache.org</unsubscribe>
       <post>mailto:dev@uima.apache.org</post>
       <archive>https://lists.apache.org/list.html?dev@uima.apache.org</archive>
-      <otherArchives>
-        <otherArchive>https://mail-archives.apache.org/mod_mbox/uima-dev</otherArchive>
-      </otherArchives>
     </mailingList>
     <mailingList>
       <name>Apache UIMA Users List</name>
@@ -86,9 +83,6 @@
       <unsubscribe>user-unsubscribe@uima.apache.org</unsubscribe>
       <post>mailto:user@uima.apache.org</post>
       <archive>https://lists.apache.org/list.html?user@uima.apache.org</archive>
-      <otherArchives>
-        <otherArchive>https://mail-archives.apache.org/mod_mbox/uima-user</otherArchive>
-      </otherArchives>
     </mailingList>
     <mailingList>
       <name>Apache UIMA Commits List</name>
@@ -96,9 +90,6 @@
       <unsubscribe>commits-unsubscribe@uima.apache.org</unsubscribe>
       <post>mailto:commits@uima.apache.org</post>
       <archive>https://lists.apache.org/list.html?commits@uima.apache.org</archive>
-      <otherArchives>
-        <otherArchive>https://mail-archives.apache.org/mod_mbox/uima-commits</otherArchive>
-      </otherArchives>
     </mailingList>
   </mailingLists>
 
