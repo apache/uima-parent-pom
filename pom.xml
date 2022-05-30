@@ -53,7 +53,7 @@
 
   <groupId>org.apache.uima</groupId>
   <artifactId>parent-pom</artifactId>
-  <version>15-SNAPSHOT</version>
+  <version>16-SNAPSHOT</version>
   <packaging>pom</packaging>
 
   <name>Apache UIMA ${project.artifactId}</name>
@@ -76,9 +76,6 @@
       <unsubscribe>dev-unsubscribe@uima.apache.org</unsubscribe>
       <post>mailto:dev@uima.apache.org</post>
       <archive>https://lists.apache.org/list.html?dev@uima.apache.org</archive>
-      <otherArchives>
-        <otherArchive>https://mail-archives.apache.org/mod_mbox/uima-dev</otherArchive>
-      </otherArchives>
     </mailingList>
     <mailingList>
       <name>Apache UIMA Users List</name>
@@ -86,9 +83,6 @@
       <unsubscribe>user-unsubscribe@uima.apache.org</unsubscribe>
       <post>mailto:user@uima.apache.org</post>
       <archive>https://lists.apache.org/list.html?user@uima.apache.org</archive>
-      <otherArchives>
-        <otherArchive>https://mail-archives.apache.org/mod_mbox/uima-user</otherArchive>
-      </otherArchives>
     </mailingList>
     <mailingList>
       <name>Apache UIMA Commits List</name>
@@ -96,9 +90,6 @@
       <unsubscribe>commits-unsubscribe@uima.apache.org</unsubscribe>
       <post>mailto:commits@uima.apache.org</post>
       <archive>https://lists.apache.org/list.html?commits@uima.apache.org</archive>
-      <otherArchives>
-        <otherArchive>https://mail-archives.apache.org/mod_mbox/uima-commits</otherArchive>
-      </otherArchives>
     </mailingList>
   </mailingLists>
 
@@ -144,7 +135,7 @@
       generates a giant request for all changes
     -->
     <!-- for parent-pom-14. Change for each release -->
-    <jiraVersion>parent-pom-14</jiraVersion>  
+    <jiraVersion>parent-pom-15</jiraVersion>  
     <!--  *********************************************************************************************************** -->
     <!--                                 U  G  H   change manually for release (to remove -SNAPSHOT                 * -->
     <!--  *********************************************************************************************************** -->
@@ -839,13 +830,48 @@
                   <goal>run</goal>
                 </goals>
                 <configuration>
+                  <!-- copy to target so checksum-maven-plugin can sha512 checkum it -->
                   <target>
-                    <!-- copy to target so checksum-maven-plugin can sha512 checkum it -->
-                    <property name="pom-file-tgt"
-                      location="${project.build.directory}/${project.artifactId}-${project.version}.pom" />
-                    <property name="pom-file-src"
-                      location="${project.build.directory}/../pom.xml" />
+                    <taskdef name="if" classname="net.sf.antcontrib.logic.IfTask" />
+                    <if>
+                      <!-- 
+                        - In some Tycho modules (e.g. feature modules), Tycho generates a "consumer
+                        - pom" which may contain additional information injected by Tycho based on
+                        - the Eclipse metadata files. If such a consumer pom is present, we need
+                        - to use it as a basis for calculating the SHA512 hash and the GPG signature
+                        -->
+                      <available file="${project.basedir}/.tycho-consumer-pom.xml" />
+                      <then>
+                        <property name="pom-file-src" location="${project.basedir}/.tycho-consumer-pom.xml" />
+                      </then>
+                      <else>
+                        <property name="pom-file-src" location="${project.basedir}/pom.xml" />
+                      </else>
+                    </if>
+                    <property name="pom-file-tgt" location="${project.build.directory}/${project.artifactId}-${project.version}.pom" />
                     <copy file="${pom-file-src}" tofile="${pom-file-tgt}" />
+                  </target>
+                </configuration>
+              </execution>
+              <execution>
+                <!-- 
+                  - The POM checksum needs a separate treatment because it is not included in the 
+                  - attached artifacts.
+                  - Cannot use checksum-maven-plugin:files here because of 
+                  - https://github.com/nicoulaj/checksum-maven-plugin/issues/136
+                  -->
+                <id>pom-checksum</id>
+                <phase>verify</phase>
+                <goals>
+                  <goal>run</goal>
+                </goals>
+                <configuration>
+                  <target>
+                    <checksum algorithm="SHA-512" fileext=".sha512" format="MD5SUM" forceoverwrite="yes">
+                      <fileset dir="${project.build.directory}">
+                        <include name="${project.artifactId}-${project.version}.pom" />
+                      </fileset>
+                    </checksum>
                   </target>
                 </configuration>
               </execution>
@@ -858,14 +884,12 @@
                 <configuration>
                   <target>
                     <taskdef name="if" classname="net.sf.antcontrib.logic.IfTask" />
-                    <property name="source-release"
-                      location="${project.build.directory}/${project.artifactId}-${project.version}-source-release.zip" />
+                    <property name="source-release" location="${project.build.directory}/${project.artifactId}-${project.version}-source-release.zip" />
                     <if>
                       <available file="${source-release}" />
                       <then>
                         <echo message="Generating checksums for source-release.zip" />
-                        <checksum format="MD5SUM" forceoverwrite="yes" algorithm="SHA-512"
-                          fileext=".sha512" file="${source-release}" />
+                        <checksum format="MD5SUM" forceoverwrite="yes" algorithm="SHA-512" fileext=".sha512" file="${source-release}" />
                         <echo message="Generating gpg signatures for source-release.zip" />
                         <exec executable="gpg" failonerror="true">
                           <arg value="--detach-sign" />
@@ -911,6 +935,7 @@
             <groupId>net.nicoulaj.maven.plugins</groupId>
             <artifactId>checksum-maven-plugin</artifactId>
             <executions>
+              <!-- POM checksum is calculated separately above using antrun - see comment there -->
               <execution>
                 <id>artifacts-checksum</id>
                 <goals>
@@ -922,30 +947,6 @@
                   <algorithms>
                     <algorithm>SHA-512</algorithm>
                   </algorithms>
-                </configuration>
-              </execution>
-              <execution>
-                <!-- 
-                  - The POM checksum needs a separate treatment because it is not included in the 
-                  - attached artifacts.
-                  -->
-                <id>pom-checksum</id>
-                <goals>
-                  <goal>files</goal>
-                </goals>
-                <configuration>
-                  <appendFilename>true</appendFilename>
-                  <algorithms>
-                    <algorithm>SHA-512</algorithm>
-                  </algorithms>
-                  <fileSets>
-                    <fileSet>
-                      <directory>${project.build.directory}</directory>
-                      <includes>
-                        <include>${project.artifactId}-${project.version}.pom</include>
-                      </includes>
-                    </fileSet>
-                  </fileSets>
                 </configuration>
               </execution>
             </executions>
@@ -2957,6 +2958,22 @@
       <properties>
         <tycho-version>2.7.3</tycho-version>
       </properties>
+    </profile>
+
+
+    <!-- *********************************************** -->
+    <!-- * Enable Tycho during release builds          * -->
+    <!-- *********************************************** -->
+    <profile>
+      <id>tycho-release</id>
+      <activation>
+        <property>
+          <name>!disable-tycho</name>
+        </property>
+        <file>
+          <exists>marker-file-enabling-tycho-release</exists>
+        </file>
+      </activation>
       
       <build>
         <plugins>
@@ -3056,7 +3073,7 @@
       </activation>
       
       <properties>
-        <releaseCandidateNum></releaseCandidateNum>
+        <releaseCandidateNum />
         <staging-scm-root>scm:svn:https://dist.apache.org/repos/dist/dev/uima/</staging-scm-root>
         <staging-local-root>${project.build.directory}/staging</staging-local-root>
         <staging-folder>${project.artifactId}-${project.version}-RC-${staging-timestamp}-${candidate-id}</staging-folder>
