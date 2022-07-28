@@ -215,6 +215,50 @@
     <pluginManagement>
       <plugins>
         <plugin>
+          <groupId>com.agilejava.docbkx</groupId>
+          <artifactId>docbkx-maven-plugin</artifactId>
+          <version>2.0.17</version>
+        </plugin>
+      
+        <plugin>
+          <groupId>org.jacoco</groupId>
+          <artifactId>jacoco-maven-plugin</artifactId>
+          <version>0.8.8</version>
+        </plugin>
+      
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-pmd-plugin</artifactId>
+          <version>3.16.0</version>
+        </plugin>
+      
+        <plugin>
+          <groupId>org.apache.uima</groupId>
+          <artifactId>PearPackagingMavenPlugin</artifactId>
+          <version>3.3.0</version>
+        </plugin>
+      
+        <plugin>
+          <groupId>com.github.siom79.japicmp</groupId>
+          <artifactId>japicmp-maven-plugin</artifactId>
+          <version>0.15.7</version>
+          <dependencies>
+            <dependency>
+              <!-- See: https://issues.apache.org/jira/browse/UIMA-6349 -->
+              <groupId>org.codehaus.groovy</groupId>
+              <artifactId>groovy-jsr223</artifactId>
+              <version>2.5.17</version>
+            </dependency>
+          </dependencies>
+        </plugin>
+        
+        <plugin>
+          <groupId>com.github.spotbugs</groupId>
+          <artifactId>spotbugs-maven-plugin</artifactId>
+          <version>4.7.0.0</version>
+        </plugin>
+      
+        <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-gpg-plugin</artifactId>
           <version>3.0.1</version>
@@ -329,7 +373,7 @@
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-toolchains-plugin</artifactId>
-          <version>3.0.0</version>
+          <version>3.1.0</version>
         </plugin>
 
         <plugin>
@@ -1164,7 +1208,6 @@
           <plugin>
             <groupId>com.agilejava.docbkx</groupId>
             <artifactId>docbkx-maven-plugin</artifactId>
-            <version>2.0.17</version>
             <configuration>  <!-- general configuration for both HTML and PDF -->
               <sourceDirectory>${basedir}/src/docbook</sourceDirectory>
               <includes>${bookNameRoot}.xml</includes>
@@ -2383,7 +2426,6 @@
           <plugin>
             <groupId>org.apache.uima</groupId>
             <artifactId>PearPackagingMavenPlugin</artifactId>
-            <version>2.10.5</version>
             <extensions>true</extensions>
             <executions>
               <execution>
@@ -2632,7 +2674,6 @@
           <plugin>
             <groupId>com.github.spotbugs</groupId>
             <artifactId>spotbugs-maven-plugin</artifactId>
-            <version>4.6.0.0</version>
             <executions>
               <execution>
                 <id>default</id>
@@ -2673,7 +2714,6 @@
           <plugin>
             <groupId>org.jacoco</groupId>
             <artifactId>jacoco-maven-plugin</artifactId>
-            <version>0.8.8</version>
             <executions>
               <execution>
                 <id>default-prepare-agent</id>
@@ -2717,7 +2757,6 @@
           <plugin>
             <groupId>org.apache.maven.plugins</groupId>
             <artifactId>maven-pmd-plugin</artifactId>
-            <version>3.16.0</version>
             <executions>
               <execution>
                 <phase>package</phase>
@@ -2805,7 +2844,6 @@
           <plugin>
             <groupId>com.github.siom79.japicmp</groupId>
             <artifactId>japicmp-maven-plugin</artifactId>
-            <version>0.15.7</version>
             <configuration>
               <oldVersion>
                 <dependency>
@@ -2873,7 +2911,7 @@
       </activation>
       
       <properties>
-        <tycho-version>2.7.3</tycho-version>
+        <tycho-version>2.7.4</tycho-version>
       </properties>
     </profile>
 
