@@ -17,7 +17,7 @@
 
 github:
   description: "Apache UIMA Parent POM"
-  homepage: https://uima.apache.org/
+  homepage: https://uima.apache.org
   dependabot_alerts:  true
   dependabot_updates: false
   notifications:
@@ -32,8 +32,8 @@ github:
   - text-analysis
   features:
     wiki: false
-    issues: false
-    projects: false
+    issues: true
+    projects: true
   enabled_merge_buttons:
     squash:  true
     merge:   true
@@ -45,4 +45,3 @@ github:
         strict: true
         contexts:
           - continuous-integration/jenkins/pr-merge
-    
