@@ -184,7 +184,7 @@
   <!-- ============================================= -->
     <maven.version>3.6.3</maven.version>
     <!-- Tycho requires at least Java 11 -->
-    <javaVersionMinBuild>11</javaVersionMinBuild>
+    <javaVersionMinBuild>17</javaVersionMinBuild>
     <felix.bundle.version>3.3.0</felix.bundle.version>
 
     <maven.surefire.heap>512m</maven.surefire.heap>
@@ -514,6 +514,7 @@
               <configuration>
                 <consoleOutput>true</consoleOutput>
                 <excludes>
+                  <exclude>**/.gitattributes</exclude>
                   <exclude>**/.tycho-consumer-pom.xml</exclude>
                   <exclude>.github/**/*</exclude> <!-- GitHub config/template files -->
                   <exclude>release.properties</exclude> <!-- generated file -->
