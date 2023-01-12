@@ -1014,6 +1014,7 @@
     <!-- *********************************************** -->
     <profile>
       <id>mavenJirareport</id>
+      <id>mavenChangesReport</id>
       <activation>
         <file>
           <exists>marker-file-identifying-parent-pom</exists>
