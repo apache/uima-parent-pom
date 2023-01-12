@@ -1013,7 +1013,6 @@
     <!-- * Generate changes report                     * -->
     <!-- *********************************************** -->
     <profile>
-      <id>mavenJirareport</id>
       <id>mavenChangesReport</id>
       <activation>
         <file>
