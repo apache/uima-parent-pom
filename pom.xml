@@ -1013,10 +1013,10 @@
     <!-- * Generate changes report                     * -->
     <!-- *********************************************** -->
     <profile>
-      <id>mavenChangesReport</id>
+      <id>generate-changes-report</id>
       <activation>
         <file>
-          <exists>marker-file-identifying-parent-pom</exists>
+          <exists>marker-file-enabling-changes-report</exists>
         </file>
       </activation>
       <build>
@@ -1037,7 +1037,7 @@
                 <configuration>
                   <filesets>
                     <fileset>
-                      <directory>issuesFixed</directory>
+                      <directory>${basedir}/issuesFixed</directory>
                     </fileset>
                   </filesets>
                 </configuration>
@@ -1059,6 +1059,7 @@
                   <onlyCurrentVersion>true</onlyCurrentVersion>
                   <githubAPIScheme>https</githubAPIScheme>
                   <githubAPIPort>443</githubAPIPort>
+                  <outputDirectory>${basedir}/issuesFixed/</outputDirectory>
                 </configuration>
               </execution>
             </executions>
