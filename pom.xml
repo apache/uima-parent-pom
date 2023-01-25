@@ -30,7 +30,7 @@
 
   <groupId>org.apache.uima</groupId>
   <artifactId>parent-pom</artifactId>
-  <version>16-SNAPSHOT</version>
+  <version>17-SNAPSHOT</version>
   <packaging>pom</packaging>
 
   <name>Apache UIMA ${project.artifactId}</name>
