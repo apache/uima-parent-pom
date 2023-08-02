@@ -150,8 +150,6 @@
     <!-- *  most inherited from apache-wide parent pom -->
     <!-- ============================================= -->
     <maven.version>3.9.3</maven.version>
-    <!-- Tycho 2.x requires at least Java 11 -->
-    <!-- Tycho 3.x requires at least Java 17 -->
     <javaVersionMinBuild>17</javaVersionMinBuild>
     <felix.bundle.version>3.3.0</felix.bundle.version>
 
@@ -2960,7 +2958,7 @@
       </activation>
       
       <properties>
-        <tycho-version>3.0.5</tycho-version>
+        <tycho-version>4.0.0</tycho-version>
       </properties>
     </profile>
 
