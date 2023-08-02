@@ -45,7 +45,7 @@
     This is the common UIMA parent pom. It contains the project-wide defaults.
   </description>
 
-  <url>${uimaWebsiteUrl}</url>
+  <url>https://uima.apache.org</url>
   <inceptionYear>2006</inceptionYear>
 
   <mailingLists>
