@@ -129,9 +129,6 @@
 
     <pdfPaperType>USletter</pdfPaperType>
     
-    <!-- This next dir *must match* the one the PearPackagingMavenPlugin uses -->
-    <pearPackagingDir>${project.build.directory}/pearPackaging</pearPackagingDir>    
-  
     <!-- poms wanting this need to set the postNoticeText to this value -->
     <ibmNoticeText>
       Portions of Apache UIMA were originally developed by
@@ -181,6 +178,18 @@
     <pluginManagement>
       <plugins>
         <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-invoker-plugin</artifactId>
+          <version>3.6.0</version>
+        </plugin>
+
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-clean-plugin</artifactId>
+          <version>3.3.1</version>
+        </plugin>
+
+        <plugin>
           <groupId>com.agilejava.docbkx</groupId>
           <artifactId>docbkx-maven-plugin</artifactId>
           <version>2.0.17</version>
@@ -189,45 +198,31 @@
         <plugin>
           <groupId>org.jacoco</groupId>
           <artifactId>jacoco-maven-plugin</artifactId>
-          <version>0.8.8</version>
+          <version>0.8.10</version>
         </plugin>
       
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-pmd-plugin</artifactId>
-          <version>3.19.0</version>
-        </plugin>
-      
-        <plugin>
-          <groupId>org.apache.uima</groupId>
-          <artifactId>PearPackagingMavenPlugin</artifactId>
-          <version>3.3.1</version>
+          <version>3.21.0</version>
         </plugin>
       
         <plugin>
           <groupId>com.github.siom79.japicmp</groupId>
           <artifactId>japicmp-maven-plugin</artifactId>
-          <version>0.17.1</version>
-          <dependencies>
-            <dependency>
-              <!-- See: https://issues.apache.org/jira/browse/UIMA-6349 -->
-              <groupId>org.codehaus.groovy</groupId>
-              <artifactId>groovy-jsr223</artifactId>
-              <version>2.5.20</version>
-            </dependency>
-          </dependencies>
+          <version>0.17.2</version>
         </plugin>
         
         <plugin>
           <groupId>com.github.spotbugs</groupId>
           <artifactId>spotbugs-maven-plugin</artifactId>
-          <version>4.7.3.0</version>
+          <version>4.7.3.5</version>
         </plugin>
       
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-gpg-plugin</artifactId>
-          <version>3.0.1</version>
+          <version>3.1.0</version>
         </plugin>
 
         <plugin>
@@ -239,25 +234,25 @@
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-dependency-plugin</artifactId>
-          <version>3.4.0</version>
+          <version>3.6.0</version>
         </plugin>
 
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-scm-plugin</artifactId>
-          <version>1.13.0</version>
+          <version>2.0.1</version>
         </plugin>
 
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-resources-plugin</artifactId>
-          <version>3.3.0</version>
+          <version>3.3.1</version>
         </plugin>
 
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-deploy-plugin</artifactId>
-          <version>3.0.0</version>
+          <version>3.1.1</version>
           <configuration> 
             <!-- https://issues.apache.org/jira/browse/UIMA-5367 -->
             <retryFailedDeploymentCount>10</retryFailedDeploymentCount>
@@ -267,13 +262,19 @@
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-source-plugin</artifactId>
-          <version>3.2.1</version>
+          <version>3.3.0</version>
         </plugin>
 
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-surefire-plugin</artifactId>
-          <version>2.22.2</version>
+          <version>3.1.2</version>
+        </plugin>
+
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-failsafe-plugin</artifactId>
+          <version>3.1.2</version>
         </plugin>
 
         <plugin>
@@ -286,8 +287,9 @@
              Disable running assembly:assembly with
              warning message to use install instead -->
         <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-assembly-plugin</artifactId>
-          <version>3.4.2</version>
+          <version>3.6.0</version>
           <executions>
             <execution>
               <id>default-cli</id>
@@ -303,18 +305,19 @@
         <plugin>
           <groupId>org.codehaus.mojo</groupId>
           <artifactId>build-helper-maven-plugin</artifactId>
-          <version>3.3.0</version>
+          <version>3.4.0</version>
         </plugin>
+
         <plugin>
           <groupId>org.codehaus.mojo</groupId>
           <artifactId>buildnumber-maven-plugin</artifactId>
-          <version>3.0.0</version>
+          <version>3.2.0</version>
         </plugin>
 
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-plugin-plugin</artifactId>
-          <version>3.7.0</version>
+          <version>3.9.0</version>
           <executions>
             <execution>
               <!-- force to use process-classes phase so runs after Java Annotations are available -->
@@ -345,13 +348,13 @@
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-compiler-plugin</artifactId>
-          <version>3.10.1</version>
+          <version>3.11.0</version>
         </plugin>
 
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-javadoc-plugin</artifactId>
-          <version>3.4.1</version>
+          <version>3.5.0</version>
           <configuration>
             <source>${maven.compiler.source}</source>
             <!-- https://issues.apache.org/jira/browse/UIMA-5369 -->
@@ -429,11 +432,6 @@
           <artifactId>maven-antrun-plugin</artifactId>
           <version>3.1.0</version>
           <dependencies>
-            <dependency>
-              <groupId>org.apache.ant</groupId>
-              <artifactId>ant</artifactId>
-              <version>1.10.12</version>
-            </dependency>
             <dependency> <!-- for ant extension supporting "if" -->
               <groupId>ant-contrib</groupId>
               <artifactId>ant-contrib</artifactId>
@@ -451,7 +449,7 @@
         <plugin>
           <groupId>org.apache.felix</groupId>
           <artifactId>maven-bundle-plugin</artifactId>
-          <version>5.1.8</version>
+          <version>5.1.9</version>
           <extensions>true</extensions>
           <executions>
             <execution>
@@ -538,13 +536,7 @@
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-enforcer-plugin</artifactId>
-          <version>3.1.0</version>
-        </plugin>
-        
-        <plugin>
-          <groupId>org.apache.maven.plugins</groupId>
-          <artifactId>maven-eclipse-plugin</artifactId>
-          <version>2.10</version>
+          <version>3.3.0</version>
         </plugin>
       </plugins>
     </pluginManagement>
@@ -695,7 +687,7 @@
               </target>
             </configuration>
           </execution>
-                 </executions>
+        </executions>
       </plugin>
 
       <plugin>
@@ -1498,7 +1490,6 @@
           <plugin>
             <groupId>org.apache.felix</groupId>
             <artifactId>maven-bundle-plugin</artifactId>
-            <version>5.1.6</version>
             <extensions>true</extensions>
             <configuration>
               <instructions>
@@ -1531,7 +1522,6 @@
           <plugin>
             <groupId>org.apache.maven.plugins</groupId>
             <artifactId>maven-clean-plugin</artifactId>
-            <version>3.2.0</version>
             <executions>
               <execution>
                 <phase>clean</phase>
