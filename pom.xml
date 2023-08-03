@@ -151,6 +151,8 @@
     <felix.bundle.version>3.3.0</felix.bundle.version>
 
     <maven.surefire.heap>512m</maven.surefire.heap>
+    
+    <gpg.skip>false</gpg.skip>
   </properties>
 
   <repositories>
@@ -878,6 +880,7 @@
                   <goal>run</goal>
                 </goals>
                 <configuration>
+                  <skip>${gpg.skip}</skip>
                   <target>
                     <taskdef name="if" classname="net.sf.antcontrib.logic.IfTask" />
                     <property name="source-release" location="${project.build.directory}/${project.artifactId}-${project.version}-source-release.zip" />
