@@ -197,6 +197,14 @@
           <groupId>com.github.siom79.japicmp</groupId>
           <artifactId>japicmp-maven-plugin</artifactId>
           <version>0.17.2</version>
+          <dependencies>
+            <dependency>
+              <!-- See: https://issues.apache.org/jira/browse/UIMA-6349 -->
+              <groupId>org.codehaus.groovy</groupId>
+              <artifactId>groovy-jsr223</artifactId>
+              <version>2.5.17</version>
+            </dependency>
+          </dependencies>
         </plugin>
         
         <plugin>
