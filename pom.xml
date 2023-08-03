@@ -90,21 +90,6 @@
     <notifiers />
   </ciManagement>
 
-  <!-- distribution management - is inherited from Apache POM
-       and specifies 
-         https://repository.apache.org/service/local/staging/deploy/maven2
-       and for snapshots:
-         https://repository.apache.org/content/repositories/snapshots -->
-  <!-- for children POMs maven automatically adds their artifactId to the URL below
-       unless overridden -->
-  <distributionManagement>
-    <site>
-      <id>uima.apache.org</id> <!-- following maven convention -->
-      <name>Apache UIMA Website</name>
-      <url>${uimaWebsiteDistributionUrl}</url>  <!-- on people.apache.org: /www/uima.apache.org -->
-    </site>
-  </distributionManagement>
-
   <properties>
     <!--  *********************************************************************************************************** -->
     <!--                                 U  G  H   change manually for release (to remove -SNAPSHOT                 * -->
@@ -113,7 +98,6 @@
     <!--  *********************************************************************************************************** -->
     <uimaBuildResourcesVersion>6</uimaBuildResourcesVersion>
     <uimaWebsiteUrl>https://uima.apache.org</uimaWebsiteUrl>
-    <uimaWebsiteDistributionUrl>scp://people.apache.org/www/uima.apache.org/</uimaWebsiteDistributionUrl>
     <maven.build.timestamp.format>yyMMdd_HHmm</maven.build.timestamp.format>
     <buildDateTime>${maven.build.timestamp}</buildDateTime>
 
