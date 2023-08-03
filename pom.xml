@@ -179,6 +179,12 @@
       <plugins>
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-invoker-plugin</artifactId>
+          <version>3.6.0</version>
+        </plugin>
+
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-clean-plugin</artifactId>
           <version>3.3.1</version>
         </plugin>
@@ -262,7 +268,13 @@
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-surefire-plugin</artifactId>
-          <version>2.22.2</version>
+          <version>3.1.2</version>
+        </plugin>
+
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-failsafe-plugin</artifactId>
+          <version>3.1.2</version>
         </plugin>
 
         <plugin>
@@ -275,6 +287,7 @@
              Disable running assembly:assembly with
              warning message to use install instead -->
         <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-assembly-plugin</artifactId>
           <version>3.6.0</version>
           <executions>
@@ -294,6 +307,7 @@
           <artifactId>build-helper-maven-plugin</artifactId>
           <version>3.4.0</version>
         </plugin>
+
         <plugin>
           <groupId>org.codehaus.mojo</groupId>
           <artifactId>buildnumber-maven-plugin</artifactId>
@@ -418,11 +432,6 @@
           <artifactId>maven-antrun-plugin</artifactId>
           <version>3.1.0</version>
           <dependencies>
-            <dependency>
-              <groupId>org.apache.ant</groupId>
-              <artifactId>ant</artifactId>
-              <version>1.10.12</version>
-            </dependency>
             <dependency> <!-- for ant extension supporting "if" -->
               <groupId>ant-contrib</groupId>
               <artifactId>ant-contrib</artifactId>
