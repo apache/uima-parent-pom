@@ -1981,7 +1981,7 @@
       </activation>
       
       <properties>
-        <tycho-version>4.0.0</tycho-version>
+        <tycho-version>4.0.1</tycho-version>
       </properties>
     </profile>
 
@@ -2181,6 +2181,38 @@
                 </configuration>
               </execution>
             </executions>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+
+    <profile>
+      <id>dependency-check</id>
+      <activation>
+        <property>
+          <name>!disable-dependency-check</name>
+        </property>
+        <file>
+          <exists>marker-file-enabling-dependency-check</exists>
+        </file>
+      </activation>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-dependency-plugin</artifactId>
+            <executions>
+              <execution>
+                <id>default</id>
+                <phase>verify</phase>
+                <goals>
+                  <goal>analyze-only</goal>
+                </goals>
+              </execution>
+            </executions>
+            <configuration>
+              <failOnWarning>true</failOnWarning>
+            </configuration>
           </plugin>
         </plugins>
       </build>
