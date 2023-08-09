@@ -1981,7 +1981,7 @@
       </activation>
       
       <properties>
-        <tycho-version>4.0.0</tycho-version>
+        <tycho-version>4.0.1</tycho-version>
       </properties>
     </profile>
 
