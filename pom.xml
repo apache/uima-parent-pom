@@ -764,16 +764,6 @@
               </execution>
             </executions>
           </plugin>
-
-          <plugin>
-            <groupId>org.apache.rat</groupId>
-            <artifactId>apache-rat-plugin</artifactId>
-            <executions>
-              <execution>
-                <id>default-cli</id>
-              </execution>
-            </executions>
-          </plugin>
           
           <!-- to fix up any generated Javadocs to have consistent line ends in html files -->
           <!-- runs in several phases after package -->
@@ -965,6 +955,11 @@
     <!-- *************************************************** -->
     <profile>
       <id>run-rat-report</id>
+      <activation>
+        <property>
+          <name>!disable-rat</name>
+        </property>
+      </activation>
 
       <build>
         <plugins>
