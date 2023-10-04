@@ -91,6 +91,12 @@
   </ciManagement>
 
   <properties>
+    <!-- BEGIN PROFILE SETTINGS: generate-release-notes-->
+    <github-repository>uima-parent-pom</github-repository>
+    <git-branch>main</git-branch>
+    <previous-release-version>16</previous-release-version>
+    <!-- END PROFILE SETTINGS: generate-release-notes-->
+    
     <!--  *********************************************************************************************************** -->
     <!--                                 U  G  H   change manually for release (to remove -SNAPSHOT                 * -->
     <!--  *********************************************************************************************************** -->
@@ -519,6 +525,20 @@
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-enforcer-plugin</artifactId>
           <version>3.3.0</version>
+        </plugin>
+        
+        <plugin>
+          <groupId>org.codehaus.gmaven</groupId>
+          <artifactId>groovy-maven-plugin</artifactId>
+          <version>2.1.1</version>
+          <dependencies>
+            <dependency>
+              <groupId>org.codehaus.groovy</groupId>
+              <artifactId>groovy-all</artifactId>
+              <version>3.0.18</version>
+              <type>pom</type>
+            </dependency>
+          </dependencies>
         </plugin>
       </plugins>
     </pluginManagement>
@@ -977,56 +997,77 @@
     </profile>
 
     <!-- *********************************************** -->
-    <!-- * Generate changes report                     * -->
+    <!-- * Generate release notes                      * -->
     <!-- *********************************************** -->
     <profile>
-      <id>generate-changes-report</id>
+      <id>generate-release-notes</id>
       <activation>
         <file>
-          <exists>marker-file-enabling-changes-report</exists>
+          <exists>marker-file-enabling-release-notes</exists>
         </file>
+        <property>
+          <name>!disable-generate-release-notes</name>
+        </property>
       </activation>
       <build>
         <plugins>
           <plugin>
-            <artifactId>maven-remote-resources-plugin</artifactId>
-          </plugin>
-
-          <plugin>
-            <artifactId>maven-clean-plugin</artifactId>
+            <artifactId>maven-antrun-plugin</artifactId>
             <executions>
               <execution>
-                <id>clean-changes-report</id>
-                <phase>clean</phase>
+                <id>gh-generate-release-notes</id>
+                <phase>prepare-package</phase>
                 <goals>
-                  <goal>clean</goal>
+                  <goal>run</goal>
                 </goals>
                 <configuration>
-                  <filesets>
-                    <fileset>
-                      <directory>${basedir}/issuesFixed</directory>
-                    </fileset>
-                  </filesets>
+                  <exportAntProperties>true</exportAntProperties>
+                  <target>
+                    <echo level="info">Generating release notes using GitHub API via the gh CLI tool</echo>
+                    <echo level="info">Repository : ${github-repository}</echo>
+                    <echo level="info">New tag    : ${project.artifactId}-${project.version}</echo>
+                    <echo level="info">Old tag    : rel/${project.artifactId}-${previous-release-version}</echo>
+                    <echo level="info">Branch     : ${git-branch}</echo>
+                    <mkdir dir="issuesFixed"/>
+                    <exec executable="gh" failonerror="true" outputproperty="gh-release-notes">
+                      <arg value="api" />
+                      <arg value="--method" />
+                      <arg value="POST" />
+                      <arg value="-H" />
+                      <arg value="Accept: application/vnd.github+json" />
+                      <arg value="-H" />
+                      <arg value="X-GitHub-Api-Version: 2022-11-28" />
+                      <arg value="/repos/apache/${github-repository}/releases/generate-notes" />
+                      <arg value="-f" />
+                      <arg value="tag_name=${project.artifactId}-${project.version}" />
+                      <arg value="-f" />
+                      <arg value="target_commitish=${git-branch}" />
+                      <arg value="-f" />
+                      <arg value="previous_tag_name=rel/${project.artifactId}-${previous-release-version}" />
+                    </exec>
+                  </target>
                 </configuration>
               </execution>
             </executions>
           </plugin>
-          
           <plugin>
-            <artifactId>maven-changes-plugin</artifactId>
+            <groupId>org.codehaus.gmaven</groupId>
+            <artifactId>groovy-maven-plugin</artifactId>
             <executions>
               <execution>
-                <id>default-cli</id>
-                <phase>generate-resources</phase>
+                <!-- Load postNoticeText from NOTICE file -->
+                <id>gh-store-release-notes</id>
+                <phase>prepare-package</phase>
                 <goals>
-                  <goal>github-report</goal>
+                  <goal>execute</goal>
                 </goals>
                 <configuration>
-                  <columnNames>Type,Id,Status,Summary</columnNames>
-                  <onlyCurrentVersion>true</onlyCurrentVersion>
-                  <githubAPIScheme>https</githubAPIScheme>
-                  <githubAPIPort>443</githubAPIPort>
-                  <outputDirectory>${basedir}/issuesFixed/</outputDirectory>
+                  <source><![CDATA[
+                    import groovy.json.JsonSlurper
+                    def jsonSlurper = new JsonSlurper()
+                    def json = jsonSlurper.parseText(project.properties['gh-release-notes'])
+                    new File('issuesFixed/github-report.md').withWriter("UTF-8") { out -> out.write(json.body) } 
+                  ]]></source>
                 </configuration>
               </execution>
             </executions>
