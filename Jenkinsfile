@@ -17,4 +17,6 @@
   
 @Library('uima-build-jenkins-shared-library') _
 
-defaultPipeline { }
+defaultPipeline {
+  extraMavenArguments = '-Prun-rat-report -Ddisable-rc-auto-staging -Ddisable-generate-release-notes'
+}
