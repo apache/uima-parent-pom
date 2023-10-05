@@ -30,7 +30,7 @@
 
   <groupId>org.apache.uima</groupId>
   <artifactId>parent-pom</artifactId>
-  <version>17-SNAPSHOT</version>
+  <version>17</version>
   <packaging>pom</packaging>
 
   <name>Apache UIMA ${project.artifactId}</name>
@@ -76,7 +76,7 @@
     <connection>scm:git:https://github.com/apache/uima-parent-pom</connection>
     <developerConnection>scm:git:https://github.com/apache/uima-parent-pom</developerConnection>
     <url>https://github.com/apache/uima-parent-pom</url>
-    <tag>HEAD</tag>
+    <tag>parent-pom-17</tag>
   </scm>
 
   <issueManagement>
@@ -1051,7 +1051,7 @@
                       <echo level="info">New tag    : ${project.artifactId}-${project.version}</echo>
                       <echo level="info">Old tag    : rel/${project.artifactId}-${previous-release-version}</echo>
                       <echo level="info">Branch     : ${git-branch}</echo>
-                      <mkdir dir="issuesFixed"/>
+                      <mkdir dir="issuesFixed" />
                       <exec executable="gh" failonerror="true" outputproperty="gh-release-notes">
                         <arg value="api" />
                         <arg value="--method" />
