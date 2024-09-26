@@ -380,6 +380,21 @@
                 <placement>a</placement>
                 <head>To be removed in version:</head>
               </tag>
+              <tag>
+                <name>apiNote</name>
+                <placement>a</placement>
+                <head>API note:</head>
+              </tag>
+              <tag>
+                <name>implSpec</name>
+                <placement>a</placement>
+                <head>Implementation specification:</head>
+              </tag>
+              <tag>
+                <name>implNote</name>
+                <placement>a</placement>
+                <head>Implementation note:</head>
+              </tag>
             </tags>
           </configuration>
           <executions>
