@@ -1,6 +1,6 @@
 ---
 name: Refactoring (for developers)
-about: Refactor the application
+about: Change that neither fixes a bug nor introduces a new feature
 ---
 
 **Describe the refactoring action**
