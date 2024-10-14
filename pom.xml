@@ -30,7 +30,7 @@
 
   <groupId>org.apache.uima</groupId>
   <artifactId>parent-pom</artifactId>
-  <version>18-SNAPSHOT</version>
+  <version>19-SNAPSHOT</version>
   <packaging>pom</packaging>
 
   <name>Apache UIMA ${project.artifactId}</name>
@@ -94,7 +94,7 @@
     <!-- BEGIN PROFILE SETTINGS: generate-release-notes-->
     <github-repository>uima-parent-pom</github-repository>
     <git-branch>main</git-branch>
-    <previous-release-version>16</previous-release-version>
+    <previous-release-version>17</previous-release-version>
     <!-- END PROFILE SETTINGS: generate-release-notes-->
     
     <!--  *********************************************************************************************************** -->

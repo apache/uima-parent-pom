@@ -7,12 +7,14 @@ about: Prepare a release
 
 - [ ] Create release issue and release preparation branch
 - [ ] Make sure to remove all SNAPSHOT repositories and SNAPSHOT dependencies
+- [ ] Update the `previous-release-version` property in the POM
 
 **Building**
 
 - [ ] Clean local `.m2/repository`
 - [ ] Commit all changes and check out in a new clean build location
 - [ ] Run a trial build locally with `-Papache-release`
+- [ ] Check the issues report in `issuesFixed` if it looks ok
 - [ ] Do the release build (`mvn release:prepare release:perform`)
 
 **Staging**
