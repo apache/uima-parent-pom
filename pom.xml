@@ -24,7 +24,7 @@
   <parent>
     <groupId>org.apache</groupId>
     <artifactId>apache</artifactId>
-    <version>37</version>
+    <version>38</version>
     <relativePath />
   </parent>
 
@@ -165,12 +165,6 @@
   <build>
     <pluginManagement>
       <plugins>
-        <plugin>
-          <groupId>org.apache.maven.plugins</groupId>
-          <artifactId>maven-invoker-plugin</artifactId>
-          <version>3.10.1</version>
-        </plugin>
-
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-clean-plugin</artifactId>
@@ -496,28 +490,29 @@
               <!-- default configuration -->
               <configuration>
                 <consoleOutput>true</consoleOutput>
-                <excludes>
-                  <exclude>**/.gitattributes</exclude>
-                  <exclude>**/.tycho-consumer-pom.xml</exclude>
-                  <exclude>.github/**/*</exclude> <!-- GitHub config/template files -->
-                  <exclude>release.properties</exclude> <!-- generated file -->
-                  <exclude>README*</exclude>
-                  <exclude>RELEASE_NOTES*</exclude>
-                  <exclude>issuesFixed/**</exclude> <!-- generated file -->
+                <outputFile>target/rat.txt</outputFile>
+                <inputExcludes>
+                  <inputExclude>**/.gitattributes</inputExclude>
+                  <inputExclude>**/.tycho-consumer-pom.xml</inputExclude>
+                  <inputExclude>.github/**/*</inputExclude> <!-- GitHub config/template files -->
+                  <inputExclude>release.properties</inputExclude> <!-- generated file -->
+                  <inputExclude>README*</inputExclude>
+                  <inputExclude>RELEASE_NOTES*</inputExclude>
+                  <inputExclude>issuesFixed/**</inputExclude> <!-- generated file -->
                   <!-- Maven profile trigger files -->
-                  <exclude>**/marker-file-identifying-*</exclude>
-                  <exclude>**/marker-file-enabling-*</exclude>
-                  <exclude>DEPENDENCIES</exclude>  <!-- generated file -->
-                  <exclude>**/MANIFEST.MF</exclude> <!-- MANIFEST.MF files cannot have comments -->
-                  <exclude>**/*.ppt</exclude> <!--  power point sources -->
-                  <exclude>**/*.sha512</exclude>
-                  <exclude>**/*.patch.txt</exclude>
-                  <exclude>**/.factorypath</exclude> <!-- Eclipse APT generated file -->
-                  <exclude>**/.idea/**</exclude> <!-- IDEA config files -->
-                  <exclude>**/.settings/**</exclude> <!-- Eclipse config files -->
-                  <exclude>**/.project</exclude> <!-- Eclipse config files -->
-                  <exclude>**/.classpath</exclude> <!-- Eclipse config files -->
-                </excludes>
+                  <inputExclude>**/marker-file-identifying-*</inputExclude>
+                  <inputExclude>**/marker-file-enabling-*</inputExclude>
+                  <inputExclude>DEPENDENCIES</inputExclude>  <!-- generated file -->
+                  <inputExclude>**/MANIFEST.MF</inputExclude> <!-- MANIFEST.MF files cannot have comments -->
+                  <inputExclude>**/*.ppt</inputExclude> <!--  power point sources -->
+                  <inputExclude>**/*.sha512</inputExclude>
+                  <inputExclude>**/*.patch.txt</inputExclude>
+                  <inputExclude>**/.factorypath</inputExclude> <!-- Eclipse APT generated file -->
+                  <inputExclude>**/.idea/**</inputExclude> <!-- IDEA config files -->
+                  <inputExclude>**/.settings/**</inputExclude> <!-- Eclipse config files -->
+                  <inputExclude>**/.project</inputExclude> <!-- Eclipse config files -->
+                  <inputExclude>**/.classpath</inputExclude> <!-- Eclipse config files -->
+                </inputExcludes>
               </configuration>
             </execution>
           </executions>
@@ -1630,9 +1625,9 @@
                 <execution>
                   <id>default-cli</id>
                   <configuration>
-                    <excludes combine.children="append">
-                      <exclude>**/api-change-report/**/*.*</exclude>
-                    </excludes>
+                    <inputExcludes combine.children="append">
+                      <inputExclude>**/api-change-report/**/*.*</inputExclude>
+                    </inputExcludes>
                   </configuration>
                 </execution>
               </executions>
