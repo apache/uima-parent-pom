@@ -131,7 +131,7 @@
     <maven.surefire.heap>512m</maven.surefire.heap>
     
     <maven.groovy.version>5.0.4</maven.groovy.version>
-    <maven.ant.version>1.10.15</maven.ant.version>
+    <maven.ant.version>1.10.17</maven.ant.version>
     
     <gpg.skip>false</gpg.skip>
 
@@ -168,7 +168,7 @@
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-invoker-plugin</artifactId>
-          <version>3.9.1</version>
+          <version>3.10.1</version>
         </plugin>
 
         <plugin>
@@ -186,7 +186,7 @@
         <plugin>
           <groupId>org.jacoco</groupId>
           <artifactId>jacoco-maven-plugin</artifactId>
-          <version>0.8.14</version>
+          <version>0.8.15</version>
         </plugin>
       
         <plugin>
@@ -198,13 +198,13 @@
         <plugin>
           <groupId>com.github.siom79.japicmp</groupId>
           <artifactId>japicmp-maven-plugin</artifactId>
-          <version>0.25.4</version>
+          <version>0.26.1</version>
         </plugin>
         
         <plugin>
           <groupId>com.github.spotbugs</groupId>
           <artifactId>spotbugs-maven-plugin</artifactId>
-          <version>4.9.8.2</version>
+          <version>4.10.2.0</version>
         </plugin>
       
         <plugin>
@@ -222,7 +222,7 @@
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-dependency-plugin</artifactId>
-          <version>3.10.0</version>
+          <version>3.11.0</version>
         </plugin>
 
         <plugin>
@@ -485,7 +485,7 @@
         <plugin>
           <groupId>org.apache.rat</groupId>
           <artifactId>apache-rat-plugin</artifactId>
-          <version>0.17</version>
+          <version>0.18</version>
           <executions>
             <execution>
               <id>default-cli</id>
@@ -550,7 +550,7 @@
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-enforcer-plugin</artifactId>
-          <version>3.6.2</version>
+          <version>3.6.3</version>
         </plugin>
         
         <plugin>
@@ -1738,7 +1738,7 @@
       </activation>
       
       <properties>
-        <tycho-version>5.0.2</tycho-version>
+        <tycho-version>5.0.3</tycho-version>
       </properties>
     </profile>
 
